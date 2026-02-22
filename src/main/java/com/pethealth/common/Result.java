@@ -4,7 +4,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 统一API响应封装�?
+ * 统一API响应封装�?
  * 用于标准化前后端数据交互格式
  *
  * @param <T> 数据类型
@@ -30,12 +30,12 @@ public class Result<T> implements Serializable {
     private T data;
 
     /**
-     * 时间�?
+     * 时间�?
      */
     private Long timestamp;
 
     /**
-     * 请求路径（可选，用于调试�?
+     * 请求路径（可选，用于调试�?
      */
     private String path;
 
@@ -50,9 +50,9 @@ public class Result<T> implements Serializable {
     // 常用消息定义
     public static final String SUCCESS_MESSAGE = "操作成功";
     public static final String ERROR_MESSAGE = "操作失败";
-    public static final String UNAUTHORIZED_MESSAGE = "未授权访�?;
+    public static final String UNAUTHORIZED_MESSAGE ="未授权访问";
     public static final String FORBIDDEN_MESSAGE = "禁止访问";
-    public static final String NOT_FOUND_MESSAGE = "资源不存�?;
+    public static final String NOT_FOUND_MESSAGE = "资源不存在";
 
     /**
      * 无参构造器
@@ -72,14 +72,14 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 成功响应 - 无数�?
+     * 成功响应 - 无数
      */
     public static <T> Result<T> success() {
         return new Result<>(SUCCESS_CODE, SUCCESS_MESSAGE, null);
     }
 
     /**
-     * 成功响应 - 带数�?
+     * 成功响应 - 带数
      */
     public static <T> Result<T> success(T data) {
         return new Result<>(SUCCESS_CODE, SUCCESS_MESSAGE, data);
@@ -100,14 +100,14 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败响应 - 自定义错误消�?
+     * 失败响应 - 自定义错误消�?
      */
     public static <T> Result<T> error(String message) {
         return new Result<>(INTERNAL_SERVER_ERROR_CODE, message, null);
     }
 
     /**
-     * 失败响应 - 自定义状态码和消�?
+     * 失败响应 - 自定义状态码和消�?
      */
     public static <T> Result<T> error(Integer code, String message) {
         return new Result<>(code, message, null);
@@ -128,14 +128,14 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 未授权响�?
+     * 未授权响�?
      */
     public static <T> Result<T> unauthorized() {
         return new Result<>(UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE, null);
     }
 
     /**
-     * 未授权响�?- 自定义消�?
+     * 未授权响�?- 自定义消�?
      */
     public static <T> Result<T> unauthorized(String message) {
         return new Result<>(UNAUTHORIZED_CODE, message, null);
@@ -149,14 +149,14 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 资源不存在响�?
+     * 资源不存在响�?
      */
     public static <T> Result<T> notFound() {
         return new Result<>(NOT_FOUND_CODE, NOT_FOUND_MESSAGE, null);
     }
 
     /**
-     * 资源不存在响�?- 自定义消�?
+     * 资源不存在响�?- 自定义消�?
      */
     public static <T> Result<T> notFound(String message) {
         return new Result<>(NOT_FOUND_CODE, message, null);

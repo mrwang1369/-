@@ -11,7 +11,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.math.BigDecimal;
 
 /**
- * 高德地图服务测试�? * 用于验证地图服务功能是否正常工作
+ * 高德地图服务测试类
+ * 用于验证地图服务功能是否正常工作
  *
  * @author Mr wang
  * @since 2026-02-13
@@ -35,8 +36,8 @@ public class AmapTestApplication {
             // 测试地理编码功能
             System.out.println("\n--- 测试地理编码 ---");
             try {
-                AmapResponseDTO geoResult = mapService.geocode("北京市朝阳区建国�?00�?);
-                System.out.println("地理编码结果状�? " + geoResult.getStatus());
+                AmapResponseDTO geoResult = mapService.geocode("北京市朝阳区建国路88号");
+                System.out.println("地理编码结果状态: " + geoResult.getStatus());
                 System.out.println("地理编码结果信息: " + geoResult.getInfo());
                 if (geoResult.getGeocodes() != null && !geoResult.getGeocodes().isEmpty()) {
                     System.out.println("地址: " + geoResult.getGeocodes().get(0).getFormatted_address());
@@ -46,17 +47,18 @@ public class AmapTestApplication {
                 System.out.println("地理编码测试失败: " + e.getMessage());
             }
             
-            // 测试逆地理编码功�?            System.out.println("\n--- 测试逆地理编�?---");
+            // 测试逆地理编码功能
+            System.out.println("\n--- 测试逆地理编码 ---");
             try {
                 AmapResponseDTO regeoResult = mapService.regeocode(
                     new BigDecimal("116.4074"), new BigDecimal("39.9042"));
-                System.out.println("逆地理编码结果状�? " + regeoResult.getStatus());
-                System.out.println("逆地理编码结果信�? " + regeoResult.getInfo());
+                System.out.println("逆地理编码结果状态: " + regeoResult.getStatus());
+                System.out.println("逆地理编码结果信息: " + regeoResult.getInfo());
                 if (regeoResult.getRegeocode() != null) {
                     System.out.println("地址: " + regeoResult.getRegeocode().getFormatted_address());
                 }
             } catch (Exception e) {
-                System.out.println("逆地理编码测试失�? " + e.getMessage());
+                System.out.println("逆地理编码测试失败: " + e.getMessage());
             }
             
             // 测试周边搜索功能
@@ -64,8 +66,8 @@ public class AmapTestApplication {
             try {
                 AmapResponseDTO nearbyResult = mapService.searchNearby(
                     new BigDecimal("116.4074"), new BigDecimal("39.9042"), 
-                    "宠物医院", 3000, "");
-                System.out.println("周边搜索结果状�? " + nearbyResult.getStatus());
+                    "美食", 3000, "");
+                System.out.println("周边搜索结果状态: " + nearbyResult.getStatus());
                 System.out.println("周边搜索结果信息: " + nearbyResult.getInfo());
                 System.out.println("找到POI数量: " + nearbyResult.getCount());
             } catch (Exception e) {
@@ -78,13 +80,14 @@ public class AmapTestApplication {
                 double distance = mapService.calculateDistance(
                     new BigDecimal("116.4074"), new BigDecimal("39.9042"),
                     new BigDecimal("116.4075"), new BigDecimal("39.9043"));
-                System.out.println("两点间距�? " + distance + " �?);
+                System.out.println("两点间距离: " + distance + " 米");
             } catch (Exception e) {
                 System.out.println("距离计算测试失败: " + e.getMessage());
             }
             
         } finally {
-            // 关闭应用上下�?            context.close();
+            // 关闭应用上下文
+            context.close();
         }
     }
 }

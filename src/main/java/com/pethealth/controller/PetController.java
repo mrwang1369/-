@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 存储宠物基本信息，支持多只宠物管�?前端控制�? * </p>
+ * 存储宠物基本信息，支持多只宠物管理 前端控制器
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

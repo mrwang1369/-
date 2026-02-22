@@ -12,7 +12,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 记录驱虫信息，支持周期提�? * </p>
+ * 记录驱虫信息，支持周期提醒
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -28,7 +29,7 @@ public class DewormingRecord implements Serializable {
     private Integer dewormingId;
 
     /**
-     * 关联宠物ID
+     * 宠物ID
      */
     private Integer petId;
 
@@ -58,7 +59,7 @@ public class DewormingRecord implements Serializable {
     private String notes;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;

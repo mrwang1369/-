@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推�?服务实现�? * </p>
+ * 存储提醒事项，支持微信推送 服务实现类
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

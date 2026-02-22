@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 存储用户基本信息，支持微信和手机号登�?Mapper 接口
+ * 存储用户基本信息，支持微信和手机号登录 Mapper 接口
  * </p>
  *
  * @author Mr wang

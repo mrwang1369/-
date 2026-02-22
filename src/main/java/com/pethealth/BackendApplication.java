@@ -1,4 +1,4 @@
-package com.pethealth;  // 包名应该�?com.pethealth
+package com.pethealth;  // 包名应该com.pethealth
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

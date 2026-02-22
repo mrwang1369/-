@@ -5,7 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * 高德地图配置�? *
+ * 高德地图配置类
+ *
  * @author Mr wang
  * @since 2026-02-13
  */
@@ -20,7 +21,7 @@ public class AmapConfig {
     private String key;
     
     /**
-     * API基础URL
+     * API请求URL
      */
     private String baseUrl;
     
@@ -40,7 +41,7 @@ public class AmapConfig {
     private String poiAroundUrl;
     
     /**
-     * 文本搜索POI URL
+     * 关键字POI搜索URL
      */
     private String poiTextUrl;
     

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * 日志切面 - 使用AOP记录接口请求参数、响应结果和执行时间
- * 便于调试和监控系统运行状�?
+ * 便于调试和监控系统运行状态
  */
 @Aspect
 @Component
@@ -46,7 +46,7 @@ public class LogAspect {
     public void servicePointcut() {}
 
     /**
-     * 环绕通知：记录Controller层接口日�?
+     * 环绕通知：记录Controller层接口日志
      */
     @Around("controllerPointcut()")
     public Object logController(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -64,7 +64,7 @@ public class LogAspect {
         Object[] args = joinPoint.getArgs();
         String requestParams = getRequestParams(args);
 
-        log.info("【请求开始】| URI: {} {} | IP: {} | �? {} | 方法: {} | 参数: {}",
+        log.info("【请求开始】| URI: {} {} | IP: {} | 类 {} | 方法: {} | 参数: {}",
                 httpMethod, requestUri, clientIp, className, methodName, requestParams);
 
         Object result = null;
@@ -90,7 +90,7 @@ public class LogAspect {
     }
 
     /**
-     * 环绕通知：记录Service层方法日�?
+     * 环绕通知：记录Service层方法日志
      */
     @Around("servicePointcut()")
     public Object logService(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -98,12 +98,12 @@ public class LogAspect {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
 
-        // 记录方法开始日�?
+        // 记录方法开始日志
         Object[] args = joinPoint.getArgs();
         String methodParams = getMethodParams(args);
 
         if (log.isDebugEnabled()) {
-            log.debug("【方法开始】| �? {} | 方法: {} | 参数: {}",
+            log.debug("【方法开始】| 类 {} | 方法: {} | 参数: {}",
                     className, methodName, methodParams);
         }
 
@@ -116,16 +116,16 @@ public class LogAspect {
 
             // 记录方法结束日志（只记录耗时较长的方法）
             if (executionTime > 1000) { // 超过1秒的方法记录警告
-                log.warn("【方法耗时】| �? {} | 方法: {} | 耗时: {}ms | 参数: {}",
+                log.warn("【方法耗时】| 类 {} | 方法: {} | 耗时: {}ms | 参数: {}",
                         className, methodName, executionTime, methodParams);
             } else if (log.isDebugEnabled()) {
-                log.debug("【方法结束】| �? {} | 方法: {} | 耗时: {}ms",
+                log.debug("【方法结束】| 类 {} | 方法: {} | 耗时: {}ms",
                         className, methodName, executionTime);
             }
 
         } catch (Exception e) {
             long executionTime = System.currentTimeMillis() - startTime;
-            log.error("【方法异常】| �? {} | 方法: {} | 耗时: {}ms | 异常: {} | 参数: {}",
+            log.error("【方法异常】| 类 {} | 方法: {} | 耗时: {}ms | 异常: {} | 参数: {}",
                     className, methodName, executionTime, e.getMessage(), methodParams, e);
             throw e;
         }
@@ -174,7 +174,7 @@ public class LogAspect {
     }
 
     /**
-     * 获取请求参数（过滤敏感信息和文件参数�?
+     * 获取请求参数（过滤敏感信息和文件参数）
      */
     private String getRequestParams(Object[] args) {
         if (args == null || args.length == 0) {
@@ -212,7 +212,7 @@ public class LogAspect {
                         return "***敏感信息***";
                     }
 
-                    // 限制参数长度，避免日志过�?
+                    // 限制参数长度，避免日志过长
                     if (paramStr.length() > 500) {
                         return paramStr.substring(0, 500) + "...[truncated]";
                     }
@@ -248,7 +248,7 @@ public class LogAspect {
     }
 
     /**
-     * 获取响应结果（格式化输出�?
+     * 获取响应结果（格式化输出）
      */
     private String getResponseResult(Object result) {
         if (result == null) {
@@ -256,7 +256,7 @@ public class LogAspect {
         }
 
         try {
-            // 如果是Result对象，提取关键信�?
+            // 如果是Result对象，提取关键信息
             if (result instanceof Result) {
                 Result<?> resultObj = (Result<?>) result;
                 return String.format("Result[code=%d, message=%s, data=%s]",

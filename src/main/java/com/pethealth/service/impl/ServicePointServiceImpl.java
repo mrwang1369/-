@@ -18,7 +18,8 @@ import java.util.List;
 
 /**
  * <p>
- * 存储周边服务信息，支持地图集�?服务实现�? * </p>
+ * 存储周边服务信息，支持地图集成 服务实现类
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -34,17 +35,18 @@ public class ServicePointServiceImpl extends ServiceImpl<ServicePointMapper, Ser
     @Override
     public List<ServicePoint> getNearbyServicePoints(BigDecimal longitude, BigDecimal latitude, 
                                                    Integer radius, String type) {
-        log.debug("查询附近服务�? longitude={}, latitude={}, radius={}, type={}", 
+        log.debug("查询附近服务点 longitude={}, latitude={}, radius={}, type={}", 
                 longitude, latitude, radius, type);
         
         // 构建查询条件
         QueryWrapper<ServicePoint> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("deleted", 0); // 只查询未删除的记�?        
+        queryWrapper.eq("deleted", 0); // 只查询未删除的记录        
         if (type != null && !type.isEmpty()) {
             queryWrapper.eq("type", type);
         }
         
-        // 查询所有符合条件的服务�?        List<ServicePoint> allServicePoints = this.list(queryWrapper);
+        // 查询所有符合条件的服务点
+        List<ServicePoint> allServicePoints = this.list(queryWrapper);
         
         // 根据距离过滤
         List<ServicePoint> nearbyServicePoints = new ArrayList<>();

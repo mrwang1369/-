@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 记录症状输入和AI分析，用于就医引�?前端控制�? * </p>
+ * 记录症状输入和AI分析，用于就医引导 前端控制器
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

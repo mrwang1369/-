@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis服务�?- 封装Redis常用操作
- * 支持对象序列化，简化缓存使�?
+ * Redis服务类 - 封装Redis常用操作
+ * 支持对象序列化，简化缓存使用
  */
 @Service
 public class RedisService {
@@ -29,16 +29,16 @@ public class RedisService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // ==================== 字符串操�?====================
+    // ==================== 字符串操作 =====================
 
     /**
-     * 设置字符串�?
+     * 设置字符串值
      */
     public void set(String key, String value) {
         try {
             stringRedisTemplate.opsForValue().set(key, value);
         } catch (Exception e) {
-            log.error("Redis设置字符串失�?key: {}", key, e);
+            log.error("Redis设置字符串失败 key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -50,19 +50,19 @@ public class RedisService {
         try {
             stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
         } catch (Exception e) {
-            log.error("Redis设置字符串失�?key: {}", key, e);
+            log.error("Redis设置字符串失败 key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
 
     /**
-     * 获取字符串�?
+     * 获取字符串值
      */
     public String get(String key) {
         try {
             return stringRedisTemplate.opsForValue().get(key);
         } catch (Exception e) {
-            log.error("Redis获取字符串失�?key: {}", key, e);
+            log.error("Redis获取字符串失败 key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -74,7 +74,7 @@ public class RedisService {
      */
     public <T> void setObject(String key, T obj) {
         try {
-            // 直接使用 RedisTemplate 存储对象，无需手动序列�?
+            // 直接使用 RedisTemplate 存储对象，无需手动序列化
             redisTemplate.opsForValue().set(key, obj);
         } catch (Exception e) {
             log.error("Redis设置对象失败 key: {}", key, e);
@@ -83,11 +83,11 @@ public class RedisService {
     }
 
     /**
-     * 设置对象值并指定过期时间（使�?RedisTemplate 自动序列化）
+     * 设置对象值并指定过期时间（使用RedisTemplate 自动序列化）
      */
     public <T> void setObject(String key, T obj, long timeout, TimeUnit timeUnit) {
         try {
-            // 直接使用 RedisTemplate 存储对象，无需手动序列�?
+            // 直接使用 RedisTemplate 存储对象，无需手动序列化
             redisTemplate.opsForValue().set(key, obj, timeout, timeUnit);
         } catch (Exception e) {
             log.error("Redis设置对象失败 key: {}", key, e);
@@ -96,7 +96,7 @@ public class RedisService {
     }
 
     /**
-     * 获取对象值（使用 RedisTemplate 自动反序列化�?
+     * 获取对象值（使用 RedisTemplate 自动反序列化）
      */
     public <T> T getObject(String key, Class<T> clazz) {
         try {
@@ -105,7 +105,7 @@ public class RedisService {
             if (obj == null) {
                 return null;
             }
-            // 强制转换为目标类�?
+            // 强制转换为目标类型
             return clazz.cast(obj);
         } catch (Exception e) {
             log.error("Redis获取对象失败 key: {}", key, e);
@@ -141,7 +141,7 @@ public class RedisService {
         }
     }
 
-    // ==================== 存在性检�?====================
+    // ==================== 存在性检查 ====================
 
     /**
      * 检查key是否存在
@@ -151,7 +151,7 @@ public class RedisService {
             Boolean result = redisTemplate.hasKey(key);
             return result != null && result;
         } catch (Exception e) {
-            log.error("Redis检查key存在性失�?key: {}", key, e);
+            log.error("Redis检查key存在性失败 key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -184,7 +184,7 @@ public class RedisService {
         }
     }
 
-    // ==================== 原子操作 ====================
+    // ==================== 递增递减操作 ====================
 
     /**
      * 递增
@@ -215,7 +215,7 @@ public class RedisService {
     // ==================== 哈希操作 ====================
 
     /**
-     * 设置哈希字段�?
+     * 设置哈希字段值
      */
     public void hset(String key, String field, Object value) {
         try {
@@ -227,7 +227,7 @@ public class RedisService {
     }
 
     /**
-     * 获取哈希字段�?
+     * 获取哈希字段值
      */
     public Object hget(String key, String field) {
         try {
@@ -238,7 +238,7 @@ public class RedisService {
         }
     }
 
-    // ==================== 工具方法 ====================
+    // ==================== 缓存键生成方法 ====================
 
     /**
      * 生成宠物品种字典的缓存key

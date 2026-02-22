@@ -8,7 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 存储用户基本信息，支持微信和手机号登�?服务�? * </p>
+ * 存储用户基本信息，支持微信和手机号登录 服务类
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -32,8 +33,10 @@ public interface UserService extends IService<User> {
     AuthResponseDTO register(RegisterRequestDTO registerRequest);
 
     /**
-     * 根据手机号查询用�?     *
-     * @param phone 手机�?     * @return 用户信息
+     * 根据手机号查询用户
+     *
+     * @param phone 手机号
+     * @return 用户信息
      */
     User findByPhone(String phone);
 
@@ -54,8 +57,11 @@ public interface UserService extends IService<User> {
     User getUserInfo(Long userId);
 
     /**
-     * 更新用户最后登录时�?     *
+     * 更新用户最后登录时间
+     *
      * @param userId 用户ID
      */
     void updateLastLoginTime(Long userId);
 }
+
+

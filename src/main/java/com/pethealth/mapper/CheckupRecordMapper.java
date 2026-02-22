@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 记录体检信息，支持图片上�?Mapper 接口
+ * 记录体检信息，支持图片上传Mapper 接口
  * </p>
  *
  * @author Mr wang

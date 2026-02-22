@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 记录症状输入和AI分析，用于就医引�?Mapper 接口
+ * 记录症状输入和AI分析，用于就医引导 Mapper 接口
  * </p>
  *
  * @author Mr wang

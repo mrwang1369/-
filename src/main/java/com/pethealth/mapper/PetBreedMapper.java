@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 宠物品种字典�?Mapper 接口
+ * 宠物品种字典管理 Mapper 接口
  * </p>
  *
  * @author Mr wang

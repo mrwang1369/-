@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 认证拦截�?- 基于JWT验证用户令牌
+ * 认证拦截器 - 基于JWT验证用户令牌
  * 拦截未登录请求，保护API接口
  */
 @Component
@@ -33,7 +33,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 公开路径列表（不需要认证的接口�?
+    // 公开路径列表（不需要认证的接口）
     private static final List<String> PUBLIC_PATHS = Arrays.asList(
             "/api/auth/login",
             "/api/auth/register",
@@ -53,49 +53,49 @@ public class AuthInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
         String method = request.getMethod();
 
-        log.debug("认证拦截�? {} {} - 开始验�?, method, requestUri);
+        log.debug("认证拦截器 {} {} - 开始验证", method, requestUri);
 
-        // 1. 检查是否为公开路径
+        // 1. 判断是否为公开路径
         if (isPublicPath(requestUri)) {
-            log.debug("公开路径，跳过认�? {}", requestUri);
+            log.debug("公开路径，跳过认证 {}", requestUri);
             return true;
         }
 
-        // 2. 从请求头获取Token
+        // 2. 尝试获取Token
         String token = getTokenFromRequest(request);
         if (token == null) {
-            log.warn("缺少认证令牌: {} {}", method, requestUri);
-            // 抛出异常，交�?GlobalExceptionHandler 处理
-            throw new UnauthorizedException("缺少认证令牌");
+            log.warn("未找到认证令牌: {} {}", method, requestUri);
+            // 抛出异常，交给GlobalExceptionHandler 处理
+            throw new UnauthorizedException("未找到认证令牌");
         }
 
         try {
             // 3. 验证Token
             if (!jwtTokenUtil.validateToken(token)) {
                 log.warn("认证令牌无效: {} {}", method, requestUri);
-                // 抛出异常，交�?GlobalExceptionHandler 处理
+                // 抛出异常，交给GlobalExceptionHandler 处理
                 throw new UnauthorizedException("认证令牌已过期或无效");
             }
 
-            // 4. 解析用户ID并设置到请求属性中
+            // 4. 将用户ID存入请求上下文中
             Long userId = jwtTokenUtil.getUserIdFromToken(token);
             request.setAttribute("currentUserId", userId);
 
-            // 5. 检查用户状态（可选）
+            // 5. 判断用户是否启用
             if (!jwtTokenUtil.isUserActive(userId)) {
-                log.warn("用户账户已被禁用: userId={}, uri={}", userId, requestUri);
-                // 抛出异常，交�?GlobalExceptionHandler 处理
-                throw new UnauthorizedException("用户账户已被禁用");
+                log.warn("用户已禁用: userId={}, uri={}", userId, requestUri);
+                // 抛出异常，交给GlobalExceptionHandler 处理
+                throw new UnauthorizedException("用户已禁用");
             }
 
-            // 记录认证成功日志
+            // 记录认证成功
             log.debug("用户认证成功: userId={}, uri={}", userId, requestUri);
             return true;
 
         } catch (Exception e) {
-            log.error("认证令牌解析失败: {} {} - {}", method, requestUri, e.getMessage());
-            // 抛出异常，交�?GlobalExceptionHandler 处理
-            throw new UnauthorizedException("认证令牌解析失败");
+            log.error("认证令牌验证失败: {} {} - {}", method, requestUri, e.getMessage());
+            // 抛出异常，交给GlobalExceptionHandler 处理
+            throw new UnauthorizedException("认证令牌验证失败");
         }
     }
 
@@ -111,22 +111,22 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * 从请求头获取Token
+     * 尝试获取Token
      */
     private String getTokenFromRequest(HttpServletRequest request) {
-        // 1. 从Authorization头获�?
+        // 1. 从Authorization头获取
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
 
-        // 2. 从X-Auth-Token头获取（备用方案�?
+        // 2. 从X-Auth-Token头获取（备用方案）
         String xAuthToken = request.getHeader("X-Auth-Token");
         if (xAuthToken != null && !xAuthToken.trim().isEmpty()) {
             return xAuthToken;
         }
 
-        // 3. 从查询参数获取（用于WebSocket等场景）
+        // 3. 从token参数获取（用于WebSocket连接）
         String tokenParam = request.getParameter("token");
         if (tokenParam != null && !tokenParam.trim().isEmpty()) {
             return tokenParam;
@@ -143,10 +143,10 @@ public class AuthInterceptor implements HandlerInterceptor {
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // 使用Result类创建未授权响应
+        // 使用Result对象封装未授权响应
         Result<?> result = Result.unauthorized(message).path(path);
 
-        // 将Result对象转换为JSON字符�?
+        // 将Result对象转换为JSON字符串
         String jsonResponse = objectMapper.writeValueAsString(result);
 
         response.getWriter().write(jsonResponse);

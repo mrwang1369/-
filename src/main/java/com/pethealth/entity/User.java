@@ -10,7 +10,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储用户基本信息，支持微信和手机号登�? * </p>
+ * 存储用户基本信息，支持微信和手机号登录
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -28,11 +29,12 @@ public class User implements Serializable {
     private String openid;
 
     /**
-     * 手机�?     */
+     * 手机号
+     */
     private String phone;
 
     /**
-     * 加密密码（手机号注册时使用）
+     * 密码，可选，支持手机号登录
      */
     private String password;
 
@@ -47,7 +49,7 @@ public class User implements Serializable {
     private String avatarUrl;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;
@@ -56,7 +58,7 @@ public class User implements Serializable {
 
     private LocalDateTime updateTime;
     
-    // 手动添加getter/setter方法
+    // 自动生成getter/setter方法
     public Integer getUserId() {
         return userId;
     }

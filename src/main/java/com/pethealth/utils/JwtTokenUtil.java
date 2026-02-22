@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * JWT工具�?- 生成和验证Token
+ * JWT工具类 - 生成和验证Token
  */
 @Component
 public class JwtTokenUtil {
@@ -36,7 +36,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 创建Token
+     * 生成Token
      */
     private String createToken(Map<String, Object> claims, Long userId) {
         return Jwts.builder()
@@ -74,11 +74,11 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 检查用户是否激活（示例方法，实际需要查询数据库�?
+     * 检查用户是否激活（示例方法，实际需要查询数据库）
      */
     public boolean isUserActive(Long userId) {
-        // 实际项目中需要查询数据库或缓�?
-        return true; // 默认返回true
+        // 实际项目中需要查询数据库或缓存
+        return true; // 示例中直接返回true
     }
 
     /**
@@ -90,7 +90,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 提取所有声�?
+     * 提取所有声明
      */
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()

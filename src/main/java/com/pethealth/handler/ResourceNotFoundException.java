@@ -1,7 +1,9 @@
 package com.pethealth.handler;
 
-import com.pethealth.common.Result; /**
- * 资源不存在异�?
+import com.pethealth.common.Result;
+
+/**
+ * 资源不存在异常
  */
 public class ResourceNotFoundException extends BusinessException {
     public ResourceNotFoundException(String message) {

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推�?Mapper 接口
+ * 存储提醒事项，支持微信推送 Mapper 接口
  * </p>
  *
  * @author Mr wang

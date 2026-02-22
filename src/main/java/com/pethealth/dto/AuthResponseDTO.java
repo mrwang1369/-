@@ -3,9 +3,9 @@ package com.pethealth.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 认证响应DTO
+ * 用户认证DTO
  */
-@Schema(description = "认证响应数据")
+@Schema(description = "用户认证数据")
 public class AuthResponseDTO {
 
     @Schema(description = "访问令牌", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
@@ -14,21 +14,21 @@ public class AuthResponseDTO {
     @Schema(description = "令牌类型", example = "Bearer")
     private String tokenType;
 
-    @Schema(description = "过期时间（秒�?, example = "86400")
+    @Schema(description = "过期时间（秒）", example = "86400")
     private Long expiresIn;
 
     @Schema(description = "用户信息")
     private UserInfo userInfo;
 
-    @Schema(description = "用户基本信息")
+    @Schema(description = "用户角色信息")
     public static class UserInfo {
         @Schema(description = "用户ID", example = "1")
         private Long userId;
 
-        @Schema(description = "用户昵称", example = "宠物主人小王")
+        @Schema(description = "用户昵称", example = "宠物医生")
         private String nickname;
 
-        @Schema(description = "手机�?, example = "13800138001")
+        @Schema(description = "手机号", example = "13800138001")
         private String phone;
 
         @Schema(description = "头像URL", example = "https://example.com/avatar.jpg")
@@ -37,7 +37,8 @@ public class AuthResponseDTO {
         @Schema(description = "微信OpenID", example = "oQv9G5HmN8KpL2JrS7TzY4XwV1U")
         private String openid;
         
-        // 构造函�?        public UserInfo() {}
+        // 构造函数
+        public UserInfo() {}
         
         public UserInfo(Long userId, String nickname, String phone, String avatarUrl, String openid) {
             this.userId = userId;
@@ -106,7 +107,7 @@ public class AuthResponseDTO {
         }
     }
     
-    // AuthResponseDTO的构造函数和getter/setter
+    // AuthResponseDTO的默认构造函数getter/setter
     public AuthResponseDTO() {}
     
     public AuthResponseDTO(String accessToken, String tokenType, Long expiresIn, UserInfo userInfo) {

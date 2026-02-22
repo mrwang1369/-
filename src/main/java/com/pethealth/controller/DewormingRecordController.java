@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 记录驱虫信息，支持周期提�?前端控制�? * </p>
+ * 记录驱虫信息，支持周期提醒 前端控制器
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

@@ -10,7 +10,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推�? * </p>
+ * 存储提醒事项，支持微信推送
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -25,17 +26,17 @@ public class Reminder implements Serializable {
     private Integer reminderId;
 
     /**
-     * 关联用户ID
+     * 用户ID
      */
     private Integer userId;
 
     /**
-     * 关联宠物ID（可为NULL表示自定义提醒）
+     * 宠物ID，也可以为空，表示全局提醒
      */
     private Integer petId;
 
     /**
-     * 类型（如疫苗、驱虫、喂食）
+     * 类型，例如：喂食、散步、体检级
      */
     private String reminderType;
 
@@ -45,16 +46,17 @@ public class Reminder implements Serializable {
     private String title;
 
     /**
-     * 到期时间
+     * 截止日期
      */
     private LocalDateTime dueDate;
 
     /**
-     * 状�?     */
+     * 状态
+     */
     private String status;
 
     /**
-     * 重复周期（如每日、每周）
+     * 重复周期，例如：每日、每周、每月级
      */
     private String repeatCycle;
 
@@ -64,7 +66,7 @@ public class Reminder implements Serializable {
     private String notes;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;

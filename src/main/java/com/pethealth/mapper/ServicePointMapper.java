@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 存储周边服务信息，支持地图集�?Mapper 接口
+ * 存储周边服务信息，支持地图集成 Mapper 接口
  * </p>
  *
  * @author Mr wang

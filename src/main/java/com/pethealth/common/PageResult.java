@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 分页响应封装�?
+ * 分页响应封装
  * 封装分页响应数据（total、list），与PageRequest对应
  *
  * @param <T> 数据类型
@@ -18,7 +18,7 @@ public class PageResult<T> {
     private long total;
 
     /**
-     * 当前页数据列�?
+     * 当前页数据列�?
      */
     private List<T> list;
 
@@ -33,35 +33,35 @@ public class PageResult<T> {
     private int pageSize;
 
     /**
-     * 总页�?
+     * 总页�?
      */
     private int totalPages;
 
     /**
-     * 是否有上一�?
+     * 是否有上一�?
      */
     private boolean hasPrevious;
 
     /**
-     * 是否有下一�?
+     * 是否有下一�?
      */
     private boolean hasNext;
 
     /**
-     * 是否为第一�?
+     * 是否为第一�?
      */
     private boolean isFirst;
 
     /**
-     * 是否为最后一�?
+     * 是否为最后一�?
      */
     private boolean isLast;
 
     /**
-     * 构造方�?
+     * 构造方�?
      *
      * @param total 总记录数
-     * @param list 当前页数据列�?
+     * @param list 当前页数据列�?
      * @param pageNum 当前页码
      * @param pageSize 每页大小
      */
@@ -71,10 +71,10 @@ public class PageResult<T> {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
 
-        // 计算总页�?
+        // 计算总页�?
         this.totalPages = (int) Math.ceil((double) total / pageSize);
 
-        // 计算分页状�?
+        // 计算分页状�?
         this.hasPrevious = pageNum > 1;
         this.hasNext = pageNum < totalPages;
         this.isFirst = pageNum == 1;
@@ -82,7 +82,7 @@ public class PageResult<T> {
     }
 
     /**
-     * �?MyBatis-Plus �?Page 对象创建 PageResult
+     * �?MyBatis-Plus �?Page 对象创建 PageResult
      *
      * @param page MyBatis-Plus 分页对象
      * @return PageResult 分页结果
@@ -97,7 +97,7 @@ public class PageResult<T> {
     }
 
     /**
-     * 空分页结�?
+     * 空分页结�?
      */
     // 修改 PageResult.empty() 方法中的调用
     public static <T> PageResult<T> empty(PageRequest pageRequest) {

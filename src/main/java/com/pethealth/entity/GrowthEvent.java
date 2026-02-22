@@ -12,7 +12,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 聚合多源数据生成成长时光�? * </p>
+ * 聚合多源数据生成成长时光轴
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -28,7 +29,7 @@ public class GrowthEvent implements Serializable {
     private Integer eventId;
 
     /**
-     * 关联宠物ID
+     * 宠物ID
      */
     private Integer petId;
 
@@ -43,20 +44,22 @@ public class GrowthEvent implements Serializable {
     private LocalDateTime eventDate;
 
     /**
-     * 描述（如疫苗名称�?     */
+     * 描述（如疫苗名称）
+     */
     private String description;
 
     /**
-     * 相关图片URL
+     * 图片URL
      */
     private String imageUrl;
 
     /**
-     * 体重值（仅体重记录时使用�?     */
+     * 体重值（仅体重记录时使用）
+     */
     private BigDecimal weightValue;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;

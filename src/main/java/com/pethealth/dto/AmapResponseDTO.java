@@ -15,12 +15,13 @@ import java.util.List;
 public class AmapResponseDTO {
     
     /**
-     * 返回状态码 1表示成功�?表示失败
+     * 返回状态码 1表示成功，0表示失败
      */
     private String status;
     
     /**
-     * 返回的状态信�?     */
+     * 返回的状态信息
+     */
     private String info;
     
     /**
@@ -34,16 +35,17 @@ public class AmapResponseDTO {
     private List<Geocode> geocodes;
     
     /**
-     * 逆地理编码结�?     */
+     * 逆地理编码结果
+     */
     private Regeocode regeocode;
     
     /**
-     * POI搜索结果
+     * POI存储结果
      */
     private List<Poi> pois;
     
     /**
-     * 总数
+     * 条目数
      */
     private String count;
     
@@ -103,7 +105,8 @@ public class AmapResponseDTO {
     }
     
     /**
-     * 逆地理编码信�?     */
+     * 逆地理编码信息
+     */
     @Data
     public static class Regeocode {
         private String formatted_address;
@@ -119,7 +122,7 @@ public class AmapResponseDTO {
     }
     
     /**
-     * 地址组件
+     * 街道门牌号
      */
     @Data
     public static class AddressComponent {
@@ -135,7 +138,8 @@ public class AmapResponseDTO {
     }
     
     /**
-     * 街道门牌�?     */
+     * 门牌号
+     */
     @Data
     public static class StreetNumber {
         private String street;
@@ -192,7 +196,7 @@ public class AmapResponseDTO {
     }
     
     /**
-     * 商业扩展信息
+     * 附加信息
      */
     @Data
     public static class BizExt {

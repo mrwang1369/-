@@ -12,7 +12,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储周边服务信息，支持地图集�? * </p>
+ * 存储周边服务信息，支持地图集成
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -28,7 +29,8 @@ public class ServicePoint implements Serializable {
     private Integer pointId;
 
     /**
-     * 服务点名�?     */
+     * 服务点名称
+     */
     private String name;
 
     /**
@@ -42,12 +44,13 @@ public class ServicePoint implements Serializable {
     private String address;
 
     /**
-     * 联系电话
+     * 电话
      */
     private String phone;
 
     /**
-     * 纬度（用于LBS�?     */
+     * 纬度（用于LBS定位）
+     */
     private BigDecimal latitude;
 
     /**
@@ -66,14 +69,14 @@ public class ServicePoint implements Serializable {
     private String businessHours;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;
 
     private LocalDateTime createTime;
     
-    // 手动添加getter/setter方法以确保编译通过
+    // 需要添加getter/setter方法，可以通过IDE自动生成
     public Integer getPointId() {
         return pointId;
     }

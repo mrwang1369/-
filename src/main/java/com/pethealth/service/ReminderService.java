@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推�?服务�? * </p>
+ * 存储提醒事项，支持微信推送 服务类
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
- * 日期工具�?- 提供日期格式化、计算间隔、解析等常用方法
+ * 鏃ユ湡宸ュ叿绫?- 鎻愪緵鏃ユ湡鏍煎紡鍖栥€佽�绠楅棿闅斻€佽В鏋愮瓑甯哥敤鏂规硶
  */
 public class DateUtils {
 
@@ -16,14 +16,14 @@ public class DateUtils {
     private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     /**
-     * 格式化日期为字符�?(yyyy-MM-dd)
+     * 鏍煎紡鍖栨棩鏈熶负瀛楃�涓?(yyyy-MM-dd)
      */
     public static String formatDate(LocalDate date) {
         return formatDate(date, DEFAULT_DATE_PATTERN);
     }
 
     /**
-     * 格式化日期为字符�?(自定义格�?
+     * 鏍煎紡鍖栨棩鏈熶负瀛楃�涓?(鑷�畾涔夋牸寮?
      */
     public static String formatDate(LocalDate date, String pattern) {
         if (date == null) return null;
@@ -31,14 +31,14 @@ public class DateUtils {
     }
 
     /**
-     * 格式化日期时间为字符�?(yyyy-MM-dd HH:mm:ss)
+     * 鏍煎紡鍖栨棩鏈熸椂闂翠负瀛楃�涓?(yyyy-MM-dd HH:mm:ss)
      */
     public static String formatDateTime(LocalDateTime dateTime) {
         return formatDateTime(dateTime, DEFAULT_DATETIME_PATTERN);
     }
 
     /**
-     * 格式化日期时间为字符�?(自定义格�?
+     * 鏍煎紡鍖栨棩鏈熸椂闂翠负瀛楃�涓?(鑷�畾涔夋牸寮?
      */
     public static String formatDateTime(LocalDateTime dateTime, String pattern) {
         if (dateTime == null) return null;
@@ -46,14 +46,14 @@ public class DateUtils {
     }
 
     /**
-     * 解析字符串为日期 (yyyy-MM-dd)
+     * 瑙ｆ瀽瀛楃�涓蹭负鏃ユ湡 (yyyy-MM-dd)
      */
     public static LocalDate parseDate(String dateStr) {
         return parseDate(dateStr, DEFAULT_DATE_PATTERN);
     }
 
     /**
-     * 解析字符串为日期 (自定义格�?
+     * 瑙ｆ瀽瀛楃�涓蹭负鏃ユ湡 (鑷�畾涔夋牸寮?
      */
     public static LocalDate parseDate(String dateStr, String pattern) {
         if (StringUtils.isBlank(dateStr)) return null;
@@ -61,14 +61,14 @@ public class DateUtils {
     }
 
     /**
-     * 解析字符串为日期时间 (yyyy-MM-dd HH:mm:ss)
+     * 瑙ｆ瀽瀛楃�涓蹭负鏃ユ湡鏃堕棿 (yyyy-MM-dd HH:mm:ss)
      */
     public static LocalDateTime parseDateTime(String dateTimeStr) {
         return parseDateTime(dateTimeStr, DEFAULT_DATETIME_PATTERN);
     }
 
     /**
-     * 解析字符串为日期时间 (自定义格�?
+     * 瑙ｆ瀽瀛楃�涓蹭负鏃ユ湡鏃堕棿 (鑷�畾涔夋牸寮?
      */
     public static LocalDateTime parseDateTime(String dateTimeStr, String pattern) {
         if (StringUtils.isBlank(dateTimeStr)) return null;
@@ -76,25 +76,25 @@ public class DateUtils {
     }
 
     /**
-     * 计算两个日期之间的天数差
+     * 璁＄畻涓や釜鏃ユ湡涔嬮棿鐨勫ぉ鏁板樊
      */
     public static long daysBetween(LocalDate start, LocalDate end) {
         return ChronoUnit.DAYS.between(start, end);
     }
 
     /**
-     * 计算两个日期时间之间的分钟差
+     * 璁＄畻涓や釜鏃ユ湡鏃堕棿涔嬮棿鐨勫垎閽熷樊
      */
     public static long minutesBetween(LocalDateTime start, LocalDateTime end) {
         return ChronoUnit.MINUTES.between(start, end);
     }
 
     /**
-     * 计算下次提醒日期 (用于驱虫、疫苗等周期提醒)
+     * 璁＄畻涓嬫�鎻愰啋鏃ユ湡 (鐢ㄤ簬椹辫櫕銆佺柅鑻楃瓑鍛ㄦ湡鎻愰啋)
      *
-     * @param lastDate 上次执行日期
-     * @param cycleDays 周期天数
-     * @return 下次提醒日期
+     * @param lastDate 涓婃�鎵ц�鏃ユ湡
+     * @param cycleDays 鍛ㄦ湡澶╂暟
+     * @return 涓嬫�鎻愰啋鏃ユ湡
      */
     public static LocalDate calculateNextReminderDate(LocalDate lastDate, int cycleDays) {
         if (lastDate == null) {
@@ -104,56 +104,56 @@ public class DateUtils {
     }
 
     /**
-     * 计算宠物年龄 (根据出生日期)
+     * 璁＄畻瀹犵墿骞撮緞 (鏍规嵁鍑虹敓鏃ユ湡)
      *
-     * @param birthDate 出生日期
-     * @return 年龄描述 (�?"2�?个月")
+     * @param birthDate 鍑虹敓鏃ユ湡
+     * @return 骞撮緞鎻忚堪 (濡?"2宀?涓�湀")
      */
     public static String calculatePetAge(LocalDate birthDate) {
-        if (birthDate == null) return "未知";
+        if (birthDate == null) return "鏈�煡";
 
         Period period = Period.between(birthDate, LocalDate.now());
         int years = period.getYears();
         int months = period.getMonths();
 
         if (years == 0 && months == 0) {
-            return "小于1个月";
+            return "灏忎簬1涓�湀";
         }
 
         StringBuilder age = new StringBuilder();
         if (years > 0) {
-            age.append(years).append("�?);
+            age.append(years).append("宀?);
         }
         if (months > 0) {
             if (years > 0) age.append("");
-            age.append(months).append("个月");
+            age.append(months).append("涓�湀");
         }
         return age.toString();
     }
 
     /**
-     * 将Date转换为LocalDateTime
+     * 灏咲ate杞�崲涓篖ocalDateTime
      */
     public static LocalDateTime toLocalDateTime(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
-     * 将Date转换为LocalDate
+     * 灏咲ate杞�崲涓篖ocalDate
      */
     public static LocalDate toLocalDate(Date date) {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     /**
-     * 获取当天的开始时�?(00:00:00)
+     * 鑾峰彇褰撳ぉ鐨勫紑濮嬫椂闂?(00:00:00)
      */
     public static LocalDateTime startOfDay(LocalDate date) {
         return date.atStartOfDay();
     }
 
     /**
-     * 获取当天的结束时�?(23:59:59.999)
+     * 鑾峰彇褰撳ぉ鐨勭粨鏉熸椂闂?(23:59:59.999)
      */
     public static LocalDateTime endOfDay(LocalDate date) {
         return date.atTime(LocalTime.MAX);

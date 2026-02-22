@@ -29,7 +29,7 @@ public class VaccinationRecord implements Serializable {
     private Integer vaccinationId;
 
     /**
-     * 关联宠物ID
+     * 宠物ID
      */
     private Integer petId;
 
@@ -49,12 +49,12 @@ public class VaccinationRecord implements Serializable {
     private LocalDate nextDueDate;
 
     /**
-     * 兽医信息
+     * 医生信息
      */
     private String vetInfo;
 
     /**
-     * 接种证明照片URL
+     * 接种证明图片URL
      */
     private String proofImageUrl;
 
@@ -64,7 +64,7 @@ public class VaccinationRecord implements Serializable {
     private String notes;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;

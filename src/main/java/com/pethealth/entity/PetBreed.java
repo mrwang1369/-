@@ -10,7 +10,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 宠物品种字典�? * </p>
+ * 宠物品种字典管理
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -26,7 +27,7 @@ public class PetBreed implements Serializable {
     private Integer breedId;
 
     /**
-     * 宠物类型
+     * 宠物种类
      */
     private String species;
 

@@ -11,7 +11,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * 记录症状输入和AI分析，用于就医引�? * </p>
+ * 记录症状输入和AI分析，用于就医引导
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -27,35 +28,37 @@ public class SymptomRecord implements Serializable {
     private Integer symptomId;
 
     /**
-     * 关联宠物ID
+     * 宠物ID
      */
     private Integer petId;
 
     /**
-     * 关联用户ID
+     * 用户ID
      */
     private Integer userId;
 
     /**
-     * 症状关键词输�?     */
+     * 症状关键词输入
+     */
     private String symptomsText;
 
     /**
-     * AI分析结果（可能病因）
+     * AI分析结果，如果是多级
      */
     private String analysisResult;
 
     /**
-     * 紧急程�?     */
+     * 紧急程度
+     */
     private String emergencyLevel;
 
     /**
-     * 处理建议
+     * 建议
      */
     private String suggestions;
 
     /**
-     * 逻辑删除标志(0-未删�?1-已删�?
+     * 逻辑删除标志(0-未删除 1-已删除)
      */
     @TableLogic
     private Byte deleted;

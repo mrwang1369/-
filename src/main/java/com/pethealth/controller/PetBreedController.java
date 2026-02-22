@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 宠物品种字典�?前端控制�? * </p>
+ * 宠物品种字典管理 前端控制器
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

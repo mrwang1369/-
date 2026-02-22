@@ -4,7 +4,6 @@ import com.pethealth.common.Result;
 import com.pethealth.dto.LoginRequestDTO;
 import com.pethealth.dto.RegisterRequestDTO;
 import com.pethealth.dto.AuthResponseDTO;
-import com.pethealth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,10 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 /**
- * 用户认证控制�? */
+ * 用户认证控制器
+ */
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "用户认证", description = "用户登录、注册、登出等相关接口")
+@Tag(name = "用户认证", description = "用户登录、注册、获取用户信息、登出、刷新Token、微信登录")
 @Validated
 public class AuthController {
     
@@ -34,7 +34,7 @@ public class AuthController {
      * 用户登录
      */
     @PostMapping("/login")
-    @Operation(summary = "用户登录", description = "支持手机号登录和微信登录两种方式")
+    @Operation(summary = "用户登录", description = "通过手机号/密码登录")
     public Result<AuthResponseDTO> login(
             @Parameter(description = "登录请求参数", required = true)
             @Valid @RequestBody LoginRequestDTO loginRequest) {
@@ -50,7 +50,7 @@ public class AuthController {
      * 用户注册
      */
     @PostMapping("/register")
-    @Operation(summary = "用户注册", description = "手机号注册新用户")
+    @Operation(summary = "用户注册", description = "通过手机号注册新用户")
     public Result<AuthResponseDTO> register(
             @Parameter(description = "注册请求参数", required = true)
             @Valid @RequestBody RegisterRequestDTO registerRequest) {
@@ -66,13 +66,14 @@ public class AuthController {
      * 获取当前用户信息
      */
     @GetMapping("/profile")
-    @Operation(summary = "获取用户信息", description = "获取当前登录用户的详细信�?)
+    @Operation(summary = "获取用户信息", description = "获取当前登录用户的详细信息")
     public Result<AuthResponseDTO.UserInfo> getCurrentUserInfo(HttpServletRequest request) {
         
-        // 从请求属性中获取用户ID（由AuthInterceptor设置�?        Long userId = (Long) request.getAttribute("currentUserId");
+        // 从请求属性中获取用户ID（由AuthInterceptor设置）
+        Long userId = (Long) request.getAttribute("currentUserId");
         
         if (userId == null) {
-            return Result.unauthorized("用户未登�?);
+            return Result.unauthorized("用户未登录");
         }
         
         log.info("获取用户信息: userId={}", userId);
@@ -80,7 +81,8 @@ public class AuthController {
         // 获取用户完整信息
         var user = userService.getUserInfo(userId);
         
-        // 构造用户信息响�?        AuthResponseDTO.UserInfo userInfo = AuthResponseDTO.UserInfo.builder()
+        // 构造用户信息响应
+        AuthResponseDTO.UserInfo userInfo = AuthResponseDTO.UserInfo.builder()
                 .userId(user.getUserId().longValue())
                 .nickname(user.getNickname())
                 .phone(user.getPhone())
@@ -95,28 +97,29 @@ public class AuthController {
      * 用户登出
      */
     @PostMapping("/logout")
-    @Operation(summary = "用户登出", description = "退出登�?)
+    @Operation(summary = "用户登出", description = "退出登录")
     public Result<Void> logout(HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
         log.info("用户登出: userId={}", userId);
         
-        // JWT是无状态的，服务端不需要特殊处�?        // 客户端只需要删除本地存储的token即可
+        // JWT是无状态的，服务端不需要特殊处理
+        // 客户端只需要删除本地存储的token即可
         
         return Result.success("登出成功", null);
     }
 
     /**
-     * 刷新Token（可选）
+     * 刷新Token，非强制级
      */
     @PostMapping("/refresh")
-    @Operation(summary = "刷新Token", description = "刷新用户访问令牌")
+    @Operation(summary = "刷新Token", description = "刷新用户认证令牌")
     public Result<AuthResponseDTO> refreshToken(HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
         
         if (userId == null) {
-            return Result.unauthorized("用户未登�?);
+            return Result.unauthorized("用户未登录");
         }
         
         log.info("刷新Token: userId={}", userId);
@@ -126,7 +129,8 @@ public class AuthController {
         String newToken = ((com.pethealth.utils.JwtTokenUtil) 
                           request.getAttribute("jwtTokenUtil")).generateToken(userId);
         
-        // 构造响�?        AuthResponseDTO.UserInfo userInfo = AuthResponseDTO.UserInfo.builder()
+        // 构造响应
+        AuthResponseDTO.UserInfo userInfo = AuthResponseDTO.UserInfo.builder()
                 .userId(user.getUserId().longValue())
                 .nickname(user.getNickname())
                 .phone(user.getPhone())
@@ -145,7 +149,7 @@ public class AuthController {
     }
 
     /**
-     * 微信登录（专门接口）
+     * 微信登录，强制级
      */
     @PostMapping("/wxlogin")
     @Operation(summary = "微信登录", description = "通过微信code登录")
@@ -153,7 +157,8 @@ public class AuthController {
             @Parameter(description = "微信登录参数", required = true)
             @Valid @RequestBody LoginRequestDTO loginRequest) {
         
-        // 确保是微信登�?        loginRequest.setLoginType("wx");
+        // 强制设置登录类型为微信
+        loginRequest.setLoginType("wx");
         
         log.info("微信登录请求: code={}", loginRequest.getWxCode());
         
