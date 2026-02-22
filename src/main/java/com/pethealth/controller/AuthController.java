@@ -72,8 +72,10 @@ public class AuthController {
         
         // 从请求属性中获取用户ID（由AuthInterceptor设置）
         Long userId = (Long) request.getAttribute("currentUserId");
+        log.debug("从request获取到的userId: {}", userId);
         
         if (userId == null) {
+            log.warn("userId为null，返回未授权");
             return Result.unauthorized("用户未登录");
         }
         

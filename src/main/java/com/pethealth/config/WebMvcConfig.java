@@ -19,14 +19,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加认证拦截器
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/api/**") // 认证API路径
+                .addPathPatterns("/**") // 拦截所有路径
                 .excludePathPatterns(
-                        "/api/auth/**",         // 认证接口
-                        "/api/public/**",       // 公共接口
-                        "/swagger-ui/**",       // Swagger UI
-                        "/v3/api-docs/**",      // OpenAPI文档
-                        "/webjars/**",          // WebJars资源
-                        "/doc.html"             // API文档页面
+                    "/auth/login",
+                    "/auth/register",
+                    "/auth/wxlogin",
+                    "/health",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/webjars/**",
+                    "/doc.html"
                 );
     }
 }
