@@ -1,5 +1,6 @@
 package com.pethealth.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.pethealth.common.Result;
 import com.pethealth.dto.AmapResponseDTO;
 import com.pethealth.entity.ServicePoint;
@@ -61,8 +62,8 @@ public class ServicePointController {
             queryWrapper.eq("type", type);
         }
         
-        // 查询所有符合条件的服务点
-        List<ServicePoint> allServicePoints = this.list(queryWrapper);
+        // 通过Service调用查询所有符合条件的服务点
+        List<ServicePoint> allServicePoints = servicePointService.list(queryWrapper);
         
         // 根据距离过滤
         List<ServicePoint> nearbyServicePoints = new ArrayList<>();

@@ -11,6 +11,7 @@ import com.pethealth.utils.JwtTokenUtil;
 import com.pethealth.utils.PasswordUtil;
 import com.pethealth.handler.BusinessException;
 import com.pethealth.handler.ResourceNotFoundException;
+import com.pethealth.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 瀛樺偍鐢ㄦ埛鍩烘湰淇℃伅锛屾敮鎸佸井淇″拰鎵嬫満鍙风櫥褰?鏈嶅姟瀹炵幇绫? * </p>
+ * 存储用户基本信息，支持微信和手机号登录 服务实现类
+ * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -43,22 +45,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public AuthResponseDTO login(LoginRequestDTO loginRequest) {
         User user = null;
 
-        // 鏍规嵁鐧诲綍鏂瑰紡澶勭悊涓嶅悓閫昏緫
+        // 根据登录方式处理不同逻辑
         if ("phone".equals(loginRequest.getLoginType())) {
-            // 鎵嬫満鍙风櫥褰?            user = handlePhoneLogin(loginRequest);
+            // 手机号登录
+            user = handlePhoneLogin(loginRequest);
         } else if ("wx".equals(loginRequest.getLoginType())) {
-            // 寰�俊鐧诲綍
+            // 微信登录
             user = handleWechatLogin(loginRequest);
         } else {
-            throw new BusinessException("涓嶆敮鎸佺殑鐧诲綍鏂瑰紡");
+            throw new BusinessException("不支持的登录方式");
         }
 
-        // 鐢熸垚JWT Token
+        // 生成JWT Token
         String token = jwtTokenUtil.generateToken(user.getUserId().longValue());
 
-        // 鏇存柊鏈€鍚庣櫥褰曟椂闂?        updateLastLoginTime(user.getUserId().longValue());
+        // 更新最后登录时间
+        updateLastLoginTime(user.getUserId().longValue());
 
-        // 鏋勯€犲搷搴旀暟鎹?        return buildAuthResponse(user, token);
+        // 构造响应数据
+        return buildAuthResponse(user, token);
     }
 
     @Override
@@ -74,28 +79,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException("手机号已被注册");
         }
 
-        // 鍒涘缓鐢ㄦ埛
+        // 创建用户
         User user = new User();
         user.setPhone(registerRequest.getPhone());
         user.setPassword(PasswordUtil.encode(registerRequest.getPassword()));
         user.setNickname(registerRequest.getNickname() != null ? 
-                         registerRequest.getNickname() : "鐢ㄦ埛" + registerRequest.getPhone().substring(7));
+                         registerRequest.getNickname() : "用户" + registerRequest.getPhone().substring(7));
         user.setAvatarUrl(registerRequest.getAvatarUrl());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         user.setDeleted((byte) 0);
 
-        // 淇濆瓨鐢ㄦ埛
+        // 保存用户
         if (!save(user)) {
             throw new BusinessException("用户注册失败");
         }
 
         log.info("用户注册成功: userId=" + user.getUserId() + ", phone=" + user.getPhone());
 
-        // 鐢熸垚JWT Token
+        // 生成JWT Token
         String token = jwtTokenUtil.generateToken(user.getUserId().longValue());
 
-        // 鏋勯€犲搷搴旀暟鎹?        return buildAuthResponse(user, token);
+        // 构造响应数据
+        return buildAuthResponse(user, token);
     }
 
     @Override
@@ -164,17 +170,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // TODO: 实际项目中需要调用微信接口验证code并获取用户信息
-        // 杩欓噷绠€鍖栧�鐞嗭紝鍋囪�code灏辨槸openid
+        // 这里简化处理，假设code就是openid
         String openid = loginRequest.getWxCode();
         
         User user = findByOpenid(openid);
         
         if (user == null) {
-            // 鏂扮敤鎴凤紝鑷�姩娉ㄥ唽
+            // 新用户，自动注册
             user = new User();
             user.setOpenid(openid);
             user.setNickname(loginRequest.getWxUserInfo() != null ? 
-                           loginRequest.getWxUserInfo().getNickName() : "寰�俊鐢ㄦ埛");
+                           loginRequest.getWxUserInfo().getNickName() : "微信用户");
             user.setAvatarUrl(loginRequest.getWxUserInfo() != null ? 
                             loginRequest.getWxUserInfo().getAvatarUrl() : "");
             user.setCreateTime(LocalDateTime.now());

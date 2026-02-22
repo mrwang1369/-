@@ -4,6 +4,7 @@ import com.pethealth.common.Result;
 import com.pethealth.dto.LoginRequestDTO;
 import com.pethealth.dto.RegisterRequestDTO;
 import com.pethealth.dto.AuthResponseDTO;
+import com.pethealth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
