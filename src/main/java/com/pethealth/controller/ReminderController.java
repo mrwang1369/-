@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推送 前端控制器
- * </p>
+ * 存储提醒事项，支持微信推�?前端控制�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

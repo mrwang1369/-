@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 记录病历和用药信息，可设置用药提醒 Mapper 接口
+ * 记录病历和用药信息，可设置用药提�?Mapper 接口
  * </p>
  *
  * @author Mr wang

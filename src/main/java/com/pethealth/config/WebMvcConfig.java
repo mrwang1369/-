@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Web MVC配置类
+ * Web MVC配置�?
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 添加认证拦截器
+        // 添加认证拦截�?
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/api/**") // 拦截所有API路径
                 .excludePathPatterns(

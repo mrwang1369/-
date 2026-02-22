@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 记录体检信息，支持图片上传 服务实现类
- * </p>
+ * 记录体检信息，支持图片上�?服务实现�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

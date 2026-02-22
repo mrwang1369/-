@@ -2,7 +2,9 @@ package com.pethealth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pethealth.handler.BusinessException;
+import com.pethealth.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -10,12 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis服务类 - 封装Redis常用操作
- * 支持对象序列化，简化缓存使用
+ * Redis服务�?- 封装Redis常用操作
+ * 支持对象序列化，简化缓存使�?
  */
-@Slf4j
 @Service
 public class RedisService {
+    
+    private static final Logger log = LogUtil.getLogger(RedisService.class);
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -26,16 +29,16 @@ public class RedisService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // ==================== 字符串操作 ====================
+    // ==================== 字符串操�?====================
 
     /**
-     * 设置字符串值
+     * 设置字符串�?
      */
     public void set(String key, String value) {
         try {
             stringRedisTemplate.opsForValue().set(key, value);
         } catch (Exception e) {
-            log.error("Redis设置字符串失败 key: {}", key, e);
+            log.error("Redis设置字符串失�?key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -47,19 +50,19 @@ public class RedisService {
         try {
             stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
         } catch (Exception e) {
-            log.error("Redis设置字符串失败 key: {}", key, e);
+            log.error("Redis设置字符串失�?key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
 
     /**
-     * 获取字符串值
+     * 获取字符串�?
      */
     public String get(String key) {
         try {
             return stringRedisTemplate.opsForValue().get(key);
         } catch (Exception e) {
-            log.error("Redis获取字符串失败 key: {}", key, e);
+            log.error("Redis获取字符串失�?key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -71,7 +74,7 @@ public class RedisService {
      */
     public <T> void setObject(String key, T obj) {
         try {
-            // 直接使用 RedisTemplate 存储对象，无需手动序列化
+            // 直接使用 RedisTemplate 存储对象，无需手动序列�?
             redisTemplate.opsForValue().set(key, obj);
         } catch (Exception e) {
             log.error("Redis设置对象失败 key: {}", key, e);
@@ -80,11 +83,11 @@ public class RedisService {
     }
 
     /**
-     * 设置对象值并指定过期时间（使用 RedisTemplate 自动序列化）
+     * 设置对象值并指定过期时间（使�?RedisTemplate 自动序列化）
      */
     public <T> void setObject(String key, T obj, long timeout, TimeUnit timeUnit) {
         try {
-            // 直接使用 RedisTemplate 存储对象，无需手动序列化
+            // 直接使用 RedisTemplate 存储对象，无需手动序列�?
             redisTemplate.opsForValue().set(key, obj, timeout, timeUnit);
         } catch (Exception e) {
             log.error("Redis设置对象失败 key: {}", key, e);
@@ -93,7 +96,7 @@ public class RedisService {
     }
 
     /**
-     * 获取对象值（使用 RedisTemplate 自动反序列化）
+     * 获取对象值（使用 RedisTemplate 自动反序列化�?
      */
     public <T> T getObject(String key, Class<T> clazz) {
         try {
@@ -102,7 +105,7 @@ public class RedisService {
             if (obj == null) {
                 return null;
             }
-            // 强制转换为目标类型
+            // 强制转换为目标类�?
             return clazz.cast(obj);
         } catch (Exception e) {
             log.error("Redis获取对象失败 key: {}", key, e);
@@ -138,7 +141,7 @@ public class RedisService {
         }
     }
 
-    // ==================== 存在性检查 ====================
+    // ==================== 存在性检�?====================
 
     /**
      * 检查key是否存在
@@ -148,7 +151,7 @@ public class RedisService {
             Boolean result = redisTemplate.hasKey(key);
             return result != null && result;
         } catch (Exception e) {
-            log.error("Redis检查key存在性失败 key: {}", key, e);
+            log.error("Redis检查key存在性失�?key: {}", key, e);
             throw new BusinessException("Redis操作失败");
         }
     }
@@ -212,7 +215,7 @@ public class RedisService {
     // ==================== 哈希操作 ====================
 
     /**
-     * 设置哈希字段值
+     * 设置哈希字段�?
      */
     public void hset(String key, String field, Object value) {
         try {
@@ -224,7 +227,7 @@ public class RedisService {
     }
 
     /**
-     * 获取哈希字段值
+     * 获取哈希字段�?
      */
     public Object hget(String key, String field) {
         try {

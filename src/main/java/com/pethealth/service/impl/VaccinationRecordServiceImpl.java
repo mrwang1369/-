@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 记录疫苗接种信息，用于健康计划和提醒 服务实现类
- * </p>
+ * 记录疫苗接种信息，用于健康计划和提醒 服务实现�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

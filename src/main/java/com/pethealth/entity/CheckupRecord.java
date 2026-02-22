@@ -12,8 +12,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 记录体检信息，支持图片上传
- * </p>
+ * 记录体检信息，支持图片上�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -54,7 +53,7 @@ public class CheckupRecord implements Serializable {
     private String reportImageUrl;
 
     /**
-     * 逻辑删除标志(0-未删除,1-已删除)
+     * 逻辑删除标志(0-未删�?1-已删�?
      */
     @TableLogic
     private Byte deleted;

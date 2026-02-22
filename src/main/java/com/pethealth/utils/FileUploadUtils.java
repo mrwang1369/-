@@ -12,28 +12,28 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 文件上传工具类
+ * 文件上传工具�?
  */
 public class FileUploadUtils {
 
-    // 允许的图片类型
+    // 允许的图片类�?
     private static final List<String> ALLOWED_IMAGE_TYPES = Arrays.asList(
             "image/jpeg", "image/png", "image/gif"
     );
 
-    // 允许的文档类型
+    // 允许的文档类�?
     private static final List<String> ALLOWED_DOC_TYPES = Arrays.asList(
             "application/pdf", "application/msword",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
 
-    // 最大文件大小 (5MB)
+    // 最大文件大�?(5MB)
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     /**
      * 上传宠物健康报告文件
      *
-     * @param file 上传的文件
+     * @param file 上传的文�?
      * @param baseDir 基础存储目录
      * @param petId 宠物ID
      * @return 文件存储路径
@@ -45,7 +45,7 @@ public class FileUploadUtils {
     /**
      * 上传宠物照片
      *
-     * @param file 上传的文件
+     * @param file 上传的文�?
      * @param baseDir 基础存储目录
      * @param petId 宠物ID
      * @return 文件存储路径
@@ -57,11 +57,11 @@ public class FileUploadUtils {
     /**
      * 通用文件上传方法
      *
-     * @param file 上传的文件
+     * @param file 上传的文�?
      * @param baseDir 基础存储目录
-     * @param subDir 子目录 (如 reports, photos)
+     * @param subDir 子目�?(�?reports, photos)
      * @param petId 宠物ID
-     * @param allowedTypes 允许的文件类型
+     * @param allowedTypes 允许的文件类�?
      * @return 文件存储路径
      */
     private static String uploadFile(MultipartFile file, String baseDir, String subDir,
@@ -82,7 +82,7 @@ public class FileUploadUtils {
         }
 
         try {
-            // 生成唯一文件名
+            // 生成唯一文件�?
             String originalFilename = file.getOriginalFilename();
             String fileExtension = originalFilename != null ?
                     originalFilename.substring(originalFilename.lastIndexOf(".")) : "";
@@ -105,7 +105,7 @@ public class FileUploadUtils {
     }
 
     /**
-     * 获取文件扩展名
+     * 获取文件扩展�?
      */
     public static String getFileExtension(String filename) {
         if (filename == null) return "";

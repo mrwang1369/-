@@ -64,7 +64,7 @@ public class VaccinationRecord implements Serializable {
     private String notes;
 
     /**
-     * 逻辑删除标志(0-未删除,1-已删除)
+     * 逻辑删除标志(0-未删�?1-已删�?
      */
     @TableLogic
     private Byte deleted;

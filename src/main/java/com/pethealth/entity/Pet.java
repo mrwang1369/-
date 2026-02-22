@@ -12,8 +12,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储宠物基本信息，支持多只宠物管理
- * </p>
+ * 存储宠物基本信息，支持多只宠物管�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -43,8 +42,7 @@ public class Pet implements Serializable {
     private String species;
 
     /**
-     * 品种（可搜索选择）
-     */
+     * 品种（可搜索选择�?     */
     private String breed;
 
     /**
@@ -58,18 +56,15 @@ public class Pet implements Serializable {
     private String gender;
 
     /**
-     * 体重（kg）
-     */
+     * 体重（kg�?     */
     private BigDecimal weight;
 
     /**
-     * 过敏史
-     */
+     * 过敏�?     */
     private String allergyHistory;
 
     /**
-     * 绝育状态
-     */
+     * 绝育状�?     */
     private Boolean neuteredStatus;
 
     /**
@@ -78,7 +73,7 @@ public class Pet implements Serializable {
     private String avatarUrl;
 
     /**
-     * 逻辑删除标志(0-未删除,1-已删除)
+     * 逻辑删除标志(0-未删�?1-已删�?
      */
     @TableLogic
     private Byte deleted;

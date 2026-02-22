@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 记录驱虫信息，支持周期提醒 服务实现类
- * </p>
+ * 记录驱虫信息，支持周期提�?服务实现�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

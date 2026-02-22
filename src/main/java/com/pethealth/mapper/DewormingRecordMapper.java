@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 记录驱虫信息，支持周期提醒 Mapper 接口
+ * 记录驱虫信息，支持周期提�?Mapper 接口
  * </p>
  *
  * @author Mr wang

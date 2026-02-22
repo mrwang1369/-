@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * MyBatis-Plus 自动填充处理器
+ * MyBatis-Plus 自动填充处理�?
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
@@ -15,7 +15,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         // 创建时间自动填充
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
-        // 逻辑删除标志自动填充（默认为0）
+        // 逻辑删除标志自动填充（默认为0�?
         this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
     }
 

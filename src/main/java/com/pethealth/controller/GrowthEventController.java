@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 聚合多源数据生成成长时光轴 前端控制器
- * </p>
+ * 聚合多源数据生成成长时光�?前端控制�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

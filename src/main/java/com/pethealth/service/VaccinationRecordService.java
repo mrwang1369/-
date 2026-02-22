@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 记录疫苗接种信息，用于健康计划和提醒 服务类
- * </p>
+ * 记录疫苗接种信息，用于健康计划和提醒 服务�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

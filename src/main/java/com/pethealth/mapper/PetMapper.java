@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 存储宠物基本信息，支持多只宠物管理 Mapper 接口
+ * 存储宠物基本信息，支持多只宠物管�?Mapper 接口
  * </p>
  *
  * @author Mr wang

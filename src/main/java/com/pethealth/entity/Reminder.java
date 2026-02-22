@@ -10,8 +10,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储提醒事项，支持微信推送
- * </p>
+ * 存储提醒事项，支持微信推�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -51,8 +50,7 @@ public class Reminder implements Serializable {
     private LocalDateTime dueDate;
 
     /**
-     * 状态
-     */
+     * 状�?     */
     private String status;
 
     /**
@@ -66,7 +64,7 @@ public class Reminder implements Serializable {
     private String notes;
 
     /**
-     * 逻辑删除标志(0-未删除,1-已删除)
+     * 逻辑删除标志(0-未删�?1-已删�?
      */
     @TableLogic
     private Byte deleted;

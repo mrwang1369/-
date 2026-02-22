@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 宠物品种字典表 服务实现类
- * </p>
+ * 宠物品种字典�?服务实现�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

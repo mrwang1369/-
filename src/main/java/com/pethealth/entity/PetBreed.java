@@ -10,8 +10,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 宠物品种字典表
- * </p>
+ * 宠物品种字典�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11

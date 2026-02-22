@@ -3,18 +3,18 @@ package com.pethealth.common;
 import lombok.Data;
 
 /**
- * 分页请求封装类
+ * 分页请求封装�?
  */
 @Data
 public class PageRequest {
 
     /**
-     * 当前页码 (默认第1页)
+     * 当前页码 (默认�?�?
      */
     private int pageNum = 1;
 
     /**
-     * 每页大小 (默认10条)
+     * 每页大小 (默认10�?
      */
     private int pageSize = 10;
 
@@ -28,7 +28,7 @@ public class PageRequest {
      */
     private String sortDirection;
 
-    // 手动添加 getter 方法（如果 Lombok 有问题）
+    // 手动添加 getter 方法（如�?Lombok 有问题）
     public int getPageNum() {
         return pageNum;
     }
@@ -62,12 +62,12 @@ public class PageRequest {
     }
 
     /**
-     * 默认构造方法
+     * 默认构造方�?
      */
     public PageRequest() {}
 
     /**
-     * 带参数的构造方法
+     * 带参数的构造方�?
      */
     public PageRequest(int pageNum, int pageSize) {
         this.pageNum = pageNum;
@@ -75,7 +75,7 @@ public class PageRequest {
     }
 
     /**
-     * 带排序的构造方法
+     * 带排序的构造方�?
      */
     public PageRequest(int pageNum, int pageSize, String sortField, String sortDirection) {
         this.pageNum = pageNum;

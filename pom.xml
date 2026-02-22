@@ -13,7 +13,7 @@
   <packaging>war</packaging>  
   <properties> 
     <java.version>17</java.version>  
-    <mybatis-plus.version>3.5.4.1</mybatis-plus.version> 
+    <mybatis-plus.version>3.5.5</mybatis-plus.version> 
   </properties>  
   <dependencies> 
     <!-- Spring Boot基础依赖 -->  
@@ -26,10 +26,33 @@
       <groupId>org.springframework.boot</groupId>  
       <artifactId>spring-boot-starter-actuator</artifactId> 
     </dependency>  
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    
+    <!-- Jakarta Servlet API -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Jakarta Validation API -->
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <!-- Hibernate Validator (Jakarta Validation 实现) -->
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    
     <!-- MyBatis-Plus -->  
     <dependency> 
       <groupId>com.baomidou</groupId>  
-      <artifactId>mybatis-plus-boot-starter</artifactId>  
+      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>  
       <version>${mybatis-plus.version}</version> 
     </dependency>  
     <!-- MySQL驱动 -->  
@@ -53,6 +76,12 @@
       <groupId>commons-fileupload</groupId>  
       <artifactId>commons-fileupload</artifactId>  
       <version>1.5</version> 
+    </dependency>
+    <!-- Commons IO -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.11.0</version>
     </dependency>  
     <!-- 工具类 -->  
     <dependency> 
@@ -79,6 +108,19 @@
       <artifactId>spring-boot-starter-test</artifactId>  
       <scope>test</scope> 
     </dependency>
+    <!-- Spring Security Test -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- 高德地图API -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>2.0.43</version>
+    </dependency>
+    
     <!-- Key -->
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
@@ -108,7 +150,7 @@
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-generator</artifactId>
-      <version>3.5.4.1</version>
+      <version>3.5.3.1</version>
     </dependency>
 
     <!-- Freemarker 模板引擎 -->
@@ -125,6 +167,7 @@
         <groupId>org.springframework.boot</groupId>  
         <artifactId>spring-boot-maven-plugin</artifactId>  
         <configuration> 
+          <mainClass>com.pethealth.BackendApplication</mainClass>
           <excludes> 
             <exclude> 
               <groupId>org.projectlombok</groupId>  

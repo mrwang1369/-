@@ -5,8 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 所有实体类的基类
- * 包含公共字段：id、createTime、updateTime、deleted（逻辑删除）
+ * 所有实体类的基�?
+ * 包含公共字段：id、createTime、updateTime、deleted（逻辑删除�?
  */
 @Data
 public class BaseEntity {
@@ -30,7 +30,7 @@ public class BaseEntity {
     private LocalDateTime updateTime;
 
     /**
-     * 逻辑删除标志 (0-未删除, 1-已删除)
+     * 逻辑删除标志 (0-未删�? 1-已删�?
      */
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "deleted", fill = FieldFill.INSERT)

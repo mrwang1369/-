@@ -12,8 +12,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 存储周边服务信息，支持地图集成
- * </p>
+ * 存储周边服务信息，支持地图集�? * </p>
  *
  * @author Mr wang
  * @since 2026-02-11
@@ -29,8 +28,7 @@ public class ServicePoint implements Serializable {
     private Integer pointId;
 
     /**
-     * 服务点名称
-     */
+     * 服务点名�?     */
     private String name;
 
     /**
@@ -49,8 +47,7 @@ public class ServicePoint implements Serializable {
     private String phone;
 
     /**
-     * 纬度（用于LBS）
-     */
+     * 纬度（用于LBS�?     */
     private BigDecimal latitude;
 
     /**
@@ -69,10 +66,99 @@ public class ServicePoint implements Serializable {
     private String businessHours;
 
     /**
-     * 逻辑删除标志(0-未删除,1-已删除)
+     * 逻辑删除标志(0-未删�?1-已删�?
      */
     @TableLogic
     private Byte deleted;
 
     private LocalDateTime createTime;
+    
+    // 手动添加getter/setter方法以确保编译通过
+    public Integer getPointId() {
+        return pointId;
+    }
+    
+    public void setPointId(Integer pointId) {
+        this.pointId = pointId;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+    
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+    
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+    
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+    
+    public BigDecimal getRating() {
+        return rating;
+    }
+    
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+    
+    public String getBusinessHours() {
+        return businessHours;
+    }
+    
+    public void setBusinessHours(String businessHours) {
+        this.businessHours = businessHours;
+    }
+    
+    public Byte getDeleted() {
+        return deleted;
+    }
+    
+    public void setDeleted(Byte deleted) {
+        this.deleted = deleted;
+    }
+    
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+    
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 }

@@ -14,29 +14,24 @@ import java.util.List;
 
 public class CodeGenerator {
     public static void main(String[] args) {
-        // 数据库配置
-        String url = "jdbc:mysql://localhost:3306/bishe?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8";
+        // 数据库配�?        String url = "jdbc:mysql://localhost:3306/bishe?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8";
         String username = "root";
         String password = "123456";
 
-        // 获取所有表名
-        List<String> tableNames = getAllTableNames(url, username, password);
+        // 获取所有表�?        List<String> tableNames = getAllTableNames(url, username, password);
 
         // 生成代码
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
-                    builder.author("Mr wang") // 设置作者
-                            .outputDir(System.getProperty("user.dir") + "/src/main/java") // 输出目录
+                    builder.author("Mr wang") // 设置作�?                            .outputDir(System.getProperty("user.dir") + "/src/main/java") // 输出目录
                             .disableOpenDir(); // 不打开输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.pethealth") // 父包名
-                            .moduleName("") // 模块名（可为空）
+                    builder.parent("com.pethealth") // 父包�?                            .moduleName("") // 模块名（可为空）
                             .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + "/src/main/resources/mapper")); // Mapper XML 路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude(tableNames.toArray(new String[0])) // 动态传入所有表名
-                            .entityBuilder()
+                    builder.addInclude(tableNames.toArray(new String[0])) // 动态传入所有表�?                            .entityBuilder()
                             .enableLombok() // 启用 Lombok
                             .logicDeleteColumnName("deleted") // 逻辑删除字段
                             .naming(NamingStrategy.underline_to_camel) // 下划线转驼峰命名
@@ -53,8 +48,7 @@ public class CodeGenerator {
     }
 
     /**
-     * 获取数据库中所有表名
-     */
+     * 获取数据库中所有表�?     */
     private static List<String> getAllTableNames(String url, String username, String password) {
         DataSourceConfig dataSourceConfig = new DataSourceConfig.Builder(url, username, password).build();
         List<String> tableNames = new ArrayList<>();
@@ -65,7 +59,7 @@ public class CodeGenerator {
             }
             tables.close();
         } catch (SQLException e) {
-            throw new RuntimeException("获取数据库表名失败", e);
+            throw new RuntimeException("获取数据库表名失�?, e);
         }
         return tableNames;
     }

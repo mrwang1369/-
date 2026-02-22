@@ -10,6 +10,6 @@ public class TestController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "宠物健康管家后端服务已启动！当前时间：" + System.currentTimeMillis();
+        return "宠物健康管家后端服务已启动！当前时间�? + System.currentTimeMillis();
     }
 }
