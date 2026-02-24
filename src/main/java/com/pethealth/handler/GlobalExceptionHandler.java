@@ -131,6 +131,28 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 处理宠物不存在异常
+     */
+    @ExceptionHandler(PetNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Result<?> handlePetNotFound(PetNotFoundException ex, HttpServletRequest request) {
+        log.warn("宠物不存在 {} - 请求路径: {}", ex.getMessage(), request.getRequestURI());
+        return Result.notFound(ex.getMessage())
+                .path(request.getRequestURI());
+    }
+
+    /**
+     * 处理宠物归属权异常
+     */
+    @ExceptionHandler(PetOwnershipException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Result<?> handlePetOwnership(PetOwnershipException ex, HttpServletRequest request) {
+        log.warn("宠物归属权异常 {} - 请求路径: {}", ex.getMessage(), request.getRequestURI());
+        return Result.error(403, ex.getMessage())
+                .path(request.getRequestURI());
+    }
+
+    /**
      * 处理所有未捕获的异常
      */
     @ExceptionHandler(Exception.class)

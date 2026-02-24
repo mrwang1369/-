@@ -1,91 +1,63 @@
-package com.pethealth.entity;
+package com.pethealth.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import java.io.Serializable;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
- * <p>
- * 存储宠物基本信息，支持多只宠物管理
- * </p>
+ * 宠物信息响应DTO
  *
  * @author Mr wang
- * @since 2026-02-11
+ * @since 2026-02-24
  */
-@Getter
-@Setter
-public class Pet implements Serializable {
+@Data
+@Schema(description = "宠物信息响应")
+public class PetResponseDTO {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId(value = "pet_id", type = IdType.AUTO)
+    @Schema(description = "宠物ID", example = "1")
     private Integer petId;
 
-    /**
-     * 用户ID
-     */
+    @Schema(description = "用户ID", example = "1")
     private Integer userId;
 
-    /**
-     * 宠物名称
-     */
+    @Schema(description = "宠物姓名", example = "小白")
     private String name;
 
-    /**
-     * 宠物种类
-     */
+    @Schema(description = "宠物种类", example = "狗")
     private String species;
 
-    /**
-     * 品种（可搜索选择）
-     */
+    @Schema(description = "宠物品种", example = "金毛寻回犬")
     private String breed;
 
-    /**
-     * 出生日期
-     */
+    @Schema(description = "出生日期", example = "2023-01-01")
     private LocalDate birthDate;
 
-    /**
-     * 性别
-     */
+    @Schema(description = "性别", example = "公")
     private String gender;
 
-    /**
-     * 体重（kg）
-     */
+    @Schema(description = "体重(kg)", example = "25.5")
     private BigDecimal weight;
 
-    /**
-     * 过敏史
-     */
+    @Schema(description = "过敏史", example = "无")
     private String allergyHistory;
 
-    /**
-     * 绝育状态
-     */
+    @Schema(description = "绝育状态", example = "true")
     private Boolean neuteredStatus;
 
-    /**
-     * 宠物头像URL
-     */
+    @Schema(description = "宠物头像URL", example = "https://example.com/avatar.jpg")
     private String avatarUrl;
 
-    /**
-     * 逻辑删除标志(0-未删除 1-已删除)
-     */
-    @TableLogic
-    private Byte deleted;
-
+    @Schema(description = "创建时间", example = "2024-01-01T10:00:00")
     private LocalDateTime createTime;
-    
+
+    @Schema(description = "更新时间", example = "2024-01-01T10:00:00")
     private LocalDateTime updateTime;
+
+    @Schema(description = "宠物年龄(计算得出)", example = "1岁")
+    private String age;
 
     // 显式添加getter/setter方法
     public Integer getPetId() { return petId; }
@@ -121,12 +93,12 @@ public class Pet implements Serializable {
     public String getAvatarUrl() { return avatarUrl; }
     public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
     
-    public Byte getDeleted() { return deleted; }
-    public void setDeleted(Byte deleted) { this.deleted = deleted; }
-    
     public LocalDateTime getCreateTime() { return createTime; }
     public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
     
     public LocalDateTime getUpdateTime() { return updateTime; }
     public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
+    
+    public String getAge() { return age; }
+    public void setAge(String age) { this.age = age; }
 }

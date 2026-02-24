@@ -1,0 +1,32 @@
+# 测试环境配置
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.pethealth: DEBUG
+    org.springframework.web: DEBUG
+    org.mybatis: DEBUG
+
+# JWT配置
+jwt:
+  secret: test-secret-key-for-integration-testing
+  expiration: 3600
+
+# 服务器配置
+server:
+  port: 0  # 随机端口用于测试
