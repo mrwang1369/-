@@ -10,8 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +28,8 @@ import java.util.List;
 @Tag(name = "周边服务", description = "周边服务点管理和地图服务接口")
 @RestController
 @RequestMapping("/service-points")
+@Slf4j
 public class ServicePointController {
-    
-    private static final Logger log = LoggerFactory.getLogger(ServicePointController.class);
     
     @Autowired
     private ServicePointService servicePointService;

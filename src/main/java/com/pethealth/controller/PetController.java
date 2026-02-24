@@ -15,8 +15,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -32,8 +30,6 @@ import org.slf4j.LoggerFactory;
 @Tag(name = "宠物档案管理", description = "宠物档案相关接口")
 public class PetController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PetController.class);
-
     @Autowired
     private PetService petService;
 
@@ -48,7 +44,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("获取宠物列表: userId={}, species={}, breed={}, nameKeyword={}", 
+        log.info("获取宠物列表: userId={}, species={}, breed={}, nameKeyword={}\n", 
                 userId, species, breed, nameKeyword);
 
         PetListQueryDTO queryDTO = new PetListQueryDTO();
@@ -69,7 +65,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("创建宠物档案: userId={}, petName={}", userId, createRequest.getName());
+        log.info("创建宠物档案: userId={}, petName={}", userId, createRequest.getName());
 
         PetResponseDTO result = petService.createPet(userId, createRequest);
         return Result.success("创建成功", result);
@@ -82,7 +78,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("获取宠物详情: userId={}, petId={}", userId, petId);
+        log.info("获取宠物详情: userId={}, petId={}", userId, petId);
 
         PetResponseDTO result = petService.getPetDetail(userId, petId);
         return Result.success("获取成功", result);
@@ -96,7 +92,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("更新宠物信息: userId={}, petId={}, petName={}", userId, petId, updateRequest.getName());
+        log.info("更新宠物信息: userId={}, petId={}, petName={}", userId, petId, updateRequest.getName());
 
         PetResponseDTO result = petService.updatePet(userId, petId, updateRequest);
         return Result.success("更新成功", result);
@@ -109,7 +105,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("删除宠物档案: userId={}, petId={}", userId, petId);
+        log.info("删除宠物档案: userId={}, petId={}", userId, petId);
 
         petService.deletePet(userId, petId);
         return Result.success("删除成功", null);
@@ -123,7 +119,7 @@ public class PetController {
             HttpServletRequest request) {
         
         Long userId = (Long) request.getAttribute("currentUserId");
-        logger.info("上传宠物头像: userId={}, petId={}, avatarUrl={}", userId, petId, avatarUrl);
+        log.info("上传宠物头像: userId={}, petId={}, avatarUrl={}", userId, petId, avatarUrl);
 
         // 验证宠物归属权
         if (!petService.checkPetOwnership(userId, petId)) {

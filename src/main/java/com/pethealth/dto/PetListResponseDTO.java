@@ -39,20 +39,4 @@ public class PetListResponseDTO {
         this.pageSize = pageSize;
         this.totalPages = (int) Math.ceil((double) total / pageSize);
     }
-
-    // 显式添加getter/setter方法
-    public List<PetResponseDTO> getPets() { return pets; }
-    public void setPets(List<PetResponseDTO> pets) { this.pets = pets; }
-    
-    public Long getTotal() { return total; }
-    public void setTotal(Long total) { this.total = total; }
-    
-    public Integer getPageNum() { return pageNum; }
-    public void setPageNum(Integer pageNum) { this.pageNum = pageNum; }
-    
-    public Integer getPageSize() { return pageSize; }
-    public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
-    
-    public Integer getTotalPages() { return totalPages; }
-    public void setTotalPages(Integer totalPages) { this.totalPages = totalPages; }
 }

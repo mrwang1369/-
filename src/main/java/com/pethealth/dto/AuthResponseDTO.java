@@ -1,10 +1,12 @@
 package com.pethealth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 用户认证DTO
  */
+@Data
 @Schema(description = "用户认证数据")
 public class AuthResponseDTO {
 
@@ -20,6 +22,7 @@ public class AuthResponseDTO {
     @Schema(description = "用户信息")
     private UserInfo userInfo;
 
+    @Data
     @Schema(description = "用户角色信息")
     public static class UserInfo {
         @Schema(description = "用户ID", example = "1")
@@ -47,22 +50,6 @@ public class AuthResponseDTO {
             this.avatarUrl = avatarUrl;
             this.openid = openid;
         }
-        
-        // Getter/Setter方法
-        public Long getUserId() { return userId; }
-        public void setUserId(Long userId) { this.userId = userId; }
-        
-        public String getNickname() { return nickname; }
-        public void setNickname(String nickname) { this.nickname = nickname; }
-        
-        public String getPhone() { return phone; }
-        public void setPhone(String phone) { this.phone = phone; }
-        
-        public String getAvatarUrl() { return avatarUrl; }
-        public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
-        
-        public String getOpenid() { return openid; }
-        public void setOpenid(String openid) { this.openid = openid; }
         
         // Builder模式
         public static UserInfoBuilder builder() {
@@ -107,7 +94,7 @@ public class AuthResponseDTO {
         }
     }
     
-    // AuthResponseDTO的默认构造函数getter/setter
+    // AuthResponseDTO的默认构造函数
     public AuthResponseDTO() {}
     
     public AuthResponseDTO(String accessToken, String tokenType, Long expiresIn, UserInfo userInfo) {
@@ -116,18 +103,6 @@ public class AuthResponseDTO {
         this.expiresIn = expiresIn;
         this.userInfo = userInfo;
     }
-    
-    public String getAccessToken() { return accessToken; }
-    public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
-    
-    public String getTokenType() { return tokenType; }
-    public void setTokenType(String tokenType) { this.tokenType = tokenType; }
-    
-    public Long getExpiresIn() { return expiresIn; }
-    public void setExpiresIn(Long expiresIn) { this.expiresIn = expiresIn; }
-    
-    public UserInfo getUserInfo() { return userInfo; }
-    public void setUserInfo(UserInfo userInfo) { this.userInfo = userInfo; }
     
     // Builder模式
     public static AuthResponseDTOBuilder builder() {

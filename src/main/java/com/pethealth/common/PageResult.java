@@ -108,4 +108,15 @@ public class PageResult<T> {
                 pageRequest.getPageSize()
         );
     }
+
+    // 显式添加getter方法
+    public long getTotal() { return total; }
+    public List<T> getList() { return list; }
+    public int getPageNum() { return pageNum; }
+    public int getPageSize() { return pageSize; }
+    public int getTotalPages() { return totalPages; }
+    public boolean isHasPrevious() { return hasPrevious; }
+    public boolean isHasNext() { return hasNext; }
+    public boolean isFirst() { return isFirst; }
+    public boolean isLast() { return isLast; }
 }

@@ -2,9 +2,7 @@ package com.pethealth.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pethealth.handler.BusinessException;
-import com.pethealth.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,10 +14,9 @@ import java.util.concurrent.TimeUnit;
  * 支持对象序列化，简化缓存使用
  */
 @Service
+@Slf4j
 public class RedisService {
     
-    private static final Logger log = LogUtil.getLogger(RedisService.class);
-
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 

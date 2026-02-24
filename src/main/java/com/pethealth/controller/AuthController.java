@@ -8,8 +8,7 @@ import com.pethealth.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +23,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 @Tag(name = "用户认证", description = "用户登录、注册、获取用户信息、登出、刷新Token、微信登录")
 @Validated
+@Slf4j
 public class AuthController {
-    
-    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private UserService userService;

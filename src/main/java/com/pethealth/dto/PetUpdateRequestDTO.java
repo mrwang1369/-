@@ -54,32 +54,4 @@ public class PetUpdateRequestDTO {
     @Schema(description = "宠物头像URL", example = "https://example.com/avatar.jpg")
     @Length(max = 200, message = "头像URL长度不能超过200个字符")
     private String avatarUrl;
-
-    // 显式添加getter/setter方法
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getSpecies() { return species; }
-    public void setSpecies(String species) { this.species = species; }
-    
-    public String getBreed() { return breed; }
-    public void setBreed(String breed) { this.breed = breed; }
-    
-    public LocalDate getBirthDate() { return birthDate; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
-    
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
-    
-    public BigDecimal getWeight() { return weight; }
-    public void setWeight(BigDecimal weight) { this.weight = weight; }
-    
-    public String getAllergyHistory() { return allergyHistory; }
-    public void setAllergyHistory(String allergyHistory) { this.allergyHistory = allergyHistory; }
-    
-    public Boolean getNeuteredStatus() { return neuteredStatus; }
-    public void setNeuteredStatus(Boolean neuteredStatus) { this.neuteredStatus = neuteredStatus; }
-    
-    public String getAvatarUrl() { return avatarUrl; }
-    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 }

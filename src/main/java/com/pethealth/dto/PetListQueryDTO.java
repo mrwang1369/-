@@ -27,20 +27,4 @@ public class PetListQueryDTO {
 
     @Schema(description = "每页大小", example = "10")
     private Integer pageSize = 10;
-
-    // 显式添加getter/setter方法
-    public String getSpecies() { return species; }
-    public void setSpecies(String species) { this.species = species; }
-    
-    public String getBreed() { return breed; }
-    public void setBreed(String breed) { this.breed = breed; }
-    
-    public String getNameKeyword() { return nameKeyword; }
-    public void setNameKeyword(String nameKeyword) { this.nameKeyword = nameKeyword; }
-    
-    public Integer getPageNum() { return pageNum; }
-    public void setPageNum(Integer pageNum) { this.pageNum = pageNum; }
-    
-    public Integer getPageSize() { return pageSize; }
-    public void setPageSize(Integer pageSize) { this.pageSize = pageSize; }
 }

@@ -1,6 +1,7 @@
 package com.pethealth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Pattern;
 /**
  * 登录请求DTO
  */
+@Data
 @Schema(description = "用户登录请求参数")
 public class LoginRequestDTO {
 
@@ -27,45 +29,4 @@ public class LoginRequestDTO {
 
     @Schema(description = "微信用户信息（微信登录时必填）")
     private WxUserInfo wxUserInfo;
-    
-    // 自动生成getter/setter方法
-    public String getLoginType() {
-        return loginType;
-    }
-    
-    public void setLoginType(String loginType) {
-        this.loginType = loginType;
-    }
-    
-    public String getPhone() {
-        return phone;
-    }
-    
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getWxCode() {
-        return wxCode;
-    }
-    
-    public void setWxCode(String wxCode) {
-        this.wxCode = wxCode;
-    }
-    
-    public WxUserInfo getWxUserInfo() {
-        return wxUserInfo;
-    }
-    
-    public void setWxUserInfo(WxUserInfo wxUserInfo) {
-        this.wxUserInfo = wxUserInfo;
-    }
 }

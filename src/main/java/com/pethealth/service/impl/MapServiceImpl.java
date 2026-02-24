@@ -5,8 +5,7 @@ import com.pethealth.config.AmapConfig;
 import com.pethealth.dto.AmapResponseDTO;
 import com.pethealth.handler.BusinessException;
 import com.pethealth.service.MapService;
-import com.pethealth.utils.LogUtil;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,8 @@ import java.util.Map;
  * @since 2026-02-13
  */
 @Service
+@Slf4j
 public class MapServiceImpl implements MapService {
-    
-    private static final Logger log = LogUtil.getLogger(MapServiceImpl.class);
     
     @Autowired
     private AmapConfig amapConfig;

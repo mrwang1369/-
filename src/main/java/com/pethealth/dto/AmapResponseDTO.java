@@ -49,35 +49,6 @@ public class AmapResponseDTO {
      */
     private String count;
     
-    // Getter方法
-    public String getStatus() {
-        return status;
-    }
-    
-    public String getInfo() {
-        return info;
-    }
-    
-    public String getInfocode() {
-        return infocode;
-    }
-    
-    public List<Geocode> getGeocodes() {
-        return geocodes;
-    }
-    
-    public Regeocode getRegeocode() {
-        return regeocode;
-    }
-    
-    public List<Poi> getPois() {
-        return pois;
-    }
-    
-    public String getCount() {
-        return count;
-    }
-    
     /**
      * 地理编码信息
      */
@@ -93,15 +64,6 @@ public class AmapResponseDTO {
         private String adcode;
         private String location;
         private String level;
-        
-        // 手动添加getter方法
-        public String getFormatted_address() {
-            return formatted_address;
-        }
-        
-        public String getLocation() {
-            return location;
-        }
     }
     
     /**
@@ -114,11 +76,6 @@ public class AmapResponseDTO {
         private List<Road> roads;
         private List<Poi> pois;
         private List<Aoi> aois;
-        
-        // 手动添加getter方法
-        public String getFormatted_address() {
-            return formatted_address;
-        }
     }
     
     /**

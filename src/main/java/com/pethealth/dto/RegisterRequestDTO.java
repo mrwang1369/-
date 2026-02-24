@@ -1,6 +1,7 @@
 package com.pethealth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Size;
 /**
  * 注册请求数据传输对象
  */
+@Data
 @Schema(description = "用户注册请求参数")
 public class RegisterRequestDTO {
 
@@ -32,45 +34,4 @@ public class RegisterRequestDTO {
 
     @Schema(description = "头像URL", example = "https://example.com/avatar.jpg")
     private String avatarUrl;
-    
-    // 自动生成getter/setter方法
-    public String getPhone() {
-        return phone;
-    }
-    
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-    
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-    
-    public String getNickname() {
-        return nickname;
-    }
-    
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-    
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-    
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
 }

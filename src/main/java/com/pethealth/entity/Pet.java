@@ -86,47 +86,4 @@ public class Pet implements Serializable {
     private LocalDateTime createTime;
     
     private LocalDateTime updateTime;
-
-    // 显式添加getter/setter方法
-    public Integer getPetId() { return petId; }
-    public void setPetId(Integer petId) { this.petId = petId; }
-    
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getSpecies() { return species; }
-    public void setSpecies(String species) { this.species = species; }
-    
-    public String getBreed() { return breed; }
-    public void setBreed(String breed) { this.breed = breed; }
-    
-    public LocalDate getBirthDate() { return birthDate; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
-    
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
-    
-    public BigDecimal getWeight() { return weight; }
-    public void setWeight(BigDecimal weight) { this.weight = weight; }
-    
-    public String getAllergyHistory() { return allergyHistory; }
-    public void setAllergyHistory(String allergyHistory) { this.allergyHistory = allergyHistory; }
-    
-    public Boolean getNeuteredStatus() { return neuteredStatus; }
-    public void setNeuteredStatus(Boolean neuteredStatus) { this.neuteredStatus = neuteredStatus; }
-    
-    public String getAvatarUrl() { return avatarUrl; }
-    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
-    
-    public Byte getDeleted() { return deleted; }
-    public void setDeleted(Byte deleted) { this.deleted = deleted; }
-    
-    public LocalDateTime getCreateTime() { return createTime; }
-    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
-    
-    public LocalDateTime getUpdateTime() { return updateTime; }
-    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
 }

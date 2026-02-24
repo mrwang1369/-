@@ -2,10 +2,12 @@ package com.pethealth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 微信用户信息
  */
+@Data
 @Schema(description = "微信用户信息")
 public class WxUserInfo {
 
@@ -30,53 +32,4 @@ public class WxUserInfo {
 
     @Schema(description = "用户所在城市", example = "广州")
     private String city;
-    
-    // 自动生成getter/setter方法
-    public String getNickName() {
-        return nickName;
-    }
-    
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-    
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-    
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-    
-    public Integer getGender() {
-        return gender;
-    }
-    
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-    
-    public String getCountry() {
-        return country;
-    }
-    
-    public void setCountry(String country) {
-        this.country = country;
-    }
-    
-    public String getProvince() {
-        return province;
-    }
-    
-    public void setProvince(String province) {
-        this.province = province;
-    }
-    
-    public String getCity() {
-        return city;
-    }
-    
-    public void setCity(String city) {
-        this.city = city;
-    }
 }
