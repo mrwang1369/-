@@ -1,4 +1,4 @@
-package com.pethealth.test;
+package com.pethealth.manualtest;
 
 import com.pethealth.BackendApplication;
 import com.pethealth.config.AmapConfig;

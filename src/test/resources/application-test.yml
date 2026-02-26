@@ -1,32 +1,78 @@
 # 测试环境配置
 spring:
+  # 数据库配置 - 使用H2内存数据库
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
     driver-class-name: org.h2.Driver
     username: sa
     password: 
-
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-
+  
+  # H2数据库配置
   h2:
     console:
       enabled: true
+      path: /h2-console
+  
+  # SQL初始化
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+  
+  # MyBatis配置
+  main:
+    allow-bean-definition-overriding: true
+  
+  # 禁用安全配置
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+# MyBatis-Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.pethealth.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
 # 日志配置
 logging:
   level:
     com.pethealth: DEBUG
-    org.springframework.web: DEBUG
+    org.springframework.web: INFO
     org.mybatis: DEBUG
+    com.baomidou.mybatisplus: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
 
 # JWT配置
 jwt:
-  secret: test-secret-key-for-integration-testing
+  secret: test-secret-key-for-integration-testing-32-characters-minimum
   expiration: 3600
 
 # 服务器配置
 server:
   port: 0  # 随机端口用于测试
+  servlet:
+    context-path: /api
+
+# 应用配置
+app:
+  scheduling:
+    enabled: false  # 测试环境禁用定时任务
+
+# 测试专用配置
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
