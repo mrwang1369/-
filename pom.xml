@@ -77,6 +77,12 @@
       <artifactId>commons-fileupload</artifactId>  
       <version>1.5</version> 
     </dependency>
+    <!-- Apache Tika - 文件类型检测 -->
+    <dependency>
+      <groupId>org.apache.tika</groupId>
+      <artifactId>tika-core</artifactId>
+      <version>2.9.1</version>
+    </dependency>
     <!-- Commons IO -->
     <dependency>
       <groupId>commons-io</groupId>
@@ -197,6 +203,18 @@
         <configuration> 
           <mainClass>com.pethealth.BackendApplication</mainClass>
         </configuration> 
+      </plugin>
+      
+      <!-- 配置文件上传大小限制 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <spring.servlet.multipart.max-file-size>10MB</spring.servlet.multipart.max-file-size>
+            <spring.servlet.multipart.max-request-size>10MB</spring.servlet.multipart.max-request-size>
+          </systemPropertyVariables>
+        </configuration>
       </plugin> 
     </plugins> 
   </build> 

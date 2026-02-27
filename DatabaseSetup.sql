@@ -411,6 +411,26 @@ INSERT INTO `growth_event`(`pet_id`,`event_type`,`event_date`,`description`,`ima
 (1,'疫苗','2024-12-01 09:00:00','狂犬疫苗接种','https://example.com/vaccine1.jpg', NULL),
 (2,'照片','2024-11-15 15:30:00','日常玩耍照片','https://example.com/photo1.jpg',NULL);
 
+-- 文件信息表(用于管理上传的文件)
+CREATE TABLE IF NOT EXISTS `file_info`(
+    `file_id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `original_name` VARCHAR(200) NOT NULL COMMENT '原始文件名',
+    `stored_name` VARCHAR(200) NOT NULL COMMENT '存储文件名(UUID)',
+    `file_path` VARCHAR(500) NOT NULL COMMENT '文件存储路径',
+    `file_size` BIGINT NOT NULL COMMENT '文件大小(字节)',
+    `file_type` VARCHAR(50) NOT NULL COMMENT '文件类型(MIME类型)',
+    `file_extension` VARCHAR(20) COMMENT '文件扩展名',
+    `module_type` VARCHAR(50) NOT NULL COMMENT '模块类型(pet_avatar,medical_record,vaccination等)',
+    `business_id` BIGINT COMMENT '关联业务ID(如pet_id,record_id等)',
+    `uploader_id` INT NOT NULL COMMENT '上传用户ID',
+    `upload_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志(0-未删除,1-已删除)',
+    FOREIGN KEY(`uploader_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE,
+    INDEX `idx_uploader_id`(`uploader_id`),
+    INDEX `idx_module_business`(`module_type`,`business_id`),
+    INDEX `idx_upload_time`(`upload_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件信息表，管理所有上传文件的元信息';
+
 -- 数据验证查询
 -- 查看插入的数据
 SELECT '用户数量:' as info, COUNT(*) as count FROM `user` 

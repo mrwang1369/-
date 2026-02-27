@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
@@ -149,6 +150,28 @@ public class GlobalExceptionHandler {
     public Result<?> handlePetOwnership(PetOwnershipException ex, HttpServletRequest request) {
         log.warn("宠物归属权异常 {} - 请求路径: {}", ex.getMessage(), request.getRequestURI());
         return Result.error(403, ex.getMessage())
+                .path(request.getRequestURI());
+    }
+
+    /**
+     * 处理文件上传异常
+     */
+    @ExceptionHandler(FileUploadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result<?> handleFileUploadException(FileUploadException ex, HttpServletRequest request) {
+        log.warn("文件上传异常 [{}] {} - 请求路径: {}", ex.getErrorCode(), ex.getMessage(), request.getRequestURI());
+        return Result.error(400, ex.getMessage())
+                .path(request.getRequestURI());
+    }
+
+    /**
+     * 处理文件大小超限异常
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public Result<?> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException ex, HttpServletRequest request) {
+        log.warn("文件上传大小超限 - 请求路径: {}", request.getRequestURI());
+        return Result.error(413, "上传文件大小超出限制")
                 .path(request.getRequestURI());
     }
 
