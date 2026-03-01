@@ -1,0 +1,96 @@
+<!--pages/map/map.wxml-->
+<view class="map-container">
+  <!-- 搜索区域 -->
+  <view class="search-section">
+    <view class="search-box">
+      <image class="search-icon" src="/images/icons/search.png"></image>
+      <input
+        class="search-input"
+        placeholder="搜索宠物医院、宠物店..."
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+      />
+      <view class="search-btn" bindtap="onSearch">搜索</view>
+    </view>
+  </view>
+
+  <!-- 服务类型筛选 -->
+  <view class="filter-section">
+    <scroll-view class="filter-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view
+        class="filter-item {{currentFilter === item.value ? 'active' : ''}}"
+        wx:for="{{filterOptions}}"
+        wx:key="value"
+        bindtap="selectFilter"
+        data-value="{{item.value}}"
+      >
+        <image class="filter-icon" src="{{item.icon}}"></image>
+        <text>{{item.label}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 服务点列表 -->
+  <view class="service-list">
+    <block wx:if="{{servicePoints.length > 0}}">
+      <view class="service-item" wx:for="{{servicePoints}}" wx:key="id" bindtap="showDetail" data-item="{{item}}">
+        <view class="service-info">
+          <view class="service-header">
+            <text class="service-name">{{item.name}}</text>
+            <view class="service-type-tag">{{item.type}}</view>
+          </view>
+
+          <view class="service-address">
+            <image class="address-icon" src="/images/icons/location.png"></image>
+            <text class="address-text">{{item.address}}</text>
+          </view>
+
+          <view class="service-meta">
+            <view class="meta-item">
+              <image class="meta-icon" src="/images/icons/distance.png"></image>
+              <text>{{item.distance}}</text>
+            </view>
+            <view class="meta-item" wx:if="{{item.rating}}">
+              <image class="meta-icon" src="/images/icons/star.png"></image>
+              <text>{{item.rating}}</text>
+            </view>
+            <view class="meta-item" wx:if="{{item.phone}}">
+              <image class="meta-icon" src="/images/icons/phone.png"></image>
+              <text>{{item.phone}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="service-actions">
+          <view class="action-btn" catchtap="callPhone" data-phone="{{item.phone}}" wx:if="{{item.phone}}">
+            <image class="action-icon" src="/images/icons/phone-call.png"></image>
+            <text>拨号</text>
+          </view>
+          <view class="action-btn" catchtap="navigate" data-item="{{item}}">
+            <image class="action-icon" src="/images/icons/navigation.png"></image>
+            <text>导航</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 加载中 -->
+    <view class="loading-state" wx:elif="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-map.png"></image>
+      <text class="empty-text">暂无附近服务点</text>
+      <button class="refresh-btn" bindtap="refreshLocation">重新定位</button>
+    </view>
+  </view>
+
+  <!-- 地图按钮 -->
+  <view class="map-btn" bindtap="openMap">
+    <image class="map-icon" src="/images/icons/map-view.png"></image>
+    <text>查看地图</text>
+  </view>
+</view>

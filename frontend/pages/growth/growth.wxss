@@ -1,0 +1,325 @@
+/* pages/growth/growth.wxss */
+.growth-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding-bottom: 120rpx;
+}
+
+/* 宠物选择器 */
+.pet-selector {
+  background: #FFFFFF;
+  padding: 20rpx 0 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.pet-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+
+.pet-option {
+  display: inline-block;
+  background: #FFFFFF;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 20rpx;
+  padding: 15rpx 25rpx;
+  margin-right: 15rpx;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.pet-option.active {
+  border-color: #FF6B9D;
+  background: #FFEEF3;
+}
+
+.pet-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+}
+
+.pet-name {
+  font-size: 26rpx;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.pet-option.active .pet-name {
+  color: #FF6B9D;
+  font-weight: 600;
+}
+
+/* 筛选器 */
+.filter-section {
+  background: #FFFFFF;
+  padding: 20rpx 0;
+  margin-bottom: 30rpx;
+}
+
+.filter-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+
+.filter-item {
+  display: inline-block;
+  padding: 10rpx 25rpx;
+  margin-right: 15rpx;
+  background: #F5F5F5;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  color: #666666;
+  transition: all 0.3s ease;
+}
+
+.filter-item.active {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* 时光轴 */
+.timeline {
+  padding: 0 20rpx;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 40rpx;
+  position: relative;
+}
+
+/* 时间线 */
+.timeline-line {
+  position: absolute;
+  left: 60rpx;
+  top: 70rpx;
+  bottom: -40rpx;
+  width: 3rpx;
+  background: linear-gradient(180deg, #FFE4E8 0%, transparent 100%);
+}
+
+.timeline-item:last-child .timeline-line {
+  display: none;
+}
+
+/* 时间点 */
+.timeline-dot {
+  position: absolute;
+  left: 45rpx;
+  top: 0;
+  width: 35rpx;
+  height: 35rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  z-index: 10;
+  box-shadow: 0 0 0 8rpx #FFF5F5;
+}
+
+.timeline-dot.vaccine {
+  background: linear-gradient(135deg, #95E1D3 0%, #B8E8D8 100%);
+}
+
+.timeline-dot.deworming {
+  background: linear-gradient(135deg, #FCE38A 0%, #F9E79F 100%);
+}
+
+.timeline-dot.checkup {
+  background: linear-gradient(135deg, #A8D8EA 0%, #D4E9F7 100%);
+}
+
+.timeline-dot.medical {
+  background: linear-gradient(135deg, #F38181 0%, #FFB6B9 100%);
+}
+
+.timeline-dot.weight {
+  background: linear-gradient(135deg, #DDA0DD 0%, #E8D5E8 100%);
+}
+
+/* 时间轴内容 */
+.timeline-content {
+  flex: 1;
+  margin-left: 40rpx;
+  padding-left: 70rpx;
+}
+
+/* 日期显示 */
+.timeline-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100rpx;
+}
+
+.date-day {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FF6B9D;
+}
+
+.date-month {
+  font-size: 22rpx;
+  color: #999999;
+  margin-top: 2rpx;
+}
+
+.date-year {
+  font-size: 18rpx;
+  color: #CCCCCC;
+  margin-top: 2rpx;
+}
+
+/* 卡片 */
+.timeline-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.08);
+  margin-top: 10rpx;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.card-type {
+  display: flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  background: linear-gradient(135deg, #FF6B9D15 0%, #FFB6C115 100%);
+  color: #FF6B9D;
+}
+
+.card-type.vaccine {
+  background: linear-gradient(135deg, #95E1D315 0%, #B8E8D815 100%);
+  color: #95E1D3;
+}
+
+.card-type.deworming {
+  background: linear-gradient(135deg, #FCE38A15 0%, #F9E79F15 100%);
+  color: #FCE38A;
+}
+
+.card-type.checkup {
+  background: linear-gradient(135deg, #A8D8EA15 0%, #D4E9F715 100%);
+  color: #A8D8EA;
+}
+
+.card-type.medical {
+  background: linear-gradient(135deg, #F3818115 0%, #FFB6B915 100%);
+  color: #F38181;
+}
+
+.type-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+}
+
+.card-time {
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.card-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.card-description {
+  background: #FFF5F5;
+  border-radius: 12rpx;
+  padding: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.card-description text {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.card-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.card-image {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 12rpx;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999999;
+  font-size: 26rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 150rpx 40rpx;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #CCCCCC;
+}
+
+/* 生成报告按钮 */
+.report-btn {
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  padding: 20rpx 60rpx;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.4);
+  z-index: 100;
+}
+
+.report-btn:active {
+  transform: translateX(-50%) scale(0.95);
+}
+
+.report-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 12rpx;
+}
+
+.report-btn text {
+  font-size: 28rpx;
+  font-weight: 600;
+}

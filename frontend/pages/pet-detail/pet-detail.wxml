@@ -1,0 +1,98 @@
+<!--pages/pet-detail/pet-detail.wxml-->
+<view class="pet-detail-container" wx:if="{{pet}}">
+  <!-- 头部信息 -->
+  <view class="pet-header">
+    <view class="pet-avatar-wrapper">
+      <image class="pet-avatar" src="{{pet.avatarUrl || '/images/default-pet.png'}}" mode="aspectFill"></image>
+      <view class="edit-avatar" bindtap="changeAvatar">
+        <image class="camera-icon" src="/images/icons/camera.png"></image>
+      </view>
+    </view>
+    <view class="pet-basic-info">
+      <view class="pet-name-row">
+        <text class="pet-name">{{pet.name}}</text>
+        <view class="gender-tag {{pet.gender === '公' ? 'male' : 'female'}}">
+          <image class="gender-icon" src="{{pet.gender === '公' ? '/images/icons/male.png' : '/images/icons/female.png'}}"></image>
+          <text>{{pet.gender}}</text>
+        </view>
+      </view>
+      <text class="pet-breed">{{pet.species}} · {{pet.breed}}</text>
+      <text class="pet-age">{{pet.age}}</text>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="info-section">
+    <view class="section-title">基本信息</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="info-label">出生日期</text>
+        <text class="info-value">{{pet.birthDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">体重</text>
+        <text class="info-value">{{pet.weight}}kg</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">绝育状态</text>
+        <text class="info-value">{{pet.neuteredStatus ? '已绝育' : '未绝育'}}</text>
+      </view>
+      <view class="info-item" wx:if="{{pet.allergyHistory}}">
+        <text class="info-label">过敏史</text>
+        <text class="info-value">{{pet.allergyHistory}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-item" bindtap="navigateToVaccine">
+      <image class="action-icon" src="/images/icons/vaccine.png"></image>
+      <text class="action-name">疫苗记录</text>
+      <text class="action-count">{{vaccineCount}}</text>
+    </view>
+    <view class="action-item" bindtap="navigateToDeworming">
+      <image class="action-icon" src="/images/icons/deworming.png"></image>
+      <text class="action-name">驱虫记录</text>
+      <text class="action-count">{{dewormingCount}}</text>
+    </view>
+    <view class="action-item" bindtap="navigateToCheckup">
+      <image class="action-icon" src="/images/icons/checkup.png"></image>
+      <text class="action-name">体检记录</text>
+      <text class="action-count">{{checkupCount}}</text>
+    </view>
+    <view class="action-item" bindtap="navigateToMedical">
+      <image class="action-icon" src="/images/icons/medical.png"></image>
+      <text class="action-name">病历记录</text>
+      <text class="action-count">{{medicalCount}}</text>
+    </view>
+  </view>
+
+  <!-- 成长时光轴 -->
+  <view class="growth-section">
+    <view class="section-header">
+      <text class="section-title">成长时光轴</text>
+      <text class="section-more" bindtap="navigateToGrowth">查看全部</text>
+    </view>
+    <view class="timeline-preview">
+      <block wx:if="{{growthEvents.length > 0}}">
+        <view class="timeline-item" wx:for="{{growthEvents}}" wx:key="id" wx:if="{{index < 3}}">
+          <view class="timeline-dot {{item.type}}"></view>
+          <view class="timeline-content">
+            <text class="timeline-title">{{item.title}}</text>
+            <text class="timeline-date">{{item.date}}</text>
+          </view>
+        </view>
+      </block>
+      <view class="empty-timeline" wx:else>
+        <text class="empty-text">暂无成长记录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn btn-outline" bindtap="editPet">编辑信息</button>
+    <button class="btn btn-primary" bindtap="deletePet">删除档案</button>
+  </view>
+</view>

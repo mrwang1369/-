@@ -1,0 +1,132 @@
+<!--pages/pet-add/pet-add.wxml-->
+<view class="pet-add-container">
+  <!-- 头像上传 -->
+  <view class="avatar-section">
+    <view class="avatar-wrapper" bindtap="chooseAvatar">
+      <image wx:if="{{formData.avatarUrl}}" class="avatar" src="{{formData.avatarUrl}}" mode="aspectFill"></image>
+      <view wx:else class="avatar-placeholder">
+        <image class="placeholder-icon" src="/images/icons/add-photo.png"></image>
+        <text class="placeholder-text">上传头像</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-section">
+    <!-- 宠物姓名 -->
+    <view class="form-item">
+      <text class="form-label">宠物姓名 *</text>
+      <input
+        class="form-input"
+        placeholder="请输入宠物姓名"
+        value="{{formData.name}}"
+        bindinput="onNameInput"
+        maxlength="20"
+      />
+    </view>
+
+    <!-- 物种选择 -->
+    <view class="form-item">
+      <text class="form-label">物种 *</text>
+      <picker
+        mode="selector"
+        range="{{speciesOptions}}"
+        bindchange="onSpeciesChange"
+      >
+        <view class="picker-input">
+          {{formData.species || '请选择物种'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 品种选择 -->
+    <view class="form-item">
+      <text class="form-label">品种 *</text>
+      <input
+        class="form-input"
+        placeholder="请输入品种"
+        value="{{formData.breed}}"
+        bindinput="onBreedInput"
+      />
+    </view>
+
+    <!-- 出生日期 -->
+    <view class="form-item">
+      <text class="form-label">出生日期 *</text>
+      <picker
+        mode="date"
+        value="{{formData.birthDate}}"
+        end="{{currentDate}}"
+        bindchange="onBirthDateChange"
+      >
+        <view class="picker-input">
+          {{formData.birthDate || '请选择出生日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 性别选择 -->
+    <view class="form-item">
+      <text class="form-label">性别 *</text>
+      <view class="gender-selector">
+        <view
+          class="gender-option {{formData.gender === '公' ? 'active' : ''}}"
+          bindtap="selectGender"
+          data-gender="公"
+        >
+          <image class="gender-icon" src="/images/icons/male.png"></image>
+          <text>公</text>
+        </view>
+        <view
+          class="gender-option {{formData.gender === '母' ? 'active' : ''}}"
+          bindtap="selectGender"
+          data-gender="母"
+        >
+          <image class="gender-icon" src="/images/icons/female.png"></image>
+          <text>母</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 体重 -->
+    <view class="form-item">
+      <text class="form-label">体重 (kg)</text>
+      <input
+        class="form-input"
+        type="digit"
+        placeholder="请输入体重"
+        value="{{formData.weight}}"
+        bindinput="onWeightInput"
+      />
+    </view>
+
+    <!-- 绝育状态 -->
+    <view class="form-item">
+      <text class="form-label">绝育状态</text>
+      <switch
+        checked="{{formData.neuteredStatus}}"
+        bindchange="onNeuteredChange"
+        color="#FF6B9D"
+      />
+    </view>
+
+    <!-- 过敏史 -->
+    <view class="form-item">
+      <text class="form-label">过敏史</text>
+      <textarea
+        class="form-textarea"
+        placeholder="如有过敏史请详细说明（选填）"
+        value="{{formData.allergyHistory}}"
+        bindinput="onAllergyInput"
+        maxlength="200"
+      />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="handleSubmit" disabled="{{loading}}">
+      {{loading ? '保存中...' : (isEdit ? '保存修改' : '创建档案')}}
+    </button>
+  </view>
+</view>

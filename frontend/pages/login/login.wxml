@@ -1,0 +1,75 @@
+<!--pages/login/login.wxml-->
+<view class="login-container">
+  <!-- Logo区域 -->
+  <view class="logo-section">
+    <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    <text class="app-name">宠物健康管家</text>
+    <text class="app-slogan">爱宠健康，随时守护</text>
+  </view>
+
+  <!-- 登录表单 -->
+  <view class="login-form">
+    <!-- 手机号输入 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/phone.png"></image>
+        <input
+          class="input-field"
+          type="number"
+          placeholder="请输入手机号"
+          placeholder-class="placeholder"
+          value="{{formData.phone}}"
+          bindinput="onPhoneInput"
+          maxlength="11"
+        />
+      </view>
+    </view>
+
+    <!-- 密码输入 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/lock.png"></image>
+        <input
+          class="input-field"
+          type="{{showPassword ? 'text' : 'password'}}"
+          placeholder="请输入密码"
+          placeholder-class="placeholder"
+          value="{{formData.password}}"
+          bindinput="onPasswordInput"
+        />
+        <image
+          class="password-toggle"
+          src="{{showPassword ? '/images/icons/eye-open.png' : '/images/icons/eye-close.png'}}"
+          bindtap="togglePassword"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 登录按钮 -->
+    <button class="login-btn btn-primary" bindtap="handleLogin" disabled="{{loading}}">
+      {{loading ? '登录中...' : '登录'}}
+    </button>
+
+    <!-- 微信登录 -->
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">或</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <button
+      class="wx-login-btn"
+      open-type="getUserInfo"
+      bindgetuserinfo="handleWxLogin"
+      disabled="{{loading}}"
+    >
+      <image class="wx-icon" src="/images/icons/wechat.png"></image>
+      <text>微信一键登录</text>
+    </button>
+  </view>
+
+  <!-- 底部链接 -->
+  <view class="footer-links">
+    <text class="link" bindtap="goToRegister">还没有账号？立即注册</text>
+  </view>
+</view>

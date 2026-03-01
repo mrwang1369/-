@@ -1,0 +1,44 @@
+<!--pages/pets/pets.wxml-->
+<view class="pets-container">
+  <!-- 宠物列表 -->
+  <view class="pet-list">
+    <block wx:if="{{pets.length > 0}}">
+      <view class="pet-item" wx:for="{{pets}}" wx:key="petId" bindtap="navigateToDetail" data-id="{{item.petId}}">
+        <image class="pet-avatar" src="{{item.avatarUrl || '/images/default-pet.png'}}" mode="aspectFill"></image>
+        <view class="pet-info">
+          <view class="pet-header">
+            <text class="pet-name">{{item.name}}</text>
+            <view class="pet-gender">
+              <image class="gender-icon" src="{{item.gender === '公' ? '/images/icons/male.png' : '/images/icons/female.png'}}"></image>
+            </view>
+          </view>
+          <view class="pet-details">
+            <text class="pet-breed">{{item.species}} · {{item.breed}}</text>
+            <text class="pet-age">{{item.age}}</text>
+          </view>
+          <view class="pet-tags">
+            <view class="tag" wx:if="{{item.neuteredStatus}}">
+              <text>已绝育</text>
+            </view>
+            <view class="tag" wx:if="{{item.weight}}">
+              <text>{{item.weight}}kg</text>
+            </view>
+          </view>
+        </view>
+        <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-pet.png"></image>
+      <text class="empty-text">还没有宠物档案哦</text>
+      <button class="empty-btn" bindtap="navigateToAdd">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="navigateToAdd">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>

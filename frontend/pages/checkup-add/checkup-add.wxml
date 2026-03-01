@@ -1,0 +1,179 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">添加体检记录</text>
+    <text class="subtitle">记录宝贝的健康体检信息</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form">
+    <!-- 宠物选择 -->
+    <view class="form-item">
+      <text class="label">选择宠物</text>
+      <picker bindchange="onPetChange" value="{{petIndex}}" range="{{petList}}" range-key="name">
+        <view class="picker">
+          {{petList[petIndex].name || '请选择宠物'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 体检类型 -->
+    <view class="form-item">
+      <text class="label">体检类型</text>
+      <picker bindchange="onTypeChange" value="{{typeIndex}}" range="{{checkupTypes}}">
+        <view class="picker">
+          {{checkupTypes[typeIndex] || '请选择类型'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 体检日期 -->
+    <view class="form-item">
+      <text class="label">体检日期</text>
+      <picker 
+        mode="date" 
+        value="{{formData.checkupDate}}" 
+        bindchange="onDateChange"
+        start="{{minDate}}"
+        end="{{maxDate}}"
+      >
+        <view class="picker">
+          {{formData.checkupDate || '请选择日期'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 体检机构 -->
+    <view class="form-item">
+      <text class="label">体检机构</text>
+      <input 
+        class="input" 
+        placeholder="例如: 宠物之家医院"
+        value="{{formData.institution}}"
+        bindinput="onInstitutionInput"
+      />
+    </view>
+
+    <!-- 医生姓名 -->
+    <view class="form-item">
+      <text class="label">医生姓名</text>
+      <input 
+        class="input" 
+        placeholder="可选填"
+        value="{{formData.doctor}}"
+        bindinput="onDoctorInput"
+      />
+    </view>
+
+    <!-- 体重 -->
+    <view class="form-item">
+      <text class="label">体重 (kg)</text>
+      <input 
+        class="input" 
+        type="digit"
+        placeholder="请输入体重"
+        value="{{formData.weight}}"
+        bindinput="onWeightInput"
+      />
+    </view>
+
+    <!-- 体检结果 -->
+    <view class="form-item">
+      <text class="label">体检结果</text>
+      <view class="result-selector">
+        <view 
+          class="result-option {{formData.result === '正常' ? 'active' : ''}}"
+          bindtap="selectResult"
+          data-result="正常"
+        >
+          正常
+        </view>
+        <view 
+          class="result-option {{formData.result === '异常' ? 'active' : ''}}"
+          bindtap="selectResult"
+          data-result="异常"
+        >
+          异常
+        </view>
+        <view 
+          class="result-option {{formData.result === '待复查' ? 'active' : ''}}"
+          bindtap="selectResult"
+          data-result="待复查"
+        >
+          待复查
+        </view>
+      </view>
+    </view>
+
+    <!-- 检查项目 -->
+    <view class="form-item">
+      <text class="label">检查项目</text>
+      <textarea 
+        class="textarea" 
+        placeholder="例如: 血常规、尿常规、肝肾功能等"
+        value="{{formData.checkItems}}"
+        bindinput="onCheckItemsInput"
+        maxlength="500"
+      />
+      <text class="char-count">{{formData.checkItems.length}}/500</text>
+    </view>
+
+    <!-- 诊断结论 -->
+    <view class="form-item">
+      <text class="label">诊断结论</text>
+      <textarea 
+        class="textarea" 
+        placeholder="医生的诊断结论和建议"
+        value="{{formData.diagnosis}}"
+        bindinput="onDiagnosisInput"
+        maxlength="500"
+      />
+      <text class="char-count">{{formData.diagnosis.length}}/500</text>
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-item">
+      <text class="label">备注信息</text>
+      <textarea 
+        class="textarea" 
+        placeholder="可选填"
+        value="{{formData.remark}}"
+        bindinput="onRemarkInput"
+        maxlength="200"
+      />
+      <text class="char-count">{{formData.remark.length}}/200</text>
+    </view>
+
+    <!-- 上传报告 -->
+    <view class="form-item upload-item">
+      <text class="label">上传报告</text>
+      <view class="upload-area">
+        <view 
+          class="upload-box" 
+          wx:if="{{!formData.reportUrl}}"
+          bindtap="chooseImage"
+        >
+          <text class="upload-icon">+</text>
+          <text class="upload-text">点击上传报告</text>
+        </view>
+        <view class="upload-preview" wx:else>
+          <image 
+            src="{{formData.reportUrl}}" 
+            class="preview-image"
+            mode="aspectFill"
+          />
+          <text class="delete-btn" bindtap="deleteImage">✕</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="btn secondary" bindtap="onCancel">取消</button>
+    <button class="btn primary" bindtap="onSubmit">保存记录</button>
+  </view>
+</view>

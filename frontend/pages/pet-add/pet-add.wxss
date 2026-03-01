@@ -1,0 +1,167 @@
+/* pages/pet-add/pet-add.wxss */
+.pet-add-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding-bottom: 40rpx;
+}
+
+/* 头像区域 */
+.avatar-section {
+  background: #FFFFFF;
+  padding: 60rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FF6B9D15 0%, #FFB6C115 100%);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.5;
+}
+
+.placeholder-text {
+  font-size: 22rpx;
+  color: #999999;
+}
+
+/* 表单区域 */
+.form-section {
+  background: #FFFFFF;
+  margin: 20rpx;
+  border-radius: 24rpx;
+  padding: 30rpx;
+}
+
+.form-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.picker-input {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.picker-input::before {
+  content: '';
+}
+
+/* 性别选择器 */
+.gender-selector {
+  display: flex;
+  gap: 30rpx;
+}
+
+.gender-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 16rpx;
+  background: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.gender-option.active {
+  border-color: #FF6B9D;
+  background: #FFEEF3;
+}
+
+.gender-icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 10rpx;
+}
+
+.gender-option text {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.gender-option.active text {
+  color: #FF6B9D;
+  font-weight: 600;
+}
+
+/* 文本域 */
+.form-textarea {
+  width: 100%;
+  min-height: 150rpx;
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* 提交区域 */
+.submit-section {
+  padding: 40rpx 20rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 100rpx;
+  border-radius: 50rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.3);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.submit-btn[disabled] {
+  opacity: 0.6;
+}
+
+switch {
+  transform: scale(1.2);
+}

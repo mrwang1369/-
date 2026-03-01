@@ -1,0 +1,195 @@
+/* pages/medical/medical.wxss */
+.medical-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding-bottom: 150rpx;
+}
+
+/* 搜索区域 */
+.search-section {
+  background: #FFFFFF;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #F5F5F5;
+  border-radius: 50rpx;
+  padding: 0 20rpx;
+  height: 80rpx;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+  opacity: 0.4;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.search-btn {
+  padding: 10rpx 25rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  font-size: 24rpx;
+  border-radius: 30rpx;
+}
+
+/* 病历列表 */
+.medical-list {
+  padding: 0 20rpx;
+}
+
+.medical-item {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.08);
+}
+
+.medical-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.diagnosis {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.visit-date {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 病历内容 */
+.medical-body {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20rpx;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.info-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 12rpx;
+  opacity: 0.5;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: #666666;
+  flex: 1;
+}
+
+/* 病历底部 */
+.medical-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.medication-reminder {
+  display: flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  background: linear-gradient(135deg, #FCE38A20 0%, #F9E79F20 100%);
+  border-radius: 20rpx;
+}
+
+.reminder-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+}
+
+.medication-reminder text {
+  font-size: 22rpx;
+  color: #FCE38A;
+}
+
+.arrow-icon {
+  width: 40rpx;
+  height: 40rpx;
+  opacity: 0.3;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 150rpx 40rpx;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #CCCCCC;
+  margin-bottom: 60rpx;
+}
+
+.empty-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  padding: 20rpx 80rpx;
+  font-size: 28rpx;
+}
+
+/* 浮动按钮 */
+.fab {
+  position: fixed;
+  bottom: 100rpx;
+  right: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.4);
+  z-index: 100;
+}
+
+.fab-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,149 @@
+/* pages/pets/pets.wxss */
+.pets-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding: 20rpx;
+}
+
+/* 宠物列表 */
+.pet-list {
+  padding-bottom: 150rpx;
+}
+
+.pet-item {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.08);
+}
+
+.pet-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 24rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+}
+
+.pet-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.pet-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.pet-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-right: 15rpx;
+}
+
+.pet-gender {
+  padding: 4rpx 12rpx;
+  background: #FFEEF3;
+  border-radius: 12rpx;
+}
+
+.gender-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.pet-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.pet-breed {
+  font-size: 26rpx;
+  color: #666666;
+  margin-right: 20rpx;
+}
+
+.pet-age {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.pet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.tag {
+  background: linear-gradient(135deg, #FF6B9D15 0%, #FFB6C115 100%);
+  padding: 6rpx 16rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  color: #FF6B9D;
+}
+
+.arrow-icon {
+  width: 40rpx;
+  height: 40rpx;
+  opacity: 0.3;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 150rpx 40rpx;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #CCCCCC;
+  margin-bottom: 60rpx;
+}
+
+.empty-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  padding: 20rpx 80rpx;
+  font-size: 28rpx;
+}
+
+/* 浮动按钮 */
+.fab {
+  position: fixed;
+  bottom: 100rpx;
+  right: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.4);
+  z-index: 100;
+}
+
+.fab-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.fab:active {
+  transform: scale(0.95);
+}

@@ -1,0 +1,207 @@
+/* pages/health/health.wxss */
+.health-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding-bottom: 40rpx;
+}
+
+/* 宠物选择器 */
+.pet-selector {
+  background: #FFFFFF;
+  padding: 20rpx 0 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.pet-scroll {
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+
+.pet-option {
+  display: inline-block;
+  background: #FFFFFF;
+  border: 2rpx solid #E5E5E5;
+  border-radius: 20rpx;
+  padding: 15rpx 25rpx;
+  margin-right: 15rpx;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.pet-option.active {
+  border-color: #FF6B9D;
+  background: #FFEEF3;
+}
+
+.pet-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+}
+
+.pet-name {
+  font-size: 26rpx;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.pet-option.active .pet-name {
+  color: #FF6B9D;
+  font-weight: 600;
+}
+
+/* 统计卡片 */
+.stats-section {
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.08);
+}
+
+.stat-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.stat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #FF6B9D;
+  margin-bottom: 5rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.arrow-icon {
+  width: 40rpx;
+  height: 40rpx;
+  opacity: 0.3;
+}
+
+/* 近期记录 */
+.recent-section {
+  padding: 0 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: #FF6B9D;
+}
+
+.recent-list {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 20rpx;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+.recent-icon {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+}
+
+.recent-icon.vaccine {
+  background: linear-gradient(135deg, #95E1D3 0%, #B8E8D8 100%);
+}
+
+.recent-icon.deworming {
+  background: linear-gradient(135deg, #FCE38A 0%, #F9E79F 100%);
+}
+
+.recent-icon.checkup {
+  background: linear-gradient(135deg, #A8D8EA 0%, #D4E9F7 100%);
+}
+
+.recent-icon.medical {
+  background: linear-gradient(135deg, #F38181 0%, #FFB6B9 100%);
+}
+
+.icon-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.recent-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-title {
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 6rpx;
+}
+
+.recent-pet {
+  font-size: 22rpx;
+  color: #999999;
+  margin-bottom: 6rpx;
+}
+
+.recent-date {
+  font-size: 22rpx;
+  color: #CCCCCC;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #CCCCCC;
+}

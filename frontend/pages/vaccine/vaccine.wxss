@@ -1,0 +1,193 @@
+/* pages/vaccine/vaccine.wxss */
+.vaccine-container {
+  min-height: 100vh;
+  background: #FFF5F5;
+  padding: 20rpx;
+  padding-bottom: 150rpx;
+}
+
+/* 疫苗列表 */
+.vaccine-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.vaccine-item {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 157, 0.08);
+}
+
+.vaccine-content {
+  margin-bottom: 20rpx;
+}
+
+.vaccine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.vaccine-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  flex: 1;
+}
+
+.status-badge {
+  padding: 6rpx 16rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+}
+
+.status-badge.completed {
+  background: linear-gradient(135deg, #95E1D320 0%, #B8E8D820 100%);
+  color: #95E1D3;
+}
+
+.status-badge.upcoming {
+  background: linear-gradient(135deg, #FCE38A20 0%, #F9E79F20 100%);
+  color: #FCE38A;
+}
+
+.status-badge.overdue {
+  background: linear-gradient(135deg, #F3818120 0%, #FFB6B920 100%);
+  color: #F38181;
+}
+
+/* 疫苗信息 */
+.vaccine-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+.info-value.overdue {
+  color: #F38181;
+}
+
+/* 备注 */
+.vaccine-notes {
+  background: #FFF5F5;
+  border-radius: 12rpx;
+  padding: 15rpx;
+  margin-top: 10rpx;
+}
+
+.notes-label {
+  font-size: 24rpx;
+  color: #999999;
+  margin-right: 8rpx;
+}
+
+.notes-text {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+/* 操作按钮 */
+.vaccine-actions {
+  display: flex;
+  gap: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15rpx;
+  background: #FFEEF3;
+  border-radius: 12rpx;
+}
+
+.action-btn:active {
+  background: #FFD6DE;
+}
+
+.action-icon {
+  width: 40rpx;
+  height: 40rpx;
+  opacity: 0.6;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 150rpx 40rpx;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  display: block;
+  font-size: 28rpx;
+  color: #CCCCCC;
+  margin-bottom: 60rpx;
+}
+
+.empty-btn {
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  padding: 20rpx 80rpx;
+  font-size: 28rpx;
+}
+
+/* 浮动按钮 */
+.fab {
+  position: fixed;
+  bottom: 100rpx;
+  right: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 157, 0.4);
+  z-index: 100;
+}
+
+.fab-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.fab:active {
+  transform: scale(0.95);
+}

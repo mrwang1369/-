@@ -1,0 +1,135 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">添加驱虫记录</text>
+    <text class="subtitle">记录宝贝的驱虫信息</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form">
+    <!-- 宠物选择 -->
+    <view class="form-item">
+      <text class="label">选择宠物</text>
+      <picker bindchange="onPetChange" value="{{petIndex}}" range="{{petList}}" range-key="name">
+        <view class="picker">
+          {{petList[petIndex].name || '请选择宠物'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 驱虫类型 -->
+    <view class="form-item">
+      <text class="label">驱虫类型</text>
+      <view class="type-selector">
+        <view 
+          class="type-option {{formData.type === '体外' ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="体外"
+        >
+          体外驱虫
+        </view>
+        <view 
+          class="type-option {{formData.type === '体内' ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="体内"
+        >
+          体内驱虫
+        </view>
+        <view 
+          class="type-option {{formData.type === '体内外' ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="体内外"
+        >
+          体内外
+        </view>
+      </view>
+    </view>
+
+    <!-- 药品名称 -->
+    <view class="form-item">
+      <text class="label">药品名称</text>
+      <input 
+        class="input" 
+        placeholder="例如: 福来恩"
+        value="{{formData.drugName}}"
+        bindinput="onDrugInput"
+      />
+    </view>
+
+    <!-- 驱虫日期 -->
+    <view class="form-item">
+      <text class="label">驱虫日期</text>
+      <picker 
+        mode="date" 
+        value="{{formData.dewormingDate}}" 
+        bindchange="onDateChange"
+        start="{{minDate}}"
+        end="{{maxDate}}"
+      >
+        <view class="picker">
+          {{formData.dewormingDate || '请选择日期'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 下次驱虫日期 -->
+    <view class="form-item">
+      <text class="label">下次驱虫日期</text>
+      <picker 
+        mode="date" 
+        value="{{formData.nextDewormingDate}}" 
+        bindchange="onNextDateChange"
+        start="{{formData.dewormingDate || minDate}}"
+      >
+        <view class="picker">
+          {{formData.nextDewormingDate || '请选择日期'}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+      <text class="tip">系统将自动创建提醒</text>
+    </view>
+
+    <!-- 驱虫机构 -->
+    <view class="form-item">
+      <text class="label">驱虫机构</text>
+      <input 
+        class="input" 
+        placeholder="例如: 宠物之家医院"
+        value="{{formData.institution}}"
+        bindinput="onInstitutionInput"
+      />
+    </view>
+
+    <!-- 用量 -->
+    <view class="form-item">
+      <text class="label">用量</text>
+      <input 
+        class="input" 
+        placeholder="例如: 1支"
+        value="{{formData.dosage}}"
+        bindinput="onDosageInput"
+      />
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-item">
+      <text class="label">备注信息</text>
+      <textarea 
+        class="textarea" 
+        placeholder="可选填"
+        value="{{formData.remark}}"
+        bindinput="onRemarkInput"
+        maxlength="200"
+      />
+      <text class="char-count">{{formData.remark.length}}/200</text>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="btn secondary" bindtap="onCancel">取消</button>
+    <button class="btn primary" bindtap="onSubmit">保存记录</button>
+  </view>
+</view>

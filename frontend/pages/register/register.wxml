@@ -1,0 +1,108 @@
+<!--pages/register/register.wxml-->
+<view class="register-container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">创建账号</text>
+    <text class="subtitle">开启爱宠健康管理之旅</text>
+  </view>
+
+  <!-- 注册表单 -->
+  <view class="register-form">
+    <!-- 手机号 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/phone.png"></image>
+        <input
+          class="input-field"
+          type="number"
+          placeholder="请输入手机号"
+          placeholder-class="placeholder"
+          value="{{formData.phone}}"
+          bindinput="onPhoneInput"
+          maxlength="11"
+        />
+      </view>
+    </view>
+
+    <!-- 昵称 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/user.png"></image>
+        <input
+          class="input-field"
+          type="text"
+          placeholder="请输入昵称"
+          placeholder-class="placeholder"
+          value="{{formData.nickname}}"
+          bindinput="onNicknameInput"
+          maxlength="20"
+        />
+      </view>
+    </view>
+
+    <!-- 密码 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/lock.png"></image>
+        <input
+          class="input-field"
+          type="{{showPassword ? 'text' : 'password'}}"
+          placeholder="请设置密码(6-20位)"
+          placeholder-class="placeholder"
+          value="{{formData.password}}"
+          bindinput="onPasswordInput"
+        />
+        <image
+          class="password-toggle"
+          src="{{showPassword ? '/images/icons/eye-open.png' : '/images/icons/eye-close.png'}}"
+          bindtap="togglePassword"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 确认密码 -->
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/icons/lock.png"></image>
+        <input
+          class="input-field"
+          type="{{showConfirmPassword ? 'text' : 'password'}}"
+          placeholder="请再次输入密码"
+          placeholder-class="placeholder"
+          value="{{formData.confirmPassword}}"
+          bindinput="onConfirmPasswordInput"
+        />
+        <image
+          class="password-toggle"
+          src="{{showConfirmPassword ? '/images/icons/eye-open.png' : '/images/icons/eye-close.png'}}"
+          bindtap="toggleConfirmPassword"
+        ></image>
+      </view>
+    </view>
+
+    <!-- 用户协议 -->
+    <view class="agreement">
+      <checkbox
+        class="agreement-checkbox"
+        checked="{{agreed}}"
+        bindtap="toggleAgreement"
+      />
+      <text class="agreement-text">
+        我已阅读并同意
+        <text class="link" bindtap="showAgreement">《用户协议》</text>
+        和
+        <text class="link" bindtap="showPrivacy">《隐私政策》</text>
+      </text>
+    </view>
+
+    <!-- 注册按钮 -->
+    <button class="register-btn btn-primary" bindtap="handleRegister" disabled="{{loading || !agreed}}">
+      {{loading ? '注册中...' : '立即注册'}}
+    </button>
+  </view>
+
+  <!-- 底部链接 -->
+  <view class="footer-links">
+    <text class="link" bindtap="goToLogin">已有账号？立即登录</text>
+  </view>
+</view>

@@ -1,0 +1,3 @@
+{
+  "navigationBarTitleText": "{{isEdit ? '编辑提醒' : '添加提醒'}}"
+}

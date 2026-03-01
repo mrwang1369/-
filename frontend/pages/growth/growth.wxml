@@ -1,0 +1,98 @@
+<!--pages/growth/growth.wxml-->
+<view class="growth-container">
+  <!-- 宠物选择 -->
+  <view class="pet-selector" wx:if="{{pets.length > 0}}">
+    <scroll-view class="pet-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view
+        class="pet-option {{currentPetId === item.petId ? 'active' : ''}}"
+        wx:for="{{pets}}"
+        wx:key="petId"
+        bindtap="selectPet"
+        data-id="{{item.petId}}"
+      >
+        <image class="pet-avatar" src="{{item.avatarUrl || '/images/default-pet.png'}}" mode="aspectFill"></image>
+        <text class="pet-name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-section">
+    <scroll-view class="filter-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view
+        class="filter-item {{currentFilter === item.value ? 'active' : ''}}"
+        wx:for="{{filterOptions}}"
+        wx:key="value"
+        bindtap="selectFilter"
+        data-value="{{item.value}}"
+      >
+        <text>{{item.label}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 时光轴 -->
+  <view class="timeline">
+    <block wx:if="{{timelineEvents.length > 0}}">
+      <view class="timeline-item" wx:for="{{timelineEvents}}" wx:key="id">
+        <view class="timeline-line"></view>
+        <view class="timeline-dot {{item.type}}"></view>
+
+        <view class="timeline-content">
+          <view class="timeline-date">
+            <text class="date-day">{{item.day}}</text>
+            <text class="date-month">{{item.month}}</text>
+            <text class="date-year">{{item.year}}</text>
+          </view>
+
+          <view class="timeline-card">
+            <view class="card-header">
+              <view class="card-type {{item.type}}">
+                <image class="type-icon" src="/images/icons/{{item.type}}.png"></image>
+                <text>{{item.typeLabel}}</text>
+              </view>
+              <text class="card-time">{{item.time}}</text>
+            </view>
+
+            <text class="card-title">{{item.title}}</text>
+
+            <view class="card-description" wx:if="{{item.description}}">
+              <text>{{item.description}}</text>
+            </view>
+
+            <view class="card-images" wx:if="{{item.images && item.images.length > 0}}">
+              <image
+                class="card-image"
+                wx:for="{{item.images}}"
+                wx:key="*this"
+                wx:for-item="image"
+                src="{{image}}"
+                mode="aspectFill"
+                bindtap="previewImage"
+                data-urls="{{item.images}}"
+                data-current="{{image}}"
+              ></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore && timelineEvents.length > 0}}" bindtap="loadMore">
+      <text>加载更多</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-growth.png"></image>
+      <text class="empty-text">暂无成长记录</text>
+    </view>
+  </view>
+
+  <!-- 生成报告按钮 -->
+  <view class="report-btn" bindtap="generateReport">
+    <image class="report-icon" src="/images/icons/report.png"></image>
+    <text>生成成长报告</text>
+  </view>
+</view>

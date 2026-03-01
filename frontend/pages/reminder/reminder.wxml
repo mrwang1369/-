@@ -1,0 +1,113 @@
+<!--pages/reminder/reminder.wxml-->
+<view class="reminder-container">
+  <!-- 标签切换 -->
+  <view class="tabs">
+    <view
+      class="tab-item {{currentTab === 'today' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="today"
+    >
+      <text>今日提醒</text>
+      <view class="tab-badge" wx:if="{{todayCount > 0}}">{{todayCount}}</view>
+    </view>
+    <view
+      class="tab-item {{currentTab === 'upcoming' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="upcoming"
+    >
+      <text>即将到期</text>
+      <view class="tab-badge" wx:if="{{upcomingCount > 0}}">{{upcomingCount}}</view>
+    </view>
+    <view
+      class="tab-item {{currentTab === 'overdue' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="overdue"
+    >
+      <text>逾期提醒</text>
+      <view class="tab-badge" wx:if="{{overdueCount > 0}}">{{overdueCount}}</view>
+    </view>
+    <view
+      class="tab-item {{currentTab === 'all' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="all"
+    >
+      <text>全部</text>
+    </view>
+  </view>
+
+  <!-- 提醒列表 -->
+  <view class="reminder-list">
+    <block wx:if="{{filteredReminders.length > 0}}">
+      <view class="reminder-card" wx:for="{{filteredReminders}}" wx:key="reminderId">
+        <view class="reminder-header">
+          <view class="reminder-type {{item.priority}}">
+            <image class="type-icon" src="/images/icons/{{item.reminderType}}.png"></image>
+            <text>{{item.reminderType}}</text>
+          </view>
+          <view class="reminder-status {{item.completed ? 'completed' : 'pending'}}">
+            <text>{{item.completed ? '已完成' : '待完成'}}</text>
+          </view>
+        </view>
+
+        <view class="reminder-body">
+          <text class="reminder-title">{{item.title}}</text>
+          <text class="reminder-description" wx:if="{{item.description}}">{{item.description}}</text>
+
+          <view class="reminder-meta">
+            <view class="meta-item" wx:if="{{item.petName}}">
+              <image class="meta-icon" src="/images/icons/pet.png"></image>
+              <text>{{item.petName}}</text>
+            </view>
+            <view class="meta-item">
+              <image class="meta-icon" src="/images/icons/time.png"></image>
+              <text>{{item.dueDate}}</text>
+            </view>
+            <view class="meta-item" wx:if="{{item.frequency && item.frequency !== 'once'}}">
+              <image class="meta-icon" src="/images/icons/repeat.png"></image>
+              <text>{{frequencyText[item.frequency]}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="reminder-footer">
+          <view
+            class="action-btn complete-btn {{item.completed ? 'completed' : ''}}"
+            bindtap="toggleComplete"
+            data-id="{{item.reminderId}}"
+          >
+            <image class="btn-icon" src="{{item.completed ? '/images/icons/undo.png' : '/images/icons/check-circle.png'}}"></image>
+            <text>{{item.completed ? '取消完成' : '标记完成'}}</text>
+          </view>
+          <view class="action-btn edit-btn" bindtap="editReminder" data-id="{{item.reminderId}}">
+            <image class="btn-icon" src="/images/icons/edit.png"></image>
+            <text>编辑</text>
+          </view>
+          <view class="action-btn delete-btn" bindtap="deleteReminder" data-id="{{item.reminderId}}">
+            <image class="btn-icon" src="/images/icons/delete.png"></image>
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-reminder.png"></image>
+      <text class="empty-text">{{emptyText}}</text>
+      <button class="empty-btn" bindtap="addReminder" wx:if="{{currentTab === 'all'}}">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 生成健康提醒按钮 -->
+  <view class="generate-section">
+    <button class="generate-btn" bindtap="generateHealthReminders">
+      <image class="generate-icon" src="/images/icons/magic.png"></image>
+      <text>生成健康提醒</text>
+    </button>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="addReminder">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>

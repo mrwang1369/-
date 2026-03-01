@@ -1,0 +1,72 @@
+<!--pages/checkup/checkup.wxml-->
+<view class="checkup-container">
+  <!-- 体检列表 -->
+  <view class="checkup-list">
+    <block wx:if="{{records.length > 0}}">
+      <view class="checkup-item" wx:for="{{records}}" wx:key="recordId">
+        <view class="checkup-content">
+          <view class="checkup-header">
+            <text class="checkup-title">健康体检</text>
+            <view class="status-badge {{item.status}}">
+              <text>{{item.statusText}}</text>
+            </view>
+          </view>
+
+          <view class="checkup-info">
+            <view class="info-row">
+              <text class="info-label">体检日期</text>
+              <text class="info-value">{{item.checkupDate}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.checkupInstitution}}">
+              <text class="info-label">体检机构</text>
+              <text class="info-value">{{item.checkupInstitution}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.veterinarian}}">
+              <text class="info-label">体检医生</text>
+              <text class="info-value">{{item.veterinarian}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.weight}}">
+              <text class="info-label">体重</text>
+              <text class="info-value">{{item.weight}}kg</text>
+            </view>
+          </view>
+
+          <view class="checkup-result" wx:if="{{item.checkupResult}}">
+            <text class="result-label">体检结果：</text>
+            <text class="result-text">{{item.checkupResult}}</text>
+          </view>
+
+          <view class="checkup-attachments" wx:if="{{item.attachments && item.attachments.length > 0}}">
+            <text class="attachments-label">附件：</text>
+            <view class="attachment-list">
+              <view class="attachment-item" wx:for="{{item.attachments}}" wx:key="*this" wx:for-item="attachment">
+                <image class="attachment-thumb" src="{{attachment}}" mode="aspectFill" bindtap="previewAttachment" data-url="{{attachment}}"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="checkup-actions">
+          <view class="action-btn" bindtap="editRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/edit.png"></image>
+          </view>
+          <view class="action-btn" bindtap="deleteRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/delete.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-checkup.png"></image>
+      <text class="empty-text">还没有体检记录</text>
+      <button class="empty-btn" bindtap="addRecord">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="addRecord">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>

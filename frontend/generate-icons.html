@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图标生成工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #FF6B9D;
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .icon-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .icon-group h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px;
+            background: white;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFB6C1 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+        .instructions {
+            background: #FFF5F7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #FF6B9D;
+        }
+        .download-all {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🐾 宠物健康管家 - 图标生成工具</h1>
+    
+    <div class="instructions">
+        <h3>📖 使用说明：</h3>
+        <ol>
+            <li>每个图标会生成两个版本：未选中（灰色）和已选中（粉色）</li>
+            <li>点击单个"下载"按钮下载单个图标</li>
+            <li>或者点击底部的"下载所有图标"按钮批量下载</li>
+            <li>下载后将图标保存到：`pet-health-miniprogram/images/tab/` 目录</li>
+        </ol>
+    </div>
+
+    <button class="download-all" onclick="downloadAll()">⬇️ 下载所有图标</button>
+
+    <div class="container" id="iconsContainer"></div>
+
+    <script>
+        const icons = [
+            { name: 'home', title: '首页', symbol: '🏠' },
+            { name: 'pets', title: '宠物', symbol: '🐾' },
+            { name: 'health', title: '健康', symbol: '❤️' },
+            { name: 'reminder', title: '提醒', symbol: '🔔' },
+            { name: 'map', title: '服务', symbol: '📍' }
+        ];
+
+        function createIconCanvas(symbol, color, bgColor) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 81;
+            canvas.height = 81;
+            const ctx = canvas.getContext('2d');
+
+            // 背景
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, 81, 81);
+
+            // 图标符号（使用emoji）
+            ctx.font = '48px Arial';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(symbol, 40.5, 40.5);
+
+            return canvas;
+        }
+
+        function createIcon(iconName, symbol, title) {
+            const group = document.createElement('div');
+            group.className = 'icon-group';
+            
+            const h3 = document.createElement('h3');
+            h3.textContent = title;
+            group.appendChild(h3);
+
+            // 未选中状态
+            const canvasNormal = createIconCanvas(symbol, '#999999', '#FFFFFF');
+            canvasNormal.id = `${iconName}-normal`;
+            group.appendChild(canvasNormal);
+            
+            const btnNormal = document.createElement('button');
+            btnNormal.className = 'download-btn';
+            btnNormal.textContent = `下载未选中 (${iconName}.png)`;
+            btnNormal.onclick = () => downloadCanvas(canvasNormal, `${iconName}.png`);
+            group.appendChild(btnNormal);
+
+            // 已选中状态
+            const canvasActive = createIconCanvas(symbol, '#FF6B9D', '#FFFFFF');
+            canvasActive.id = `${iconName}-active`;
+            group.appendChild(canvasActive);
+            
+            const btnActive = document.createElement('button');
+            btnActive.className = 'download-btn';
+            btnActive.textContent = `下载已选中 (${iconName}-active.png)`;
+            btnActive.onclick = () => downloadCanvas(canvasActive, `${iconName}-active.png`);
+            group.appendChild(btnActive);
+
+            return group;
+        }
+
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            let delay = 0;
+            icons.forEach(icon => {
+                setTimeout(() => {
+                    const canvasNormal = document.getElementById(`${icon.name}-normal`);
+                    const canvasActive = document.getElementById(`${icon.name}-active`);
+                    if (canvasNormal) downloadCanvas(canvasNormal, `${icon.name}.png`);
+                    if (canvasActive) downloadCanvas(canvasActive, `${icon.name}-active.png`);
+                }, delay);
+                delay += 500;
+            });
+            
+            setTimeout(() => {
+                alert('✅ 所有图标已开始下载！\n\n请将下载的图标保存到：\npet-health-miniprogram/images/tab/ 目录');
+            }, delay + 500);
+        }
+
+        // 初始化图标
+        const container = document.getElementById('iconsContainer');
+        icons.forEach(icon => {
+            container.appendChild(createIcon(icon.name, icon.symbol, icon.title));
+        });
+    </script>
+</body>
+</html>

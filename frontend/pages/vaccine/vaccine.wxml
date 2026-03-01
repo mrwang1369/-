@@ -1,0 +1,63 @@
+<!--pages/vaccine/vaccine.wxml-->
+<view class="vaccine-container">
+  <!-- 疫苗列表 -->
+  <view class="vaccine-list">
+    <block wx:if="{{records.length > 0}}">
+      <view class="vaccine-item" wx:for="{{records}}" wx:key="recordId">
+        <view class="vaccine-content">
+          <view class="vaccine-header">
+            <text class="vaccine-name">{{item.vaccineName}}</text>
+            <view class="status-badge {{item.status}}">
+              <text>{{item.statusText}}</text>
+            </view>
+          </view>
+
+          <view class="vaccine-info">
+            <view class="info-row">
+              <text class="info-label">接种日期</text>
+              <text class="info-value">{{item.vaccinationDate}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.nextDueDate}}">
+              <text class="info-label">下次接种</text>
+              <text class="info-value {{item.isOverdue ? 'overdue' : ''}}">{{item.nextDueDate}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.veterinarian}}">
+              <text class="info-label">接种医生</text>
+              <text class="info-value">{{item.veterinarian}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.hospital}}">
+              <text class="info-label">接种机构</text>
+              <text class="info-value">{{item.hospital}}</text>
+            </view>
+          </view>
+
+          <view class="vaccine-notes" wx:if="{{item.notes}}">
+            <text class="notes-label">备注：</text>
+            <text class="notes-text">{{item.notes}}</text>
+          </view>
+        </view>
+
+        <view class="vaccine-actions">
+          <view class="action-btn" bindtap="editRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/edit.png"></image>
+          </view>
+          <view class="action-btn" bindtap="deleteRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/delete.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-vaccine.png"></image>
+      <text class="empty-text">还没有疫苗记录</text>
+      <button class="empty-btn" bindtap="addRecord">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="addRecord">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>

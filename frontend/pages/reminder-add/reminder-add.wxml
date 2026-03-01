@@ -1,0 +1,115 @@
+<!--pages/reminder-add/reminder-add.wxml-->
+<view class="reminder-add-container">
+  <!-- 表单 -->
+  <view class="form-section">
+    <!-- 提醒类型 -->
+    <view class="form-item">
+      <text class="form-label">提醒类型</text>
+      <view class="type-selector">
+        <view
+          class="type-option {{formData.reminderType === item ? 'active' : ''}}"
+          wx:for="{{typeOptions}}"
+          wx:key="*this"
+          bindtap="selectType"
+          data-type="{{item}}"
+        >
+          <image class="type-icon" src="/images/icons/{{item}}.png"></image>
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 选择宠物 -->
+    <view class="form-item" wx:if="{{pets.length > 0}}">
+      <text class="form-label">关联宠物</text>
+      <view class="pet-selector">
+        <view
+          class="pet-option {{formData.petId === item.petId ? 'active' : ''}}"
+          wx:for="{{pets}}"
+          wx:key="petId"
+          bindtap="selectPet"
+          data-id="{{item.petId}}"
+        >
+          <image class="pet-avatar" src="{{item.avatarUrl || '/images/default-pet.png'}}" mode="aspectFill"></image>
+          <text>{{item.name}}</text>
+        </view>
+        <view class="pet-option {{formData.petId === null ? 'active' : ''}}" bindtap="selectPet" data-id="">
+          <image class="pet-avatar" src="/images/icons/all-pet.png"></image>
+          <text>所有宠物</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提醒标题 -->
+    <view class="form-item">
+      <text class="form-label">提醒标题 *</text>
+      <input
+        class="form-input"
+        placeholder="请输入提醒标题"
+        value="{{formData.title}}"
+        bindinput="onTitleInput"
+        maxlength="50"
+      />
+    </view>
+
+    <!-- 提醒描述 -->
+    <view class="form-item">
+      <text class="form-label">描述</text>
+      <textarea
+        class="form-textarea"
+        placeholder="请输入详细描述（选填）"
+        value="{{formData.description}}"
+        bindinput="onDescriptionInput"
+        maxlength="200"
+      />
+    </view>
+
+    <!-- 提醒时间 -->
+    <view class="form-item">
+      <text class="form-label">提醒时间 *</text>
+      <picker
+        mode="multiSelector"
+        range="{{timeRange}}"
+        range-key="label"
+        bindchange="onTimeChange"
+      >
+        <view class="picker-input">
+          {{formData.time || '请选择时间'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 重复周期 -->
+    <view class="form-item">
+      <text class="form-label">重复周期</text>
+      <picker mode="selector" range="{{frequencyOptions}}" bindchange="onFrequencyChange">
+        <view class="picker-input">
+          {{frequencyText[formData.frequency] || '请选择周期'}}
+        </view>
+      </picker>
+    </view>
+
+    <!-- 优先级 -->
+    <view class="form-item">
+      <text class="form-label">优先级</text>
+      <view class="priority-selector">
+        <view
+          class="priority-option {{formData.priority === item ? 'active' : ''}}"
+          wx:for="{{priorityOptions}}"
+          wx:key="*this"
+          bindtap="selectPriority"
+          data-priority="{{item}}"
+        >
+          <text>{{priorityText[item]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <button class="submit-btn" bindtap="handleSubmit" disabled="{{loading}}">
+      {{loading ? '保存中...' : (isEdit ? '保存修改' : '创建提醒')}}
+    </button>
+  </view>
+</view>

@@ -1,0 +1,77 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/pets/pets",
+    "pages/pet-detail/pet-detail",
+    "pages/pet-add/pet-add",
+    "pages/health/health",
+    "pages/vaccine/vaccine",
+    "pages/vaccine-add/vaccine-add",
+    "pages/deworming/deworming",
+    "pages/deworming-add/deworming-add",
+    "pages/checkup/checkup",
+    "pages/checkup-add/checkup-add",
+    "pages/medical/medical",
+    "pages/medical-add/medical-add",
+    "pages/reminder/reminder",
+    "pages/reminder-add/reminder-add",
+    "pages/map/map",
+    "pages/growth/growth"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFB6C1",
+    "navigationBarTitleText": "宠物健康管家",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FFF5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF6B9D",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab/home.png",
+        "selectedIconPath": "images/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/pets/pets",
+        "text": "宠物",
+        "iconPath": "images/tab/pets.png",
+        "selectedIconPath": "images/tab/pets-active.png"
+      },
+      {
+        "pagePath": "pages/health/health",
+        "text": "健康",
+        "iconPath": "images/tab/health.png",
+        "selectedIconPath": "images/tab/health-active.png"
+      },
+      {
+        "pagePath": "pages/reminder/reminder",
+        "text": "提醒",
+        "iconPath": "images/tab/reminder.png",
+        "selectedIconPath": "images/tab/reminder-active.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "服务",
+        "iconPath": "images/tab/map.png",
+        "selectedIconPath": "images/tab/map-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于查找附近的宠物医院和服务"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

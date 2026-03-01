@@ -1,0 +1,84 @@
+<!--pages/health/health.wxml-->
+<view class="health-container">
+  <!-- 宠物选择 -->
+  <view class="pet-selector">
+    <scroll-view class="pet-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}">
+      <view
+        class="pet-option {{currentPetId === item.petId ? 'active' : ''}}"
+        wx:for="{{pets}}"
+        wx:key="petId"
+        bindtap="selectPet"
+        data-id="{{item.petId}}"
+      >
+        <image class="pet-avatar" src="{{item.avatarUrl || '/images/default-pet.png'}}" mode="aspectFill"></image>
+        <text class="pet-name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 健康统计卡片 -->
+  <view class="stats-section">
+    <view class="stat-card" bindtap="navigateToVaccine">
+      <image class="stat-icon" src="/images/icons/vaccine.png"></image>
+      <view class="stat-info">
+        <text class="stat-value">{{vaccineCount}}</text>
+        <text class="stat-label">疫苗记录</text>
+      </view>
+      <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+    </view>
+
+    <view class="stat-card" bindtap="navigateToDeworming">
+      <image class="stat-icon" src="/images/icons/deworming.png"></image>
+      <view class="stat-info">
+        <text class="stat-value">{{dewormingCount}}</text>
+        <text class="stat-label">驱虫记录</text>
+      </view>
+      <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+    </view>
+
+    <view class="stat-card" bindtap="navigateToCheckup">
+      <image class="stat-icon" src="/images/icons/checkup.png"></image>
+      <view class="stat-info">
+        <text class="stat-value">{{checkupCount}}</text>
+        <text class="stat-label">体检记录</text>
+      </view>
+      <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+    </view>
+
+    <view class="stat-card" bindtap="navigateToMedical">
+      <image class="stat-icon" src="/images/icons/medical.png"></image>
+      <view class="stat-info">
+        <text class="stat-value">{{medicalCount}}</text>
+        <text class="stat-label">病历记录</text>
+      </view>
+      <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+    </view>
+  </view>
+
+  <!-- 近期记录 -->
+  <view class="recent-section">
+    <view class="section-header">
+      <text class="section-title">近期记录</text>
+      <text class="section-more" bindtap="navigateToGrowth">查看全部</text>
+    </view>
+
+    <view class="recent-list">
+      <block wx:if="{{recentRecords.length > 0}}">
+        <view class="recent-item" wx:for="{{recentRecords}}" wx:key="id">
+          <view class="recent-icon {{item.type}}">
+            <text class="icon-text">{{item.type[0]}}</text>
+          </view>
+          <view class="recent-info">
+            <text class="recent-title">{{item.title}}</text>
+            <text class="recent-pet">{{item.petName}}</text>
+            <text class="recent-date">{{item.date}}</text>
+          </view>
+        </view>
+      </block>
+
+      <view class="empty-state" wx:else>
+        <text class="empty-text">暂无健康记录</text>
+      </view>
+    </view>
+  </view>
+</view>

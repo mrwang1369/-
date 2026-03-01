@@ -1,0 +1,63 @@
+<!--pages/deworming/deworming.wxml-->
+<view class="deworming-container">
+  <!-- 驱虫列表 -->
+  <view class="deworming-list">
+    <block wx:if="{{records.length > 0}}">
+      <view class="deworming-item" wx:for="{{records}}" wx:key="recordId">
+        <view class="deworming-content">
+          <view class="deworming-header">
+            <text class="deworming-type">{{item.dewormingType}}</text>
+            <view class="status-badge {{item.status}}">
+              <text>{{item.statusText}}</text>
+            </view>
+          </view>
+
+          <view class="deworming-info">
+            <view class="info-row">
+              <text class="info-label">驱虫日期</text>
+              <text class="info-value">{{item.dewormingDate}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.nextDueDate}}">
+              <text class="info-label">下次驱虫</text>
+              <text class="info-value {{item.isOverdue ? 'overdue' : ''}}">{{item.nextDueDate}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.dewormingMedicine}}">
+              <text class="info-label">驱虫药物</text>
+              <text class="info-value">{{item.dewormingMedicine}}</text>
+            </view>
+            <view class="info-row" wx:if="{{item.veterinarian}}">
+              <text class="info-label">治疗医生</text>
+              <text class="info-value">{{item.veterinarian}}</text>
+            </view>
+          </view>
+
+          <view class="deworming-notes" wx:if="{{item.notes}}">
+            <text class="notes-label">备注：</text>
+            <text class="notes-text">{{item.notes}}</text>
+          </view>
+        </view>
+
+        <view class="deworming-actions">
+          <view class="action-btn" bindtap="editRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/edit.png"></image>
+          </view>
+          <view class="action-btn" bindtap="deleteRecord" data-id="{{item.recordId}}">
+            <image class="action-icon" src="/images/icons/delete.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-deworming.png"></image>
+      <text class="empty-text">还没有驱虫记录</text>
+      <button class="empty-btn" bindtap="addRecord">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="addRecord">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>

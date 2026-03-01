@@ -1,0 +1,64 @@
+<!--pages/medical/medical.wxml-->
+<view class="medical-container">
+  <!-- 搜索框 -->
+  <view class="search-section">
+    <view class="search-box">
+      <image class="search-icon" src="/images/icons/search.png"></image>
+      <input
+        class="search-input"
+        placeholder="搜索病历记录..."
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+      />
+      <view class="search-btn" bindtap="onSearch">搜索</view>
+    </view>
+  </view>
+
+  <!-- 病历列表 -->
+  <view class="medical-list">
+    <block wx:if="{{records.length > 0}}">
+      <view class="medical-item" wx:for="{{records}}" wx:key="recordId" bindtap="viewDetail" data-id="{{item.recordId}}">
+        <view class="medical-header">
+          <text class="diagnosis">{{item.diagnosisResult || '就医记录'}}</text>
+          <text class="visit-date">{{item.visitDate}}</text>
+        </view>
+
+        <view class="medical-body">
+          <view class="info-row" wx:if="{{item.hospital}}">
+            <image class="info-icon" src="/images/icons/hospital.png"></image>
+            <text class="info-text">{{item.hospital}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.veterinarian}}">
+            <image class="info-icon" src="/images/icons/doctor.png"></image>
+            <text class="info-text">{{item.veterinarian}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.medicationList}}">
+            <image class="info-icon" src="/images/icons/medicine.png"></image>
+            <text class="info-text text-ellipsis">{{item.medicationList}}</text>
+          </view>
+        </view>
+
+        <view class="medical-footer">
+          <view class="medication-reminder" wx:if="{{item.hasMedicationReminder}}">
+            <image class="reminder-icon" src="/images/icons/reminder.png"></image>
+            <text>有用药提醒</text>
+          </view>
+          <image class="arrow-icon" src="/images/icons/arrow-right.png"></image>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="/images/icons/empty-medical.png"></image>
+      <text class="empty-text">{{keyword ? '未找到相关记录' : '还没有病历记录'}}</text>
+      <button class="empty-btn" bindtap="addRecord" wx:if="{{!keyword}}">立即添加</button>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab" bindtap="addRecord">
+    <image class="fab-icon" src="/images/icons/add-white.png"></image>
+  </view>
+</view>
