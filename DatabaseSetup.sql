@@ -183,165 +183,23 @@ CREATE TABLE IF NOT EXISTS `pet_breed`(
     INDEX `idx_species`(`species`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='宠物品种字典表';
 
--- 创建宠物表（如果不存在）
-CREATE TABLE IF NOT EXISTS `pet` (
-    `pet_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '宠物ID',
-    `user_id` INT NOT NULL COMMENT '用户ID',
-    `name` VARCHAR(50) NOT NULL COMMENT '宠物名称',
-    `species` VARCHAR(20) COMMENT '物种',
-    `breed` VARCHAR(50) COMMENT '品种',
-    `gender` TINYINT COMMENT '性别(0-未知 1-雄性 2-雌性)',
-    `birth_date` DATE COMMENT '出生日期',
-    `weight` DECIMAL(5,2) COMMENT '体重(kg)',
-    `avatar_url` VARCHAR(500) COMMENT '头像URL',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
-    INDEX idx_user_id (`user_id`),
-    INDEX idx_species (`species`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='宠物表';
 
--- 创建医疗记录表（如果不存在）
-CREATE TABLE IF NOT EXISTS `medical_record` (
-    `medical_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '医疗记录ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `hospital` VARCHAR(100) COMMENT '就诊医院',
-    `diagnosis` TEXT COMMENT '诊断结果',
-    `medication_list` TEXT COMMENT '用药清单',
-    `treatment_date` DATE COMMENT '就诊日期',
-    `notes` TEXT COMMENT '备注',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_treatment_date (`treatment_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='医疗记录表';
 
--- 创建疫苗接种记录表（如果不存在）
-CREATE TABLE IF NOT EXISTS `vaccination_record` (
-    `vaccination_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '疫苗接种记录ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `vaccine_type` VARCHAR(50) COMMENT '疫苗类型',
-    `vaccination_date` DATE COMMENT '接种日期',
-    `next_due_date` DATE COMMENT '下次接种日期',
-    `veterinarian` VARCHAR(50) COMMENT '兽医',
-    `notes` TEXT COMMENT '备注',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_vaccination_date (`vaccination_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='疫苗接种记录表';
 
--- 创建驱虫记录表（如果不存在）
-CREATE TABLE IF NOT EXISTS `deworming_record` (
-    `deworming_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '驱虫记录ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `medicine_name` VARCHAR(100) COMMENT '药品名称',
-    `deworming_date` DATE COMMENT '驱虫日期',
-    `next_due_date` DATE COMMENT '下次驱虫日期',
-    `notes` TEXT COMMENT '备注',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_deworming_date (`deworming_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='驱虫记录表';
 
--- 创建体检记录表（如果不存在）
-CREATE TABLE IF NOT EXISTS `checkup_record` (
-    `checkup_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '体检记录ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `checkup_date` DATE COMMENT '体检日期',
-    `institution` VARCHAR(100) COMMENT '体检机构',
-    `result_summary` TEXT COMMENT '体检结果摘要',
-    `report_image_url` VARCHAR(500) COMMENT '报告图片URL',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_checkup_date (`checkup_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='体检记录表';
 
--- 创建成长事件表（如果不存在）
-CREATE TABLE IF NOT EXISTS `growth_event` (
-    `event_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '成长事件ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `event_type` VARCHAR(20) COMMENT '事件类型',
-    `event_date` DATE COMMENT '事件日期',
-    `description` TEXT COMMENT '事件描述',
-    `image_url` VARCHAR(500) COMMENT '图片URL',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_event_date (`event_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='成长事件表';
 
--- 创建症状记录表（如果不存在）
-CREATE TABLE IF NOT EXISTS `symptom_record` (
-    `symptom_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '症状记录ID',
-    `pet_id` INT NOT NULL COMMENT '宠物ID',
-    `symptom_type` VARCHAR(50) COMMENT '症状类型',
-    `severity` VARCHAR(20) COMMENT '严重程度',
-    `start_date` DATE COMMENT '开始日期',
-    `end_date` DATE COMMENT '结束日期',
-    `description` TEXT COMMENT '症状描述',
-    `treatment_notes` TEXT COMMENT '治疗备注',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_start_date (`start_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='症状记录表';
 
--- 创建服务网点表（如果不存在）
-CREATE TABLE IF NOT EXISTS `service_point` (
-    `point_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '服务网点ID',
-    `name` VARCHAR(100) NOT NULL COMMENT '网点名称',
-    `type` VARCHAR(20) COMMENT '网点类型',
-    `address` VARCHAR(200) COMMENT '地址',
-    `phone` VARCHAR(20) COMMENT '联系电话',
-    `latitude` DECIMAL(10,8) COMMENT '纬度',
-    `longitude` DECIMAL(11,8) COMMENT '经度',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-    INDEX idx_type (`type`),
-    INDEX idx_location (`latitude`, `longitude`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='服务网点表';
 
--- 创建提醒表（如果不存在）
-CREATE TABLE IF NOT EXISTS `reminder` (
-    `reminder_id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '提醒ID',
-    `user_id` INT NOT NULL COMMENT '用户ID',
-    `pet_id` INT COMMENT '宠物ID（可为空，表示全局提醒）',
-    `reminder_type` VARCHAR(20) COMMENT '提醒类型',
-    `title` VARCHAR(100) COMMENT '提醒标题',
-    `due_date` DATETIME COMMENT '截止日期',
-    `status` VARCHAR(20) DEFAULT 'pending' COMMENT '状态',
-    `repeat_cycle` VARCHAR(20) COMMENT '重复周期',
-    `notes` TEXT COMMENT '备注',
-    `completed_time` DATETIME COMMENT '完成时间',
-    `deleted` TINYINT DEFAULT 0 COMMENT '逻辑删除标志',
-    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
-    FOREIGN KEY (`pet_id`) REFERENCES `pet`(`pet_id`),
-    INDEX idx_user_id (`user_id`),
-    INDEX idx_pet_id (`pet_id`),
-    INDEX idx_due_date (`due_date`),
-    INDEX idx_status (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='提醒表';
+
+
+
+
+
+
+
+
+
 
 -- 插入常见犬种
 INSERT INTO `pet_breed`(`species`,`breed_name`) VALUES

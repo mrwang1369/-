@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/petBreed")
+@RequestMapping("/pet-breeds")
 @Slf4j
 public class PetBreedController {
 

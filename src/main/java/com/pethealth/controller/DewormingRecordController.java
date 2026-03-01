@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/api/deworming-records")
+@RequestMapping("/deworming-records")
 @Tag(name = "驱虫记录管理", description = "驱虫记录的增删改查及相关提醒功能")
 @Slf4j
 public class DewormingRecordController {

@@ -26,14 +26,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**") // 拦截所有路径
                 .excludePathPatterns(
-                    "/auth/login",
+                    "/auth/login",      // 认证相关接口
                     "/auth/register",
                     "/auth/wxlogin",
-                    "/health",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/webjars/**",
-                    "/doc.html"
+                    "/auth/refresh",
+                    "/auth/profile",
+                    "/auth/logout",
+                    "/health",          // 健康检查
+                    "/swagger-ui/**",   // Swagger UI
+                    "/v3/api-docs/**",  // API文档
+                    "/webjars/**",      // 静态资源
+                    "/doc.html",        // Knife4j文档
+                    "/favicon.ico"       // 图标
                 );
     }
 

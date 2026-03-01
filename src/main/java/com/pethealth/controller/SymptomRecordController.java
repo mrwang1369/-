@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/symptomRecord")
+@RequestMapping("/symptom-records")
 @Slf4j
 public class SymptomRecordController {
 

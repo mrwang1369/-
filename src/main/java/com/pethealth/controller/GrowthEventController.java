@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/growthEvent")
+@RequestMapping("/growth-events")
 public class GrowthEventController {
 
 }

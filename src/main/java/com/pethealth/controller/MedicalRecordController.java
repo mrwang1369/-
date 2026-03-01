@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/api/medical-records")
+@RequestMapping("/medical-records")
 @Tag(name = "病历记录管理", description = "病历记录的增删改查及相关查询功能")
 @Slf4j
 public class MedicalRecordController {

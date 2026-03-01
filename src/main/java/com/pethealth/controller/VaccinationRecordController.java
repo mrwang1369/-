@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2026-02-11
  */
 @RestController
-@RequestMapping("/api/vaccination-records")
+@RequestMapping("/vaccination-records")
 @Tag(name = "疫苗记录管理", description = "疫苗接种记录的增删改查及相关提醒功能")
 @Slf4j
 public class VaccinationRecordController {
