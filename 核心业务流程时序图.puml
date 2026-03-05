@@ -1,0 +1,112 @@
+@startuml 宠物健康管家系统核心业务时序图
+
+title 宠物健康管家系统核心业务时序图（概要级）
+
+' 参与者定义
+actor "用户" as User
+participant "小程序前端" as Frontend
+participant "后端控制器" as Controller
+participant "业务服务层" as Service
+database "数据库" as Database
+participant "第三方服务" as ThirdParty
+
+== 1. 用户注册登录流程 ==
+User -> Frontend: 打开小程序
+Frontend -> Frontend: 检查登录状态
+alt 已登录
+    Frontend --> User: 进入首页
+else 未登录
+    User -> Frontend: 选择微信登录
+    Frontend -> ThirdParty: 请求微信授权
+    ThirdParty --> Frontend: 返回授权码 code
+    Frontend -> Controller: 通过 code 获取用户信息
+    Controller -> ThirdParty: 换取 access_token 和用户信息
+    ThirdParty --> Controller: 返回 openid 和用户数据
+    Controller -> Service: 查询/创建用户
+    Service -> Database: 保存/更新用户信息
+    Database --> Service: 返回用户 ID
+    Service --> Controller: 生成 JWT Token
+    Controller --> Frontend: 返回登录凭证
+    Frontend --> User: 登录成功，跳转首页
+end
+
+== 2. 宠物档案管理流程 ==
+User -> Frontend: 点击添加宠物
+User -> Frontend: 填写宠物信息并提交
+Frontend -> Controller: 提交宠物档案数据
+Controller -> Service: 验证数据并处理上传
+Service -> Service: 图片压缩和存储
+Service -> Database: 保存宠物基本信息
+Database --> Service: 返回宠物 ID
+Service -> Database: 建立用户 - 宠物关联
+Database --> Service: 关联成功
+Service --> Controller: 返回创建结果
+Controller --> Frontend: 显示添加成功
+Frontend --> User: 跳转宠物详情页
+
+== 3. 健康记录添加流程 ==
+User -> Frontend: 选择宠物和记录类型
+User -> Frontend: 填写健康记录详情
+alt 需要提醒
+    User -> Frontend: 设置提醒时间
+end
+User -> Frontend: 提交健康记录
+Frontend -> Controller: 发送记录创建请求
+Controller -> Service: 验证权限和数据
+Service -> Database: 保存健康记录
+Database --> Service: 返回记录 ID
+alt 设置了提醒
+    Service -> Database: 创建提醒配置
+    Database --> Service: 提醒创建成功
+end
+Service --> Controller: 返回操作结果
+Controller --> Frontend: 显示添加成功
+Frontend --> User: 跳转记录详情页
+
+== 4. 智能提醒触发流程 ==
+activate ThirdParty
+ThirdParty -> ThirdParty: 定时任务启动（每小时）
+ThirdParty -> Service: 查询待处理提醒列表
+Service -> Database: 获取待触发提醒
+Database --> Service: 返回提醒数据
+Service -> Service: 评估提醒优先级
+Service -> ThirdParty: 调用微信模板消息接口
+ThirdParty -> ThirdParty: 发送微信通知
+ThirdParty --> Service: 返回发送结果
+Service -> Database: 更新提醒状态
+alt 周期性提醒
+    Service -> Database: 创建下次提醒
+end
+Database --> Service: 更新成功
+Service --> ThirdParty: 处理完成
+ThirdParty -> ThirdParty: 记录执行日志
+deactivate ThirdParty
+
+== 5. 地图服务使用流程 ==
+User -> Frontend: 点击地图功能
+Frontend -> Frontend: 检查定位权限
+alt 已授权
+    Frontend -> ThirdParty: 获取当前位置
+    ThirdParty --> Frontend: 返回坐标信息
+else 未授权
+    Frontend --> User: 引导开启权限
+    User -> Frontend: 开启定位
+end
+User -> Frontend: 输入搜索关键词
+Frontend -> Controller: 请求周边服务点
+Controller -> Service: 执行地理搜索
+Service -> ThirdParty: 调用地图 API 搜索
+ThirdParty --> Service: 返回搜索结果
+Service -> Database: 同步本地服务点数据
+Database --> Service: 返回补充信息
+Service --> Controller: 整合搜索结果
+Controller --> Frontend: 返回服务点列表
+Frontend --> User: 显示服务点信息
+alt 需要导航
+    User -> Frontend: 请求导航路线
+    Frontend -> ThirdParty: 路径规划
+    ThirdParty --> Frontend: 返回导航信息
+    Frontend --> User: 显示导航路线
+end
+
+@enduml

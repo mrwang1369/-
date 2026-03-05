@@ -1,0 +1,305 @@
+@startuml
+' 宠物健康管理系统 - 数据库实体属性图
+' 生成时间：2026-03-05
+' 说明：展示所有数据库表对应的实体类及其属性
+
+hide circle
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    HeaderBackgroundColor LightBlue
+    FontName Microsoft YaHei
+    FontSize 12
+}
+
+' ==================== 核心实体类 ====================
+
+class User {
+    <<用户表>>
+    --
+    - userId: Integer <<主键，自增>>
+    - openid: String <<微信唯一标识>>
+    - phone: String <<手机号>>
+    - password: String <<加密密码>>
+    - nickname: String <<用户昵称>>
+    - avatarUrl: String <<头像 URL>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+    - updateTime: LocalDateTime <<更新时间>>
+}
+
+class Pet {
+    <<宠物表>>
+    --
+    - petId: Integer <<主键，自增>>
+    - userId: Integer <<关联用户 ID>>
+    - name: String <<宠物姓名>>
+    - species: String <<宠物类型>>
+    - breed: String <<品种>>
+    - birthDate: LocalDate <<出生日期>>
+    - gender: String <<性别>>
+    - weight: BigDecimal <<体重 (kg)>>
+    - allergyHistory: String <<过敏史>>
+    - neuteredStatus: Boolean <<绝育状态>>
+    - avatarUrl: String <<宠物头像 URL>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+    - updateTime: LocalDateTime <<更新时间>>
+}
+
+class PetBreed {
+    <<宠物品种字典表>>
+    --
+    - breedId: Integer <<主键，自增>>
+    - species: String <<宠物类型>>
+    - breedName: String <<品种名称>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+' ==================== 健康记录实体类 ====================
+
+class VaccinationRecord {
+    <<疫苗记录表>>
+    --
+    - vaccinationId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - vaccineName: String <<疫苗名称>>
+    - vaccinationDate: LocalDate <<接种日期>>
+    - nextDueDate: LocalDate <<下次接种日期>>
+    - vetInfo: String <<兽医信息>>
+    - proofImageUrl: String <<接种证明照片 URL>>
+    - notes: String <<备注>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+class DewormingRecord {
+    <<驱虫记录表>>
+    --
+    - dewormingId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - dewormingType: String <<驱虫类型>>
+    - drugName: String <<药物名称>>
+    - date: LocalDate <<驱虫日期>>
+    - nextDate: LocalDate <<下次驱虫日期>>
+    - notes: String <<备注>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+class CheckupRecord {
+    <<体检报告记录表>>
+    --
+    - checkupId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - checkupDate: LocalDate <<体检日期>>
+    - institution: String <<体检机构>>
+    - resultSummary: String <<结果摘要>>
+    - reportImageUrl: String <<报告照片 URL>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+class MedicalRecord {
+    <<病历与用药记录表>>
+    --
+    - medicalId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - hospital: String <<就诊医院>>
+    - diagnosis: String <<诊断结果>>
+    - medicationList: String <<用药清单>>
+    - treatmentDate: LocalDate <<就诊日期>>
+    - notes: String <<备注>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+' ==================== 提醒与服务实体类 ====================
+
+class Reminder {
+    <<提醒事项表>>
+    --
+    - reminderId: Integer <<主键，自增>>
+    - userId: Integer <<关联用户 ID>>
+    - petId: Integer <<关联宠物 ID>>
+    - reminderType: String <<提醒类型>>
+    - title: String <<提醒标题>>
+    - dueDate: LocalDateTime <<到期时间>>
+    - status: String <<状态>>
+    - repeatCycle: String <<重复周期>>
+    - notes: String <<备注>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+    - updateTime: LocalDateTime <<更新时间>>
+    - completedTime: LocalDateTime <<完成时间>>
+}
+
+class ServicePoint {
+    <<周边服务点表>>
+    --
+    - pointId: Integer <<主键，自增>>
+    - name: String <<服务点名称>>
+    - type: String <<服务类型>>
+    - address: String <<地址>>
+    - phone: String <<联系电话>>
+    - latitude: BigDecimal <<纬度>>
+    - longitude: BigDecimal <<经度>>
+    - rating: BigDecimal <<用户评分>>
+    - businessHours: String <<营业时间>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+class SymptomRecord {
+    <<AI 症状初筛记录表>>
+    --
+    - symptomId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - userId: Integer <<关联用户 ID>>
+    - symptomsText: String <<症状关键词输入>>
+    - analysisResult: String <<AI 分析结果>>
+    - emergencyLevel: String <<紧急程度>>
+    - suggestions: String <<处理建议>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+' ==================== 成长与文件实体类 ====================
+
+class GrowthEvent {
+    <<成长事件表>>
+    --
+    - eventId: Integer <<主键，自增>>
+    - petId: Integer <<关联宠物 ID>>
+    - eventType: String <<事件类型>>
+    - eventDate: LocalDateTime <<事件日期>>
+    - description: String <<描述>>
+    - imageUrl: String <<相关图片 URL>>
+    - weightValue: BigDecimal <<体重值>>
+    - deleted: Byte <<逻辑删除标志>>
+    - createTime: LocalDateTime <<创建时间>>
+}
+
+class FileInfo {
+    <<文件信息表>>
+    --
+    - fileId: Long <<主键，自增>>
+    - originalName: String <<原始文件名>>
+    - storedName: String <<存储文件名>>
+    - filePath: String <<文件存储路径>>
+    - fileSize: Long <<文件大小 (字节)>>
+    - fileType: String <<文件类型>>
+    - fileExtension: String <<文件扩展名>>
+    - moduleType: String <<模块类型>>
+    - businessId: Long <<关联业务 ID>>
+    - uploaderId: Integer <<上传用户 ID>>
+    - uploadTime: LocalDateTime <<上传时间>>
+    - deleted: Byte <<逻辑删除标志>>
+}
+
+' ==================== 基类 ====================
+
+class BaseEntity {
+    <<实体基类>>
+    --
+    + serialVersionUID: long
+}
+
+' ==================== 实体关系 ====================
+
+User "1" -- "0..*" Pet : 拥有 >
+Pet "1" -- "0..*" VaccinationRecord : 包含 >
+Pet "1" -- "0..*" DewormingRecord : 包含 >
+Pet "1" -- "0..*" CheckupRecord : 包含 >
+Pet "1" -- "0..*" MedicalRecord : 包含 >
+Pet "1" -- "0..*" GrowthEvent : 产生 >
+User "1" -- "0..*" Reminder : 设置 >
+Pet "1" -- "0..*" Reminder : 关联 >
+User "1" -- "0..*" SymptomRecord : 提交 >
+Pet "1" -- "0..*" SymptomRecord : 关联 >
+User "1" -- "0..*" FileInfo : 上传 >
+
+' 索引标注
+note right of User
+    <b>索引:</b>
+    - idx_phone(phone)
+    - idx_openid(openid)
+end note
+
+note right of Pet
+    <b>索引:</b>
+    - idx_user_id(user_id)
+    - idx_species(species)
+</b>外键:</b>
+    - user_id → user(user_id)
+end note
+
+note right of VaccinationRecord
+    <b>索引:</b>
+    - idx_pet_id(pet_id)
+    - idx_next_due_date(next_due_date)
+</b>外键:</b>
+    - pet_id → pet(pet_id)
+end note
+
+note right of DewormingRecord
+    <b>索引:</b>
+    - idx_pet_id(pet_id)
+</b>外键:</b>
+    - pet_id → pet(pet_id)
+end note
+
+note right of CheckupRecord
+    <b>索引:</b>
+    - idx_pet_id(pet_id)
+</b>外键:</b>
+    - pet_id → pet(pet_id)
+end note
+
+note right of MedicalRecord
+    <b>索引:</b>
+    - idx_pet_id(pet_id)
+</b>外键:</b>
+    - pet_id → pet(pet_id)
+end note
+
+note right of Reminder
+    <b>索引:</b>
+    - idx_user_id(user_id)
+    - idx_pet_id(pet_id)
+    - idx_due_date(due_date)
+    - idx_status(status)
+    - idx_user_pet_status_due(user_id,pet_id,status,due_date)
+</b>外键:</b>
+    - user_id → user(user_id)
+    - pet_id → pet(pet_id)
+end note
+
+note right of ServicePoint
+    <b>索引:</b>
+    - idx_location(latitude,longitude)
+    - idx_type(type)
+</b>唯一约束:</b>
+    - uk_name_address(name,address)
+end note
+
+note right of GrowthEvent
+    <b>索引:</b>
+    - idx_pet_id(pet_id)
+    - idx_event_date(event_date)
+    - idx_pet_date(pet_id,event_date DESC)
+</b>外键:</b>
+    - pet_id → pet(pet_id)
+end note
+
+note right of FileInfo
+    <b>索引:</b>
+    - idx_uploader_id(uploader_id)
+    - idx_module_business(module_type,business_id)
+    - idx_upload_time(upload_time)
+</b>外键:</b>
+    - uploader_id → user(user_id)
+end note
+
+@enduml

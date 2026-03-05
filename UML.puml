@@ -1,0 +1,1493 @@
+@startuml
+class com.pethealth.interceptor.AuthInterceptor {
+- {static} Logger log
+- JwtTokenUtil jwtTokenUtil
+- ObjectMapper objectMapper
+- {static} List<String> PUBLIC_PATHS
++ boolean preHandle(HttpServletRequest,HttpServletResponse,Object)
+- boolean isPublicPath(String)
+- String getTokenFromRequest(HttpServletRequest)
+- void sendUnauthorizedResponse(HttpServletResponse,String,String)
+}
+
+
+class com.pethealth.controller.ServicePointController {
+- ServicePointService servicePointService
+- MapService mapService
++ Result<List<ServicePoint>> getNearbyServicePoints(BigDecimal,BigDecimal,Integer,String)
++ Result<AmapResponseDTO> searchServicePoints(String,String,String)
++ Result<AmapResponseDTO> geocode(String)
++ Result<AmapResponseDTO> regeocode(BigDecimal,BigDecimal)
++ Result<Double> calculateDistance(BigDecimal,BigDecimal,BigDecimal,BigDecimal)
+}
+
+
+class com.pethealth.dto.DewormingRecordResponseDTO {
+- Integer dewormingId
+- Integer petId
+- String dewormingType
+- String drugName
+- LocalDate date
+- LocalDate nextDate
+- String notes
+- LocalDateTime createTime
+- Integer daysUntilNext
+- Boolean isExpiringSoon
+}
+
+class com.pethealth.aspect.LogAspect {
+- {static} Logger log
+- ObjectMapper objectMapper
++ void controllerPointcut()
++ void servicePointcut()
++ Object logController(ProceedingJoinPoint)
++ Object logService(ProceedingJoinPoint)
+- HttpServletRequest getHttpServletRequest()
+- String getClientIp(HttpServletRequest)
+- String getRequestParams(Object[])
+- String getMethodParams(Object[])
+- String getResponseResult(Object)
++ Object monitorPerformance(ProceedingJoinPoint)
+}
+
+
+class com.pethealth.entity.DewormingRecord {
+- {static} long serialVersionUID
+- Integer dewormingId
+- Integer petId
+- String dewormingType
+- String drugName
+- LocalDate date
+- LocalDate nextDate
+- String notes
+- Byte deleted
+- LocalDateTime createTime
+}
+
+class com.pethealth.dto.CheckupRecordResponseDTO {
+- Integer checkupId
+- Integer petId
+- LocalDate checkupDate
+- String institution
+- String resultSummary
+- String reportImageUrl
+- String notes
+- LocalDateTime createTime
+- Integer daysAgo
+- Boolean isRecent
++ Integer getCheckupId()
++ void setCheckupId(Integer)
++ Integer getPetId()
++ void setPetId(Integer)
++ LocalDate getCheckupDate()
++ void setCheckupDate(LocalDate)
++ String getInstitution()
++ void setInstitution(String)
++ String getResultSummary()
++ void setResultSummary(String)
++ String getReportImageUrl()
++ void setReportImageUrl(String)
++ String getNotes()
++ void setNotes(String)
++ LocalDateTime getCreateTime()
++ void setCreateTime(LocalDateTime)
++ Integer getDaysAgo()
++ void setDaysAgo(Integer)
++ Boolean getIsRecent()
++ void setIsRecent(Boolean)
+}
+
+
+class com.pethealth.controller.TestController {
++ String hello()
+}
+
+class com.pethealth.BackendApplication {
++ {static} void main(String[])
+}
+
+interface com.pethealth.service.FileService {
+~ FileUploadResponseDTO uploadFile(MultipartFile,FileUploadRequestDTO,Integer)
+~ FileUploadResponseDTO uploadPetAvatar(MultipartFile,Long,Integer)
+~ FileUploadResponseDTO uploadHealthRecordAttachment(MultipartFile,String,Long,Integer)
+~ FileInfoResponseDTO getFileInfo(Long)
+~ List<FileInfoResponseDTO> getFileListByBusiness(String,Long)
+~ List<FileInfoResponseDTO> getFileListByUser(Integer)
+~ boolean deleteFile(Long,Integer)
+~ int batchDeleteFiles(List<Long>,Integer)
+}
+
+class com.pethealth.service.impl.SymptomRecordServiceImpl {
+}
+interface com.pethealth.mapper.ServicePointMapper {
+}
+class com.pethealth.utils.PasswordUtil {
+- {static} BCryptPasswordEncoder encoder
++ {static} String encode(String)
++ {static} boolean matches(String,String)
++ {static} int checkPasswordStrength(String)
+}
+
+
+interface com.pethealth.mapper.CheckupRecordMapper {
+}
+class com.pethealth.entity.User {
+- {static} long serialVersionUID
+- Integer userId
+- String openid
+- String phone
+- String password
+- String nickname
+- String avatarUrl
+- Byte deleted
+- LocalDateTime createTime
+- LocalDateTime updateTime
+}
+
+class com.pethealth.dto.PetUpdateRequestDTO {
+- String name
+- String species
+- String breed
+- LocalDate birthDate
+- String gender
+- BigDecimal weight
+- String allergyHistory
+- Boolean neuteredStatus
+- String avatarUrl
+}
+
+class com.pethealth.dto.FileInfoResponseDTO {
+- Long fileId
+- String originalName
+- String fileUrl
+- Long fileSize
+- String fileSizeDisplay
+- String fileType
+- String fileExtension
+- String moduleType
+- String moduleTypeDisplay
+- Long businessId
+- Integer uploaderId
+- String uploaderName
+- LocalDateTime uploadTime
+}
+
+class com.pethealth.dto.HealthTimelineDTO {
+- LocalDate timelineDate
+- List<HealthEvent> events
+- Boolean isToday
+- Boolean hasImportantEvents
+}
+
+class com.pethealth.dto.HealthTimelineDTO$HealthEvent {
+- String eventType
+- String title
+- String description
+- Integer recordId
+- String imageUrl
+- LocalDateTime createTime
+- Boolean isImportant
+- String status
+}
+
+class com.pethealth.dto.AuthResponseDTO {
+- String accessToken
+- String tokenType
+- Long expiresIn
+- UserInfo userInfo
++ {static} AuthResponseDTOBuilder builder()
+}
+
+
+class com.pethealth.dto.AuthResponseDTO$UserInfo {
+- Long userId
+- String nickname
+- String phone
+- String avatarUrl
+- String openid
++ {static} UserInfoBuilder builder()
+}
+
+
+class com.pethealth.dto.AuthResponseDTO$UserInfo$UserInfoBuilder {
+- Long userId
+- String nickname
+- String phone
+- String avatarUrl
+- String openid
++ UserInfoBuilder userId(Long)
++ UserInfoBuilder nickname(String)
++ UserInfoBuilder phone(String)
++ UserInfoBuilder avatarUrl(String)
++ UserInfoBuilder openid(String)
++ UserInfo build()
+}
+
+
+class com.pethealth.dto.AuthResponseDTO$AuthResponseDTOBuilder {
+- String accessToken
+- String tokenType
+- Long expiresIn
+- UserInfo userInfo
++ AuthResponseDTOBuilder accessToken(String)
++ AuthResponseDTOBuilder tokenType(String)
++ AuthResponseDTOBuilder expiresIn(Long)
++ AuthResponseDTOBuilder userInfo(UserInfo)
++ AuthResponseDTO build()
+}
+
+
+class com.pethealth.entity.SymptomRecord {
+- {static} long serialVersionUID
+- Integer symptomId
+- Integer petId
+- Integer userId
+- String symptomsText
+- String analysisResult
+- String emergencyLevel
+- String suggestions
+- Byte deleted
+- LocalDateTime createTime
+}
+
+class com.pethealth.controller.AuthController {
+- UserService userService
++ Result<AuthResponseDTO> login(LoginRequestDTO)
++ Result<AuthResponseDTO> register(RegisterRequestDTO)
++ Result<AuthResponseDTO.UserInfo> getCurrentUserInfo(HttpServletRequest)
++ Result<Void> logout(HttpServletRequest)
++ Result<AuthResponseDTO> refreshToken(HttpServletRequest)
++ Result<AuthResponseDTO> wechatLogin(LoginRequestDTO)
+}
+
+
+class com.pethealth.dto.ReminderQueryDTO {
+- Integer petId
+- String reminderType
+- String status
+- Boolean todayOnly
+- Boolean overdueOnly
+}
+
+class com.pethealth.config.WebMvcConfig {
+- AuthInterceptor authInterceptor
+- String uploadPath
++ void addInterceptors(InterceptorRegistry)
++ void addResourceHandlers(ResourceHandlerRegistry)
+}
+
+
+interface com.pethealth.mapper.ReminderMapper {
+}
+class com.pethealth.controller.FileController {
+- FileService fileService
++ Result<FileUploadResponseDTO> uploadFile(MultipartFile,FileUploadRequestDTO,HttpServletRequest)
++ Result<FileUploadResponseDTO> uploadPetAvatar(Long,MultipartFile,HttpServletRequest)
++ Result<FileUploadResponseDTO> uploadHealthRecordAttachment(String,Long,MultipartFile,HttpServletRequest)
++ Result<FileInfoResponseDTO> getFileInfo(Long)
++ Result<List<FileInfoResponseDTO>> getFileListByBusiness(String,Long)
++ Result<List<FileInfoResponseDTO>> getFileListByUser(HttpServletRequest)
++ Result<Boolean> deleteFile(Long,HttpServletRequest)
++ Result<Integer> batchDeleteFiles(List<Long>,HttpServletRequest)
++ void downloadFile(String,String)
+}
+
+
+class com.pethealth.entity.Pet {
+- {static} long serialVersionUID
+- Integer petId
+- Integer userId
+- String name
+- String species
+- String breed
+- LocalDate birthDate
+- String gender
+- BigDecimal weight
+- String allergyHistory
+- Boolean neuteredStatus
+- String avatarUrl
+- Byte deleted
+- LocalDateTime createTime
+- LocalDateTime updateTime
+}
+
+interface com.pethealth.service.ReminderService {
+~ ReminderResponseDTO createReminder(ReminderCreateDTO,Integer)
+~ ReminderResponseDTO updateReminder(Integer,ReminderUpdateDTO)
+~ void deleteReminder(Integer)
+~ ReminderResponseDTO completeReminder(Integer)
+~ ReminderResponseDTO getReminderById(Integer)
+~ PageResult<ReminderResponseDTO> getRemindersByUserId(Integer,ReminderQueryDTO,PageRequest)
+~ List<ReminderResponseDTO> getUpcomingReminders(Integer,int)
+~ List<ReminderResponseDTO> getOverdueReminders(Integer)
+~ List<ReminderResponseDTO> getTodayReminders(Integer)
+~ void generateHealthReminders(Integer)
+}
+
+class com.pethealth.dto.PetCreateRequestDTO {
+- String name
+- String species
+- String breed
+- LocalDate birthDate
+- String gender
+- BigDecimal weight
+- String allergyHistory
+- Boolean neuteredStatus
+- String avatarUrl
+}
+
+class com.pethealth.entity.Reminder {
+- {static} long serialVersionUID
+- Integer reminderId
+- Integer userId
+- Integer petId
+- String reminderType
+- String title
+- LocalDateTime dueDate
+- String status
+- String repeatCycle
+- String notes
+- Byte deleted
+- LocalDateTime createTime
+- LocalDateTime completedTime
+}
+
+interface com.pethealth.service.GrowthEventService {
+}
+class com.pethealth.controller.PetBreedController {
+}
+class com.pethealth.controller.VaccinationRecordController {
+- VaccinationRecordService vaccinationRecordService
++ Result<VaccinationRecordResponseDTO> createRecord(VaccinationRecordCreateDTO)
++ Result<VaccinationRecordResponseDTO> updateRecord(Integer,VaccinationRecordUpdateDTO)
++ Result<Void> deleteRecord(Integer)
++ Result<PageResult<VaccinationRecordResponseDTO>> getRecordsByPetId(Integer,PageRequest)
++ Result<List<VaccinationRecordResponseDTO>> getUpcomingVaccinations(LocalDate)
++ Result<List<VaccinationRecordResponseDTO>> getExpiredVaccinations(LocalDate)
+}
+
+
+class com.pethealth.dto.MedicalRecordCreateDTO {
+- Integer petId
+- String hospital
+- String diagnosis
+- String medicationList
+- LocalDate treatmentDate
+- String notes
+}
+
+interface com.pethealth.mapper.FileInfoMapper {
+}
+class com.pethealth.controller.ReminderController {
+- ReminderService reminderService
+- ReminderTask reminderTask
++ Result<ReminderResponseDTO> createReminder(ReminderCreateDTO,HttpServletRequest)
++ Result<ReminderResponseDTO> updateReminder(Integer,ReminderUpdateDTO,HttpServletRequest)
++ Result<Void> deleteReminder(Integer,HttpServletRequest)
++ Result<ReminderResponseDTO> completeReminder(Integer,HttpServletRequest)
++ Result<ReminderResponseDTO> getReminderById(Integer,HttpServletRequest)
++ Result<PageResult<ReminderResponseDTO>> getReminders(ReminderQueryDTO,PageRequest,HttpServletRequest)
++ Result<List<ReminderResponseDTO>> getUpcomingReminders(Integer,HttpServletRequest)
++ Result<List<ReminderResponseDTO>> getOverdueReminders(HttpServletRequest)
++ Result<List<ReminderResponseDTO>> getTodayReminders(HttpServletRequest)
++ Result<Void> generateHealthReminders(HttpServletRequest)
+}
+
+
+interface com.pethealth.service.CheckupRecordService {
+~ CheckupRecordResponseDTO createRecord(CheckupRecordCreateDTO)
+~ CheckupRecordResponseDTO updateRecord(Integer,CheckupRecordUpdateDTO)
+~ void deleteRecord(Integer)
+~ PageResult<CheckupRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
+~ List<CheckupRecordResponseDTO> getRecentCheckups(LocalDate)
+~ List<CheckupRecordResponseDTO> getOverdueCheckups(int)
+}
+
+class com.pethealth.entity.PetBreed {
+- {static} long serialVersionUID
+- Integer breedId
+- String species
+- String breedName
+- LocalDateTime createTime
+}
+
+class com.pethealth.config.AppConfig {
++ RestTemplate restTemplate()
+}
+
+class com.pethealth.controller.MedicalRecordController {
+- MedicalRecordService medicalRecordService
++ Result<MedicalRecordResponseDTO> createRecord(MedicalRecordCreateDTO)
++ Result<MedicalRecordResponseDTO> updateRecord(Integer,MedicalRecordUpdateDTO)
++ Result<Void> deleteRecord(Integer)
++ Result<PageResult<MedicalRecordResponseDTO>> getRecordsByPetId(Integer,PageRequest)
++ Result<List<MedicalRecordResponseDTO>> getRecentMedicalRecords(LocalDate)
++ Result<List<MedicalRecordResponseDTO>> searchByDiagnosis(String)
++ Result<List<MedicalRecordResponseDTO>> getMedicationReminders()
+}
+
+
+class com.pethealth.common.PageRequest {
+- int pageNum
+- int pageSize
+- String sortField
+- String sortDirection
++ int getPageNum()
++ void setPageNum(int)
++ int getPageSize()
++ void setPageSize(int)
++ String getSortField()
++ void setSortField(String)
++ String getSortDirection()
++ void setSortDirection(String)
++ String getOrderBy()
+}
+
+
+class com.pethealth.handler.PetOwnershipException {
+}
+class com.pethealth.service.RedisService {
+- RedisTemplate<String,Object> redisTemplate
+- StringRedisTemplate stringRedisTemplate
+- ObjectMapper objectMapper
++ void set(String,String)
++ void set(String,String,long,TimeUnit)
++ String get(String)
++ void setObject(String,T)
++ void setObject(String,T,long,TimeUnit)
++ T getObject(String,Class<T>)
++ boolean expire(String,long,TimeUnit)
++ long getExpire(String,TimeUnit)
++ boolean hasKey(String)
++ boolean delete(String)
++ long delete(String)
++ long increment(String,long)
++ long decrement(String,long)
++ void hset(String,String,Object)
++ Object hget(String,String)
++ String getPetBreedCacheKey()
++ String getUserCacheKey(Long)
++ String getPetCacheKey(Long)
+}
+
+
+class com.pethealth.service.impl.UserServiceImpl {
+- JwtTokenUtil jwtTokenUtil
+- Long jwtExpiration
++ AuthResponseDTO login(LoginRequestDTO)
++ AuthResponseDTO register(RegisterRequestDTO)
++ User findByPhone(String)
++ User findByOpenid(String)
++ User getUserInfo(Long)
++ void updateLastLoginTime(Long)
+- User handlePhoneLogin(LoginRequestDTO)
+- User handleWechatLogin(LoginRequestDTO)
+- AuthResponseDTO buildAuthResponse(User,String)
+}
+
+
+class com.pethealth.service.impl.WechatMessageServiceImpl {
+- UserMapper userMapper
+- RestTemplate restTemplate
+- String appId
+- String appSecret
+- String upcomingReminderTemplateId
+- String overdueReminderTemplateId
+- String completionConfirmationTemplateId
+- {static} DateTimeFormatter DATE_FORMATTER
++ boolean sendReminderNotification(Integer,ReminderResponseDTO,String)
++ boolean sendUpcomingReminder(Integer,ReminderResponseDTO)
++ boolean sendOverdueReminder(Integer,ReminderResponseDTO)
++ boolean sendCompletionConfirmation(Integer,ReminderResponseDTO)
+- Map<String,Object> buildMessageData(ReminderResponseDTO,String)
+- boolean sendTemplateMessage(String,String,Map<String,Object>)
+- String getAccessToken()
+}
+
+
+class com.pethealth.controller.GrowthEventController {
+}
+class com.pethealth.controller.HealthController {
++ Map<String,Object> healthCheck()
+}
+
+interface com.pethealth.service.PetBreedService {
+}
+class com.pethealth.utils.StringUtil {
++ {static} boolean isBlank(CharSequence)
++ {static} boolean isNotBlank(CharSequence)
++ {static} String safeTruncate(String,int)
++ {static} String generatePetCode(LocalDate,int)
++ {static} String hideSensitiveInfo(String,int,int)
++ {static} String joinPath(String)
++ {static} String toDbSafeString(String)
+}
+
+interface com.pethealth.mapper.PetBreedMapper {
+}
+class com.pethealth.dto.CheckupRecordUpdateDTO {
+- LocalDate checkupDate
+- String institution
+- String resultSummary
+- String reportImageUrl
+- String notes
+}
+
+interface com.pethealth.service.UserService {
+~ AuthResponseDTO login(LoginRequestDTO)
+~ AuthResponseDTO register(RegisterRequestDTO)
+~ User findByPhone(String)
+~ User findByOpenid(String)
+~ User getUserInfo(Long)
+~ void updateLastLoginTime(Long)
+}
+
+class com.pethealth.utils.JwtTokenUtil {
+- String secret
+- Long expiration
++ String generateToken(Long)
+- String createToken(Map<String,Object>,Long)
++ boolean validateToken(String)
++ Long getUserIdFromToken(String)
++ boolean isUserActive(Long)
+- T extractClaim(String,Function<Claims,T>)
+- Claims extractAllClaims(String)
+- Key getSigningKey()
+}
+
+
+interface com.pethealth.mapper.MedicalRecordMapper {
+}
+class com.pethealth.entity.CheckupRecord {
+- {static} long serialVersionUID
+- Integer checkupId
+- Integer petId
+- LocalDate checkupDate
+- String institution
+- String resultSummary
+- String reportImageUrl
+- Byte deleted
+- LocalDateTime createTime
+}
+
+interface com.pethealth.service.MapService {
+~ AmapResponseDTO geocode(String)
+~ AmapResponseDTO regeocode(BigDecimal,BigDecimal)
+~ AmapResponseDTO searchNearby(BigDecimal,BigDecimal,String,Integer,String)
+~ AmapResponseDTO searchText(String,String,String)
+~ double calculateDistance(BigDecimal,BigDecimal,BigDecimal,BigDecimal)
+}
+
+interface com.pethealth.mapper.GrowthEventMapper {
+}
+class com.pethealth.dto.ReminderResponseDTO {
+- Integer reminderId
+- Integer userId
+- Integer petId
+- String petName
+- String reminderType
+- String title
+- LocalDateTime dueDate
+- String status
+- String repeatCycle
+- String notes
+- LocalDateTime createTime
+- LocalDateTime completedTime
+- Boolean isOverdue
+- Integer daysUntilDue
+}
+
+class com.pethealth.task.ReminderTask {
+- ReminderService reminderService
+- WechatMessageService wechatMessageService
++ void checkUpcomingReminders()
++ void checkOverdueReminders()
+- void processUpcomingReminders(List<ReminderResponseDTO>,Integer)
+- void processOverdueReminders(List<ReminderResponseDTO>,Integer)
++ void sendCompletionMessage(Integer,ReminderResponseDTO)
+}
+
+
+class com.pethealth.service.impl.VaccinationRecordServiceImpl {
+- PetMapper petMapper
++ VaccinationRecordResponseDTO createRecord(VaccinationRecordCreateDTO)
++ VaccinationRecordResponseDTO updateRecord(Integer,VaccinationRecordUpdateDTO)
++ void deleteRecord(Integer)
++ PageResult<VaccinationRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
++ List<VaccinationRecordResponseDTO> getUpcomingVaccinations(LocalDate)
++ List<VaccinationRecordResponseDTO> getExpiredVaccinations(LocalDate)
+- VaccinationRecordResponseDTO convertToResponseDTO(VaccinationRecord)
+}
+
+
+class com.pethealth.common.Result {
+- {static} long serialVersionUID
+- Integer code
+- String message
+- T data
+- Long timestamp
+- String path
++ {static} Integer SUCCESS_CODE
++ {static} Integer BAD_REQUEST_CODE
++ {static} Integer UNAUTHORIZED_CODE
++ {static} Integer FORBIDDEN_CODE
++ {static} Integer NOT_FOUND_CODE
++ {static} Integer INTERNAL_SERVER_ERROR_CODE
++ {static} String SUCCESS_MESSAGE
++ {static} String ERROR_MESSAGE
++ {static} String UNAUTHORIZED_MESSAGE
++ {static} String FORBIDDEN_MESSAGE
++ {static} String NOT_FOUND_MESSAGE
++ {static} Result<T> success()
++ {static} Result<T> success(T)
++ {static} Result<T> success(String,T)
++ {static} Result<T> error()
++ {static} Result<T> error(String)
++ {static} Result<T> error(Integer,String)
++ {static} Result<T> error(Integer,String,T)
++ {static} Result<T> badRequest(String)
++ {static} Result<T> unauthorized()
++ {static} Result<T> unauthorized(String)
++ {static} Result<T> forbidden()
++ {static} Result<T> notFound()
++ {static} Result<T> notFound(String)
++ Result<T> path(String)
++ boolean isSuccess()
++ Result<T> data(T)
++ Result<T> message(String)
++ Result<T> code(Integer)
++ Integer getCode()
++ String getMessage()
++ T getData()
+}
+
+
+class com.pethealth.controller.SymptomRecordController {
+}
+class com.pethealth.dto.MedicalRecordUpdateDTO {
+- String hospital
+- String diagnosis
+- String medicationList
+- LocalDate treatmentDate
+- String notes
+}
+
+class com.pethealth.controller.PetController {
+- PetService petService
++ Result<PetListResponseDTO> getPets(String,String,String,Integer,Integer,HttpServletRequest)
++ Result<PetResponseDTO> createPet(PetCreateRequestDTO,HttpServletRequest)
++ Result<PetResponseDTO> getPetDetail(Integer,HttpServletRequest)
++ Result<PetResponseDTO> updatePet(Integer,PetUpdateRequestDTO,HttpServletRequest)
++ Result<Void> deletePet(Integer,HttpServletRequest)
++ Result<String> uploadPetAvatar(Integer,String,HttpServletRequest)
+}
+
+
+enum com.pethealth.enums.FileModuleTypeEnum {
++  PET_AVATAR
++  MEDICAL_RECORD
++  VACCINATION_RECORD
++  CHECKUP_RECORD
++  DEWORMING_RECORD
++  SYMPTOM_RECORD
++  GROWTH_EVENT
++  GENERAL
+- String code
+- String displayName
++ {static} FileModuleTypeEnum getByCode(String)
+}
+
+
+class com.pethealth.handler.MyMetaObjectHandler {
++ void insertFill(MetaObject)
++ void updateFill(MetaObject)
+}
+
+class com.pethealth.dto.WxUserInfo {
+- String nickName
+- String avatarUrl
+- Integer gender
+- String country
+- String province
+- String city
+}
+
+class com.pethealth.config.SwaggerConfig {
++ OpenAPI petHealthOpenAPI()
+}
+
+class com.pethealth.dto.VaccinationRecordCreateDTO {
+- Integer petId
+- String vaccineName
+- LocalDate vaccinationDate
+- LocalDate nextDueDate
+- String vetInfo
+- String proofImageUrl
+- String notes
+}
+
+interface com.pethealth.service.SymptomRecordService {
+}
+class com.pethealth.config.MyBatisPlusConfig {
+}
+class com.pethealth.dto.ReminderUpdateDTO {
+- Integer petId
+- String reminderType
+- String title
+- LocalDateTime dueDate
+- String status
+- String repeatCycle
+- String notes
+}
+
+class com.pethealth.entity.GrowthEvent {
+- {static} long serialVersionUID
+- Integer eventId
+- Integer petId
+- String eventType
+- LocalDateTime eventDate
+- String description
+- String imageUrl
+- BigDecimal weightValue
+- Byte deleted
+- LocalDateTime createTime
+}
+
+interface com.pethealth.service.PetService {
+~ PetListResponseDTO getPetsByUserId(Long,PetListQueryDTO)
+~ PetResponseDTO createPet(Long,PetCreateRequestDTO)
+~ PetResponseDTO getPetDetail(Long,Integer)
+~ PetResponseDTO updatePet(Long,Integer,PetUpdateRequestDTO)
+~ void deletePet(Long,Integer)
+~ boolean checkPetOwnership(Long,Integer)
+}
+
+class com.pethealth.dto.AmapResponseDTO {
+- String status
+- String info
+- String infocode
+- List<Geocode> geocodes
+- Regeocode regeocode
+- List<Poi> pois
+- String count
+}
+
+class com.pethealth.dto.AmapResponseDTO$Geocode {
+- String formatted_address
+- String province
+- String city
+- String citycode
+- String district
+- String street
+- String number
+- String adcode
+- String location
+- String level
+}
+
+class com.pethealth.dto.AmapResponseDTO$Regeocode {
+- String formatted_address
+- AddressComponent addressComponent
+- List<Road> roads
+- List<Poi> pois
+- List<Aoi> aois
+}
+
+class com.pethealth.dto.AmapResponseDTO$AddressComponent {
+- String country
+- String province
+- String city
+- String citycode
+- String district
+- String adcode
+- String township
+- String towncode
+- StreetNumber streetNumber
+}
+
+class com.pethealth.dto.AmapResponseDTO$StreetNumber {
+- String street
+- String number
+- String location
+- String direction
+- String distance
+}
+
+class com.pethealth.dto.AmapResponseDTO$Road {
+- String id
+- String name
+- String distance
+- String location
+- String direction
+}
+
+class com.pethealth.dto.AmapResponseDTO$Poi {
+- String id
+- String name
+- String type
+- String typecode
+- String biz_type
+- String address
+- String location
+- String tel
+- String distance
+- String business_area
+- String postcode
+- String website
+- String email
+- String entr_location
+- String exit_location
+- String match
+- String recommend
+- String timestamp
+- String alias
+- String indoor_map
+- String indoor_data
+- String groupbuy_num
+- String discount_num
+- BizExt biz_ext
+- String event
+- Children children
+- String photos
+}
+
+class com.pethealth.dto.AmapResponseDTO$BizExt {
+- String rating
+- String cost
+}
+
+class com.pethealth.dto.AmapResponseDTO$Children {
+- String[] childtype
+- String[] industries
+}
+
+class com.pethealth.dto.AmapResponseDTO$Aoi {
+- String id
+- String name
+- String adcode
+- String location
+- String area
+- String distance
+- String type
+}
+
+class com.pethealth.dto.PetListResponseDTO {
+- List<PetResponseDTO> pets
+- Long total
+- Integer pageNum
+- Integer pageSize
+- Integer totalPages
+}
+
+class com.pethealth.dto.LoginRequestDTO {
+- String loginType
+- String phone
+- String password
+- String wxCode
+- WxUserInfo wxUserInfo
+}
+
+class com.pethealth.dto.VaccinationRecordResponseDTO {
+- Integer vaccinationId
+- Integer petId
+- String vaccineName
+- LocalDate vaccinationDate
+- LocalDate nextDueDate
+- String vetInfo
+- String proofImageUrl
+- String notes
+- LocalDateTime createTime
+- Integer daysUntilNext
+- Boolean isExpiringSoon
+}
+
+class com.pethealth.handler.ResourceNotFoundException {
+}
+class com.pethealth.handler.PetNotFoundException {
+}
+class com.pethealth.dto.DewormingRecordCreateDTO {
+- Integer petId
+- String dewormingType
+- String drugName
+- LocalDate date
+- LocalDate nextDate
+- String notes
+}
+
+class com.pethealth.handler.BusinessException {
+- Integer code
++ Integer getCode()
+}
+
+
+class com.pethealth.service.impl.ReminderServiceImpl {
+- {static} String STATUS_PENDING
+- {static} String STATUS_COMPLETED
+- {static} byte DELETED_NO
+- {static} byte DELETED_YES
+- PetMapper petMapper
++ ReminderResponseDTO createReminder(ReminderCreateDTO,Integer)
++ ReminderResponseDTO updateReminder(Integer,ReminderUpdateDTO)
++ void deleteReminder(Integer)
++ ReminderResponseDTO completeReminder(Integer)
++ ReminderResponseDTO getReminderById(Integer)
++ PageResult<ReminderResponseDTO> getRemindersByUserId(Integer,ReminderQueryDTO,PageRequest)
++ List<ReminderResponseDTO> getUpcomingReminders(Integer,int)
++ List<ReminderResponseDTO> getOverdueReminders(Integer)
++ List<ReminderResponseDTO> getTodayReminders(Integer)
++ void generateHealthReminders(Integer)
+- QueryWrapper<Reminder> buildQueryWrapper(Integer,ReminderQueryDTO)
+- ReminderResponseDTO convertToResponseDTO(Reminder)
+}
+
+
+interface com.pethealth.service.ServicePointService {
+~ List<ServicePoint> getNearbyServicePoints(BigDecimal,BigDecimal,Integer,String)
+}
+
+class com.pethealth.service.impl.DewormingRecordServiceImpl {
+- PetMapper petMapper
++ DewormingRecordResponseDTO createRecord(DewormingRecordCreateDTO)
++ DewormingRecordResponseDTO updateRecord(Integer,DewormingRecordUpdateDTO)
++ void deleteRecord(Integer)
++ PageResult<DewormingRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
++ List<DewormingRecordResponseDTO> getUpcomingDewormings(LocalDate)
++ List<DewormingRecordResponseDTO> getExpiredDewormings(LocalDate)
++ LocalDate calculateNextDewormingDate(LocalDate,int)
+- DewormingRecordResponseDTO convertToResponseDTO(DewormingRecord)
+}
+
+
+class com.pethealth.service.impl.CheckupRecordServiceImpl {
+- PetMapper petMapper
++ CheckupRecordResponseDTO createRecord(CheckupRecordCreateDTO)
++ CheckupRecordResponseDTO updateRecord(Integer,CheckupRecordUpdateDTO)
++ void deleteRecord(Integer)
++ PageResult<CheckupRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
++ List<CheckupRecordResponseDTO> getRecentCheckups(LocalDate)
++ List<CheckupRecordResponseDTO> getOverdueCheckups(int)
+- CheckupRecordResponseDTO convertToResponseDTO(CheckupRecord)
+}
+
+
+interface com.pethealth.service.MedicalRecordService {
+~ MedicalRecordResponseDTO createRecord(MedicalRecordCreateDTO)
+~ MedicalRecordResponseDTO updateRecord(Integer,MedicalRecordUpdateDTO)
+~ void deleteRecord(Integer)
+~ PageResult<MedicalRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
+~ List<MedicalRecordResponseDTO> getRecentMedicalRecords(LocalDate)
+~ List<MedicalRecordResponseDTO> searchByDiagnosis(String)
+~ List<MedicalRecordResponseDTO> getMedicationReminders()
+}
+
+class com.pethealth.handler.FileUploadException {
+- String errorCode
++ String getErrorCode()
+}
+
+
+class com.pethealth.controller.CheckupRecordController {
+- CheckupRecordService checkupRecordService
++ Result<CheckupRecordResponseDTO> createRecord(CheckupRecordCreateDTO)
++ Result<CheckupRecordResponseDTO> updateRecord(Integer,CheckupRecordUpdateDTO)
++ Result<Void> deleteRecord(Integer)
++ Result<PageResult<CheckupRecordResponseDTO>> getRecordsByPetId(Integer,PageRequest)
++ Result<List<CheckupRecordResponseDTO>> getRecentCheckups(LocalDate)
++ Result<List<CheckupRecordResponseDTO>> getOverdueCheckups(int)
+}
+
+
+class com.pethealth.dto.PetResponseDTO {
+- Integer petId
+- Integer userId
+- String name
+- String species
+- String breed
+- LocalDate birthDate
+- String gender
+- BigDecimal weight
+- String allergyHistory
+- Boolean neuteredStatus
+- String avatarUrl
+- LocalDateTime createTime
+- LocalDateTime updateTime
+- String age
+}
+
+class com.pethealth.dto.FileUploadResponseDTO {
+- Long fileId
+- String originalName
+- String fileUrl
+- Long fileSize
+- String fileType
+- String fileExtension
+- String moduleType
+- Long businessId
+- LocalDateTime uploadTime
+}
+
+class com.pethealth.utils.FileUploadUtils {
+- {static} List<String> ALLOWED_IMAGE_TYPES
+- {static} List<String> ALLOWED_DOC_TYPES
+- {static} long MAX_FILE_SIZE
++ {static} String uploadHealthReport(MultipartFile,String,Long)
++ {static} String uploadPetPhoto(MultipartFile,String,Long)
+- {static} String uploadFile(MultipartFile,String,String,Long,List<String>)
++ {static} String getFileExtension(String)
++ {static} boolean deleteFile(String,String)
+}
+
+
+class com.pethealth.entity.FileInfo {
+- Long fileId
+- String originalName
+- String storedName
+- String filePath
+- Long fileSize
+- String fileType
+- String fileExtension
+- String moduleType
+- Long businessId
+- Integer uploaderId
+- LocalDateTime uploadTime
+- LocalDateTime createTime
+- Integer deleted
+}
+
+class com.pethealth.entity.BaseEntity {
+- Long id
+- LocalDateTime createTime
+- LocalDateTime updateTime
+- Integer deleted
+}
+
+class com.pethealth.service.impl.PetServiceImpl {
++ PetListResponseDTO getPetsByUserId(Long,PetListQueryDTO)
++ PetResponseDTO createPet(Long,PetCreateRequestDTO)
++ PetResponseDTO getPetDetail(Long,Integer)
++ PetResponseDTO updatePet(Long,Integer,PetUpdateRequestDTO)
++ void deletePet(Long,Integer)
++ boolean checkPetOwnership(Long,Integer)
+- PetResponseDTO convertToResponseDTO(Pet)
+- String calculateAge(LocalDate)
+}
+
+class com.pethealth.entity.ServicePoint {
+- {static} long serialVersionUID
+- Integer pointId
+- String name
+- String type
+- String address
+- String phone
+- BigDecimal latitude
+- BigDecimal longitude
+- BigDecimal rating
+- String businessHours
+- Byte deleted
+- LocalDateTime createTime
+}
+
+class com.pethealth.dto.MedicalRecordResponseDTO {
+- Integer medicalId
+- Integer petId
+- String hospital
+- String diagnosis
+- String medicationList
+- LocalDate treatmentDate
+- String notes
+- LocalDateTime createTime
+- Integer daysAgo
+- Boolean isRecent
+}
+
+class com.pethealth.dto.DewormingRecordUpdateDTO {
+- String dewormingType
+- String drugName
+- LocalDate date
+- LocalDate nextDate
+- String notes
+}
+
+interface com.pethealth.service.WechatMessageService {
+~ boolean sendReminderNotification(Integer,ReminderResponseDTO,String)
+~ boolean sendUpcomingReminder(Integer,ReminderResponseDTO)
+~ boolean sendOverdueReminder(Integer,ReminderResponseDTO)
+~ boolean sendCompletionConfirmation(Integer,ReminderResponseDTO)
+}
+
+class com.pethealth.utils.DateUtils {
+- {static} String DEFAULT_DATE_PATTERN
+- {static} String DEFAULT_DATETIME_PATTERN
++ {static} String formatDate(LocalDate)
++ {static} String formatDate(LocalDate,String)
++ {static} String formatDateTime(LocalDateTime)
++ {static} String formatDateTime(LocalDateTime,String)
++ {static} LocalDate parseDate(String)
++ {static} LocalDate parseDate(String,String)
++ {static} LocalDateTime parseDateTime(String)
++ {static} LocalDateTime parseDateTime(String,String)
++ {static} long daysBetween(LocalDate,LocalDate)
++ {static} long minutesBetween(LocalDateTime,LocalDateTime)
++ {static} LocalDate calculateNextReminderDate(LocalDate,int)
++ {static} String calculatePetAge(LocalDate)
++ {static} LocalDateTime toLocalDateTime(Date)
++ {static} LocalDate toLocalDate(Date)
++ {static} LocalDateTime startOfDay(LocalDate)
++ {static} LocalDateTime endOfDay(LocalDate)
+}
+
+
+class com.pethealth.service.impl.FileServiceImpl {
+- FileInfoMapper fileInfoMapper
+- String uploadPath
+- Long maxFileSize
+- String allowedTypes
+- String contextPath
+- String serverPort
++ FileUploadResponseDTO uploadFile(MultipartFile,FileUploadRequestDTO,Integer)
++ FileUploadResponseDTO uploadPetAvatar(MultipartFile,Long,Integer)
++ FileUploadResponseDTO uploadHealthRecordAttachment(MultipartFile,String,Long,Integer)
++ FileInfoResponseDTO getFileInfo(Long)
++ List<FileInfoResponseDTO> getFileListByBusiness(String,Long)
++ List<FileInfoResponseDTO> getFileListByUser(Integer)
++ boolean deleteFile(Long,Integer)
++ int batchDeleteFiles(List<Long>,Integer)
+- void validateFile(MultipartFile)
+- void validateModuleType(String)
+- void validateFileHeader(byte[],String)
+- String buildFileUrl(String,String)
+- FileInfoResponseDTO convertToFileInfoResponse(FileInfo)
+}
+
+
+class com.pethealth.utils.LogUtil {
++ {static} Logger getLogger(Class<?>)
++ {static} Logger getCurrentLogger()
++ {static} void debug(Class<?>,String,Object)
++ {static} void info(Class<?>,String,Object)
++ {static} void warn(Class<?>,String,Object)
++ {static} void error(Class<?>,String,Object)
+}
+
+interface com.pethealth.mapper.PetMapper {
+~ int deleteByUserId(Long)
+~ int deleteAllTestData()
+}
+
+class com.pethealth.utils.FileUtils {
++ {static} String getFileExtension(String)
++ {static} String getModulePath(String)
++ {static} String formatFileSize(long)
++ {static} boolean isFileNameSafe(String)
+}
+
+class com.pethealth.dto.CheckupRecordCreateDTO {
+- Integer petId
+- LocalDate checkupDate
+- String institution
+- String resultSummary
+- String reportImageUrl
+- String notes
+}
+
+interface com.pethealth.mapper.UserMapper {
+}
+class com.pethealth.dto.FileUploadRequestDTO {
+- String moduleType
+- Long businessId
+- String description
+}
+
+class com.pethealth.handler.GlobalExceptionHandler {
+- {static} Logger log
++ Result<?> handleBusinessException(BusinessException,HttpServletRequest)
++ Result<?> handleMethodArgumentNotValid(MethodArgumentNotValidException,HttpServletRequest)
++ Result<?> handleBindException(BindException,HttpServletRequest)
++ Result<?> handleTypeMismatch(MethodArgumentTypeMismatchException,HttpServletRequest)
++ Result<?> handleConstraintViolation(ConstraintViolationException,HttpServletRequest)
++ Result<?> handleUnauthorizedException(UnauthorizedException,HttpServletRequest)
++ Result<?> handleResourceNotFound(ResourceNotFoundException,HttpServletRequest)
++ Result<?> handlePetNotFound(PetNotFoundException,HttpServletRequest)
++ Result<?> handlePetOwnership(PetOwnershipException,HttpServletRequest)
++ Result<?> handleFileUploadException(FileUploadException,HttpServletRequest)
++ Result<?> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException,HttpServletRequest)
++ Result<?> handleGlobalException(Exception,HttpServletRequest)
+}
+
+
+class com.pethealth.dto.PetListQueryDTO {
+- String species
+- String breed
+- String nameKeyword
+- Integer pageNum
+- Integer pageSize
+}
+
+interface com.pethealth.mapper.SymptomRecordMapper {
+}
+class com.pethealth.dto.ReminderCreateDTO {
+- Integer petId
+- String reminderType
+- String title
+- LocalDateTime dueDate
+- String repeatCycle
+- String notes
+}
+
+interface com.pethealth.mapper.VaccinationRecordMapper {
+}
+class com.pethealth.dto.VaccinationRecordUpdateDTO {
+- String vaccineName
+- LocalDate vaccinationDate
+- LocalDate nextDueDate
+- String vetInfo
+- String proofImageUrl
+- String notes
+}
+
+class com.pethealth.service.impl.MapServiceImpl {
+- AmapConfig amapConfig
+- RestTemplate restTemplate
++ AmapResponseDTO geocode(String)
++ AmapResponseDTO regeocode(BigDecimal,BigDecimal)
++ AmapResponseDTO searchNearby(BigDecimal,BigDecimal,String,Integer,String)
++ AmapResponseDTO searchText(String,String,String)
++ double calculateDistance(BigDecimal,BigDecimal,BigDecimal,BigDecimal)
+}
+
+
+class com.pethealth.utils.CodeGenerator {
++ {static} void main(String[])
+- {static} List<String> getAllTableNames(String,String,String)
+}
+
+class com.pethealth.entity.MedicalRecord {
+- {static} long serialVersionUID
+- Integer medicalId
+- Integer petId
+- String hospital
+- String diagnosis
+- String medicationList
+- LocalDate treatmentDate
+- String notes
+- Byte deleted
+- LocalDateTime createTime
+}
+
+class com.pethealth.dto.RegisterRequestDTO {
+- String phone
+- String password
+- String confirmPassword
+- String nickname
+- String avatarUrl
+}
+
+class com.pethealth.common.PageResult {
+- long total
+- List<T> list
+- int pageNum
+- int pageSize
+- int totalPages
+- boolean hasPrevious
+- boolean hasNext
+- boolean isFirst
+- boolean isLast
++ {static} PageResult<T> from(com.baomidou.mybatisplus.extension.plugins.pagination.Page<T>)
++ {static} PageResult<T> empty(PageRequest)
++ long getTotal()
++ List<T> getList()
++ int getPageNum()
++ int getPageSize()
++ int getTotalPages()
++ boolean isHasPrevious()
++ boolean isHasNext()
++ boolean isFirst()
++ boolean isLast()
+}
+
+
+class com.pethealth.handler.UnauthorizedException {
+}
+class com.pethealth.service.impl.ServicePointServiceImpl {
+- MapService mapService
++ List<ServicePoint> getNearbyServicePoints(BigDecimal,BigDecimal,Integer,String)
+}
+
+
+class com.pethealth.controller.DewormingRecordController {
+- DewormingRecordService dewormingRecordService
++ Result<DewormingRecordResponseDTO> createRecord(DewormingRecordCreateDTO)
++ Result<DewormingRecordResponseDTO> updateRecord(Integer,DewormingRecordUpdateDTO)
++ Result<Void> deleteRecord(Integer)
++ Result<PageResult<DewormingRecordResponseDTO>> getRecordsByPetId(Integer,PageRequest)
++ Result<List<DewormingRecordResponseDTO>> getUpcomingDeworming(LocalDate)
++ Result<List<DewormingRecordResponseDTO>> getOverdueDeworming(LocalDate)
+}
+
+
+class com.pethealth.controller.UserController {
+}
+class com.pethealth.entity.VaccinationRecord {
+- {static} long serialVersionUID
+- Integer vaccinationId
+- Integer petId
+- String vaccineName
+- LocalDate vaccinationDate
+- LocalDate nextDueDate
+- String vetInfo
+- String proofImageUrl
+- String notes
+- Byte deleted
+- LocalDateTime createTime
+}
+
+class com.pethealth.service.impl.PetBreedServiceImpl {
+}
+class com.pethealth.config.AmapConfig {
+- String key
+- String baseUrl
+- String geocodeUrl
+- String regeocodeUrl
+- String poiAroundUrl
+- String poiTextUrl
++ String getKey()
++ void setKey(String)
++ String getBaseUrl()
++ void setBaseUrl(String)
++ String getGeocodeUrl()
++ void setGeocodeUrl(String)
++ String getRegeocodeUrl()
++ void setRegeocodeUrl(String)
++ String getPoiAroundUrl()
++ void setPoiAroundUrl(String)
++ String getPoiTextUrl()
++ void setPoiTextUrl(String)
+}
+
+
+class com.pethealth.service.impl.GrowthEventServiceImpl {
+}
+class com.pethealth.config.RedisConfig {
++ RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory,ObjectMapper)
+}
+
+interface com.pethealth.service.DewormingRecordService {
+~ DewormingRecordResponseDTO createRecord(DewormingRecordCreateDTO)
+~ DewormingRecordResponseDTO updateRecord(Integer,DewormingRecordUpdateDTO)
+~ void deleteRecord(Integer)
+~ PageResult<DewormingRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
+~ List<DewormingRecordResponseDTO> getUpcomingDewormings(LocalDate)
+~ List<DewormingRecordResponseDTO> getExpiredDewormings(LocalDate)
+~ LocalDate calculateNextDewormingDate(LocalDate,int)
+}
+
+class com.pethealth.service.impl.MedicalRecordServiceImpl {
+- PetMapper petMapper
++ MedicalRecordResponseDTO createRecord(MedicalRecordCreateDTO)
++ MedicalRecordResponseDTO updateRecord(Integer,MedicalRecordUpdateDTO)
++ void deleteRecord(Integer)
++ PageResult<MedicalRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
++ List<MedicalRecordResponseDTO> getRecentMedicalRecords(LocalDate)
++ List<MedicalRecordResponseDTO> searchByDiagnosis(String)
++ List<MedicalRecordResponseDTO> getMedicationReminders()
+- MedicalRecordResponseDTO convertToResponseDTO(MedicalRecord)
+}
+
+
+interface com.pethealth.mapper.DewormingRecordMapper {
+}
+interface com.pethealth.service.VaccinationRecordService {
+~ VaccinationRecordResponseDTO createRecord(VaccinationRecordCreateDTO)
+~ VaccinationRecordResponseDTO updateRecord(Integer,VaccinationRecordUpdateDTO)
+~ void deleteRecord(Integer)
+~ PageResult<VaccinationRecordResponseDTO> getRecordsByPetId(Integer,PageRequest)
+~ List<VaccinationRecordResponseDTO> getUpcomingVaccinations(LocalDate)
+~ List<VaccinationRecordResponseDTO> getExpiredVaccinations(LocalDate)
+}
+
+
+
+org.springframework.web.servlet.HandlerInterceptor <|.. com.pethealth.interceptor.AuthInterceptor
+java.io.Serializable <|.. com.pethealth.entity.DewormingRecord
+com.pethealth.service.SymptomRecordService <|.. com.pethealth.service.impl.SymptomRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.SymptomRecordServiceImpl
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.ServicePointMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.CheckupRecordMapper
+java.io.Serializable <|.. com.pethealth.entity.User
+com.pethealth.dto.HealthTimelineDTO +.. com.pethealth.dto.HealthTimelineDTO$HealthEvent
+com.pethealth.dto.AuthResponseDTO +.. com.pethealth.dto.AuthResponseDTO$UserInfo
+com.pethealth.dto.AuthResponseDTO$UserInfo +.. com.pethealth.dto.AuthResponseDTO$UserInfo$UserInfoBuilder
+com.pethealth.dto.AuthResponseDTO +.. com.pethealth.dto.AuthResponseDTO$AuthResponseDTOBuilder
+java.io.Serializable <|.. com.pethealth.entity.SymptomRecord
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer <|.. com.pethealth.config.WebMvcConfig
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.ReminderMapper
+java.io.Serializable <|.. com.pethealth.entity.Pet
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.ReminderService
+java.io.Serializable <|.. com.pethealth.entity.Reminder
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.GrowthEventService
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.FileInfoMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.CheckupRecordService
+java.io.Serializable <|.. com.pethealth.entity.PetBreed
+com.pethealth.handler.RuntimeException <|-- com.pethealth.handler.PetOwnershipException
+com.pethealth.service.UserService <|.. com.pethealth.service.impl.UserServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.UserServiceImpl
+com.pethealth.service.WechatMessageService <|.. com.pethealth.service.impl.WechatMessageServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.PetBreedService
+org.apache.commons.lang3.StringUtils <|-- com.pethealth.utils.StringUtil
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.PetBreedMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.UserService
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.MedicalRecordMapper
+java.io.Serializable <|.. com.pethealth.entity.CheckupRecord
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.GrowthEventMapper
+com.pethealth.service.VaccinationRecordService <|.. com.pethealth.service.impl.VaccinationRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.VaccinationRecordServiceImpl
+java.io.Serializable <|.. com.pethealth.common.Result
+com.baomidou.mybatisplus.core.handlers.MetaObjectHandler <|.. com.pethealth.handler.MyMetaObjectHandler
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.SymptomRecordService
+java.io.Serializable <|.. com.pethealth.entity.GrowthEvent
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.PetService
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Geocode
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Regeocode
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$AddressComponent
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$StreetNumber
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Road
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Poi
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$BizExt
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Children
+com.pethealth.dto.AmapResponseDTO +.. com.pethealth.dto.AmapResponseDTO$Aoi
+com.pethealth.handler.BusinessException <|-- com.pethealth.handler.ResourceNotFoundException
+com.pethealth.handler.RuntimeException <|-- com.pethealth.handler.PetNotFoundException
+com.pethealth.handler.RuntimeException <|-- com.pethealth.handler.BusinessException
+com.pethealth.service.ReminderService <|.. com.pethealth.service.impl.ReminderServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.ReminderServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.ServicePointService
+com.pethealth.service.DewormingRecordService <|.. com.pethealth.service.impl.DewormingRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.DewormingRecordServiceImpl
+com.pethealth.service.CheckupRecordService <|.. com.pethealth.service.impl.CheckupRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.CheckupRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.MedicalRecordService
+com.pethealth.handler.RuntimeException <|-- com.pethealth.handler.FileUploadException
+com.pethealth.service.PetService <|.. com.pethealth.service.impl.PetServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.PetServiceImpl
+java.io.Serializable <|.. com.pethealth.entity.ServicePoint
+com.pethealth.service.FileService <|.. com.pethealth.service.impl.FileServiceImpl
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.PetMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.UserMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.SymptomRecordMapper
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.VaccinationRecordMapper
+com.pethealth.service.MapService <|.. com.pethealth.service.impl.MapServiceImpl
+java.io.Serializable <|.. com.pethealth.entity.MedicalRecord
+com.pethealth.handler.BusinessException <|-- com.pethealth.handler.UnauthorizedException
+com.pethealth.service.ServicePointService <|.. com.pethealth.service.impl.ServicePointServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.ServicePointServiceImpl
+java.io.Serializable <|.. com.pethealth.entity.VaccinationRecord
+com.pethealth.service.PetBreedService <|.. com.pethealth.service.impl.PetBreedServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.PetBreedServiceImpl
+com.pethealth.service.GrowthEventService <|.. com.pethealth.service.impl.GrowthEventServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.GrowthEventServiceImpl
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.DewormingRecordService
+com.pethealth.service.MedicalRecordService <|.. com.pethealth.service.impl.MedicalRecordServiceImpl
+com.baomidou.mybatisplus.extension.service.impl.ServiceImpl <|-- com.pethealth.service.impl.MedicalRecordServiceImpl
+com.baomidou.mybatisplus.core.mapper.BaseMapper <|-- com.pethealth.mapper.DewormingRecordMapper
+com.baomidou.mybatisplus.extension.service.IService <|-- com.pethealth.service.VaccinationRecordService
+@enduml
