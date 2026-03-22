@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <headerType>gui</headerType>
+  <outfile>target/DOTA2Annotator.exe</outfile>
+  <jar>target/DOTA2-1.0-SNAPSHOT.jar</jar>
+  <errTitle>DOTA2标注工具</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>https://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>true</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <singleInstance>
+    <mutexName>DOTA2Annotator</mutexName>
+    <windowTitle></windowTitle>
+  </singleInstance>
+  <jre>
+    <path></path>
+    <minVersion>1.8.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>50</initialHeapSize>
+    <maxHeapSize>256</maxHeapSize>
+  </jre>
+</launch4jConfig>

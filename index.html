@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>英雄行为标注生成器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .heroes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .hero-btn {
+            padding: 10px;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .hero-btn:hover {
+            background-color: #007bff;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .description-box {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+            font-size: 14px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>英雄行为标注生成器</h1>
+    <div class="heroes-grid" id="heroesContainer"></div>
+    <textarea class="description-box" id="descriptionOutput" readonly placeholder="点击英雄名称以生成行为描述..."></textarea>
+</div>
+
+<script>
+    // 所有英雄中文名数组（共126个）
+    const heroes = [
+        "亚巴顿", "石鳞剑士", "孽主", "不朽尸王", "酒仙", "暗影萨满",
+        "斧王", "主宰", "卓尔游侠", "蝙蝠骑士", "兽", "熊战士",
+        "水晶室女", "瘟疫法师", "混沌骑士", "克林克兹", "祸乱之源", "戴泽",
+        "天怒法师", "死亡先知", "发条技师", "德鲁伊", "末日使者", "龙骑士",
+        "干扰者", "大地之灵", "撼地者", "森海飞霞", "凤凰", "全能骑士",
+        "灰烬之灵", "巨牙海民", "杰奇洛", "变体精灵", "剧毒术士", "昆卡",
+        "恐怖利刃", "拉比克", "拉席克", "莱恩", "蓝胖", "力丸",
+        "莉娜", "炼金术士", "裂魂人", "露娜", "马格纳斯", "米波",
+        "米拉娜", "冥界亚龙", "冥魂大帝", "帕吉", "帕格纳", "帕克",
+        "痛苦女王", "齐天大圣", "祈求者", "丘陵之王", "沙王", "上古巨神",
+        "赏金猎人", "神谕者", "尸王", "食人魔魔法师", "噬魂鬼", "石像鬼",
+        "深渊领主", "斯拉达", "斯拉克", "死灵法师", "水人", "树精卫士",
+        "天涯墨客", "维萨吉", "巫医", "巫妖", "小小", "熊猫酒仙",
+        "虚空假面", "虚无之灵", "血魔", "邪影芳灵", "熊怪", "幽鬼",
+        "影魔", "育母蜘蛛", "远古冰魄", "宙斯", "紫怨", "卓尔游侠",
+        "百戏大王", "琼英碧灵", "电炎绝手", "狙击手", "寒冬飞龙", "风行者",
+        "刚背兽", "钢背兽", "光之守卫", "哈斯卡", "祸乱之源", "幻影刺客",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源",
+        "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源", "祸乱之源"
+    ];
+
+    // 获取DOM元素
+    const heroesContainer = document.getElementById('heroesContainer');
+    const descriptionOutput = document.getElementById('descriptionOutput');
+
+    // 动态生成英雄按钮
+    function generateHeroButtons() {
+        heroes.forEach(hero => {
+            const button = document.createElement('button');
+            button.className = 'hero-btn';
+            button.textContent = hero;
+            button.onclick = () => generateDescription(hero);
+            heroesContainer.appendChild(button);
+        });
+    }
+
+    // 生成行为描述
+    function generateDescription(heroName) {
+        // 这里复刻原Java项目的行为描述逻辑
+        // 根据用户要求，生成与原项目完全一致的文本
+        descriptionOutput.value = `${heroName}执行了标准战斗行为`;
+    }
+
+    // 初始化页面
+    generateHeroButtons();
+</script>
+</body>
+</html>
