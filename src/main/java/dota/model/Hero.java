@@ -3,8 +3,10 @@ package dota.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 /**
- * DOTA2英雄数据模型，用于映射JSON文件中的英雄信息。
+ * DOTA2 英雄数据模型，用于映射 JSON 文件中的英雄信息。
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Hero {
@@ -13,6 +15,9 @@ public class Hero {
     
     @JsonProperty("title")
     private String title; // 中文名
+    
+    @JsonProperty("skills")
+    private List<Skill> skills; // 技能列表
     
     public Hero() {}
     
@@ -32,8 +37,16 @@ public class Hero {
         this.title = title;
     }
     
+    public List<Skill> getSkills() {
+        return skills;
+    }
+    
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+    
     @Override
     public String toString() {
-        return title; // 在UI中显示中文名
+        return title; // 在 UI 中显示中文名
     }
 }

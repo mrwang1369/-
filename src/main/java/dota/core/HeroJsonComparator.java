@@ -50,7 +50,19 @@ public class HeroJsonComparator {
     }
     
     /**
-     * 读取JSON文件并解析为英雄列表
+     * 读取 JSON 文件并解析为英雄列表（静态方法）
+     */
+    private static List<Map<String, Object>> readHeroFileStatic(String filePath) throws Exception {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("文件不存在：" + filePath);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(file, new TypeReference<List<Map<String, Object>>>() {});
+    }
+        
+    /**
+     * 读取 JSON 文件并解析为英雄列表
      */
     private List<Map<String, Object>> readHeroFile(String filePath) throws Exception {
         File file = new File(filePath);
@@ -66,9 +78,26 @@ public class HeroJsonComparator {
      */
     public static void main(String[] args) {
         try {
+            if (args.length == 1 && "count".equals(args[0])) {
+                // 统计英雄数量
+                List<Map<String, Object>> heroes = readHeroFileStatic(args[0]);
+                System.out.println("===========================================");
+                System.out.println("DOTA2 英雄统计 - 共 " + heroes.size() + " 个英雄");
+                System.out.println("===========================================\n");
+                for (int i = 0; i < heroes.size(); i++) {
+                    Map<String, Object> hero = heroes.get(i);
+                    System.out.printf("%3d. %s (%s)%n", i + 1, hero.get("title"), hero.get("name"));
+                }
+                System.out.println("\n===========================================");
+                System.out.println("总计：" + heroes.size() + " 个英雄");
+                System.out.println("===========================================");
+                return;
+            }
+            
             if (args.length < 2) {
-                System.err.println("Usage: java HeroJsonComparator <json_file> <hero_name1> <hero_name2> ...");
-                System.err.println("Example: java HeroJsonComparator dota_heroes_no_duplicates_20260322_105010.json bounty-hunter brewmaster zeus");
+                System.err.println("Usage: java HeroJsonComparator <json_file> count | <hero_name1> <hero_name2> ...");
+                System.err.println("Example: java HeroJsonComparator dota_heroes.json count");
+                System.err.println("         java HeroJsonComparator dota_heroes.json bounty-hunter brewmaster zeus");
                 return;
             }
             

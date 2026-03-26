@@ -1,365 +1,236 @@
 package dota.ui;
 
-import dota.core.ActionDescriptionGenerator;
-import dota.model.BehaviorEntry;
+import dota.model.Skill;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * 行为描述生成器面板，允许用户通过下拉菜单选择参数来生成行为描述。
+ * 行为描述生成器 - 全新简化版
  */
 public class BehaviorGeneratorPanel extends JPanel {
-    private final Map<String, JComponent> dynamicComponents = new HashMap<>();
-
-    // 主要组件
-    private JComboBox<String> identityComboBox;
-    private JTextField heroNameField;
-    private JComboBox<String> actionTypeComboBox;
-    private JPanel dynamicParamPanel;
-    private JTextArea generatedDescriptionArea;
-    private JButton generateButton;
-    private JButton addToEntryButton;
-
-    // 动态组件 - 技能相关
-    private JComboBox<String> skillComboBox;
-    private JComboBox<String> stateComboBox;
-    private JComboBox<String> targetHeroTypeComboBox;
-    private JTextField targetHeroField;
-
+    
+    private JTextField heroNameField;           // 英雄名称
+    private JPanel contentPanel;                // 内容面板（标签 + 文本框）
+    private JTextArea resultArea;               // 结果展示区
+    private JButton generateButton;             // 生成按钮
+    private List<JTextField> inputFields;       // 所有输入框
+    private JTextField currentFocusedField;     // 当前获得焦点的输入框
+    
+    public BehaviorGeneratorPanel() {
+        inputFields = new ArrayList<>();
+        initUI();
+    }
+    
+    private void initUI() {
+        setLayout(new BorderLayout(5, 5));
+        setBorder(BorderFactory.createTitledBorder("行为描述生成器"));
+        
+        // 1. 顶部：英雄名称
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.add(new JLabel("英雄:"));
+        heroNameField = new JTextField(15);
+        topPanel.add(heroNameField);
+        add(topPanel, BorderLayout.NORTH);
+        
+        // 2. 中部：内容区域（标签和文本框横向排列）
+        contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setPreferredSize(new Dimension(-1, 60));
+        add(scrollPane, BorderLayout.CENTER);
+        
+        // 3. 底部：生成按钮 + 结果区
+        JPanel bottomPanel = new JPanel(new BorderLayout(5, 5));
+        
+        generateButton = new JButton("生成完整版");
+        generateButton.addActionListener(e -> generateResult());
+        bottomPanel.add(generateButton, BorderLayout.NORTH);
+        
+        resultArea = new JTextArea(3, 40);
+        resultArea.setLineWrap(true);
+        resultArea.setEditable(false);
+        resultArea.setBackground(new Color(240, 240, 240));
+        bottomPanel.add(new JScrollPane(resultArea), BorderLayout.CENTER);
+        
+        add(bottomPanel, BorderLayout.SOUTH);
+    }
+    
     /**
-     * 获取目标英雄文本字段，供外部组件引用。
-     * @return 目标英雄文本字段
+     * 填充技能描述
      */
-    public JTextField getTargetHeroField() {
-        return targetHeroField;
+    public void fillFromSkill(Skill skill) {
+        if (skill == null || skill.getFull_text() == null) return;
+            
+        // 清空
+        contentPanel.removeAll();
+        inputFields.clear();
+        resultArea.setText("");
+            
+        String description = skill.getFull_text();
+        System.out.println("原始描述：" + description);
+        System.out.println("描述长度：" + description.length());
+                
+        // 手动解析“目标”和“位置”
+        int lastEnd = 0;
+        int matchCount = 0;
+                
+        while (true) {
+            // 查找下一个“目标”或“位置”
+            int targetIndex = description.indexOf("目标", lastEnd);
+            int positionIndex = description.indexOf("位置", lastEnd);
+                    
+            // 都找不到，结束
+            if (targetIndex == -1 && positionIndex == -1) {
+                break;
+            }
+                    
+            // 找到最近的匹配
+            int nextMatchIndex;
+            String matchedKeyword;
+            if (targetIndex != -1 && positionIndex != -1) {
+                if (targetIndex < positionIndex) {
+                    nextMatchIndex = targetIndex;
+                    matchedKeyword = "目标";
+                } else {
+                    nextMatchIndex = positionIndex;
+                    matchedKeyword = "位置";
+                }
+            } else if (targetIndex != -1) {
+                nextMatchIndex = targetIndex;
+                matchedKeyword = "目标";
+            } else {
+                nextMatchIndex = positionIndex;
+                matchedKeyword = "位置";
+            }
+                    
+            matchCount++;
+            System.out.println("找到匹配：" + matchedKeyword + " 位置：" + nextMatchIndex);
+                    
+            // 添加前面的文本
+            if (lastEnd < nextMatchIndex) {
+                String text = description.substring(lastEnd, nextMatchIndex);
+                JLabel label = new JLabel(text);
+                contentPanel.add(label);
+                System.out.println("添加文本：" + text);
+            }
+                    
+            // 添加文本框（替代“目标”或“位置”）
+            JTextField field = new JTextField(10);
+            field.setMaximumSize(new Dimension(150, 30));
+            
+            // 为每个动态文本框添加焦点监听器
+            field.addFocusListener(new java.awt.event.FocusAdapter() {
+                @Override
+                public void focusGained(java.awt.event.FocusEvent e) {
+                    currentFocusedField = field;
+                    System.out.println("动态文本框获得焦点：" + matchedKeyword);
+                }
+            });
+            
+            inputFields.add(field);
+            contentPanel.add(field);
+            System.out.println("添加文本框");
+                    
+            lastEnd = nextMatchIndex + matchedKeyword.length();
+        }
+                
+        System.out.println("总共找到 " + matchCount + " 个匹配");
+            
+        // 添加剩余文本
+        if (lastEnd < description.length()) {
+            String text = description.substring(lastEnd);
+            contentPanel.add(new JLabel(text));
+            System.out.println("添加剩余文本：" + text);
+        }
+            
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+    
+    /**
+     * 生成最终结果
+     */
+    private void generateResult() {
+        StringBuilder result = new StringBuilder();
+        
+        // 遍历内容面板的所有组件
+        for (Component comp : contentPanel.getComponents()) {
+            if (comp instanceof JLabel) {
+                result.append(((JLabel) comp).getText());
+            } else if (comp instanceof JTextField) {
+                result.append(((JTextField) comp).getText().trim());
+            }
+        }
+        
+        String finalText = result.toString();
+        resultArea.setText(finalText);
+        
+        // 自动复制到剪贴板
+        copyToClipboard(finalText);
+    }
+    
+    /**
+     * 复制文本到系统剪贴板
+     */
+    private void copyToClipboard(String text) {
+        if (text == null || text.isEmpty()) return;
+        
+        try {
+            java.awt.datatransfer.StringSelection stringSelection = 
+                new java.awt.datatransfer.StringSelection(text);
+            java.awt.Toolkit.getDefaultToolkit().getSystemClipboard()
+                .setContents(stringSelection, null);
+            System.out.println("已复制到剪贴板：" + text);
+        } catch (Exception e) {
+            System.err.println("复制到剪贴板失败：" + e.getMessage());
+        }
     }
     
     public JTextField getHeroNameField() {
         return heroNameField;
     }
     
-    private JComboBox<String> effectComboBox;
-
-    public BehaviorGeneratorPanel() {
-        setLayout(new BorderLayout());
-        initializeComponents();
-        setupDynamicParams();
-        buildUI();
-        attachListeners();
-    }
-
-    private void initializeComponents() {
-        // 身份选择
-        identityComboBox = new JComboBox<>(new String[]{"主角", "队友", "敌方"});
-
-        // 英雄名输入
-        heroNameField = new JTextField(10);
-
-        // 行为类型选择
-        actionTypeComboBox = new JComboBox<>(new String[]{"英雄技能", "道具使用", "攻击", "移动", "购买", "走位", "埋伏", "拆塔"});
-
-        // 动态参数面板
-        dynamicParamPanel = new JPanel();
-        dynamicParamPanel.setLayout(new BoxLayout(dynamicParamPanel, BoxLayout.Y_AXIS));
-
-        // 生成按钮
-        generateButton = new JButton("生成行为描述");
-
-        // 生成的描述显示区
-        generatedDescriptionArea = new JTextArea(3, 40);
-        generatedDescriptionArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(generatedDescriptionArea);
-
-        // 添加到列表按钮
-        addToEntryButton = new JButton("添加到当前片段");
-
-        // 初始化动态组件
-        skillComboBox = new JComboBox<>(new String[]{"Q", "W", "E", "R", "闪烁", "跳刀"});
-        stateComboBox = new JComboBox<>(new String[]{"使用了", "预判释放了", "二段..."});
-        targetHeroTypeComboBox = new JComboBox<>(new String[]{"敌方", "队友", "位置"});
-        this.targetHeroField = new JTextField(10);
-        effectComboBox = new JComboBox<>(new String[]{
-            "造成伤害", "禁锢了", "减速", "沉默",
-            "眩晕", "击退", "缠绕", "石化", "恐惧", "缴械", 
-            "显形", "破隐一击", "降低护甲", "降低攻击力",
-            "提升移速", "降低移速", "叠加负面状态", "施加持续伤害"
-        });
-    }
-
-    private void setupDynamicParams() {
-        // 默认显示技能相关的组件
-        updateDynamicParams("英雄技能");
-    }
-
-    private void buildUI() {
-        // 使用GridBagLayout进行更精确的布局
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // 第一行：身份、英雄名、行为类型
-        gbc.gridx = 0; gbc.gridy = 0;
-        add(new JLabel("身份:"), gbc);
-        gbc.gridx = 1;
-        add(identityComboBox, gbc);
-
-        gbc.gridx = 2;
-        add(new JLabel("英雄:"), gbc);
-        gbc.gridx = 3;
-        add(heroNameField, gbc);
-
-        gbc.gridx = 4;
-        add(new JLabel("行为:"), gbc);
-        gbc.gridx = 5;
-        add(actionTypeComboBox, gbc);
-
-        // 第二行：动态参数面板
-        gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 6;
-        add(dynamicParamPanel, gbc);
-
-        // 第三行：生成按钮和显示区
-        gbc.gridy = 2; gbc.gridwidth = 2;
-        add(generateButton, gbc);
-
-        gbc.gridx = 2; gbc.gridwidth = 4;
-        add(new JScrollPane(generatedDescriptionArea), gbc);
-
-        // 第四行：意图描述
-
-
-        // 第五行：添加到列表按钮
-        gbc.gridx = 0; gbc.gridy = 4; gbc.gridwidth = 6;
-        add(addToEntryButton, gbc);
-    }
-
-    private void attachListeners() {
-        actionTypeComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selectedType = (String) actionTypeComboBox.getSelectedItem();
-                updateDynamicParams(selectedType);
-            }
-        });
-
-        generateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                generateDescription();
-            }
-        });
-    }
-
     /**
-     * 根据选择的行为类型，更新动态参数面板中的组件。
-     * @param actionType 选择的行为类型。
+     * 获取当前获得焦点的输入框
      */
-    private void updateDynamicParams(String actionType) {
-        dynamicParamPanel.removeAll();
-
-        if ("英雄技能".equals(actionType)) {
-            addDynamicSkillComponents();
-        } else if ("道具使用".equals(actionType)) {
-            addDynamicItemComponents();
-        } else if ("攻击".equals(actionType)) {
-            addDynamicAttackComponents();
-        } else if ("移动".equals(actionType)) {
-            addDynamicMoveComponents();
-        } else if ("购买".equals(actionType)) {
-            addDynamicBuyComponents();
-        } else if ("走位".equals(actionType)) {
-            addDynamicPositioningComponents();
-        } else if ("埋伏".equals(actionType)) {
-            addDynamicAmbushComponents();
-        } else if ("拆塔".equals(actionType)) {
-            addDynamicTowerDestructionComponents();
-        }
-
-        dynamicParamPanel.revalidate();
-        dynamicParamPanel.repaint();
+    public JTextField getCurrentFocusedField() {
+        return currentFocusedField;
     }
-
-    private void addDynamicSkillComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("状态:"));
-        panel.add(stateComboBox);
-        panel.add(new JLabel("技能:"));
-        panel.add(skillComboBox);
-        panel.add(new JLabel("效果:"));
-        panel.add(effectComboBox);
-        panel.add(new JLabel("目标类型:"));
-        panel.add(targetHeroTypeComboBox);
-        panel.add(new JLabel("目标:"));
-        panel.add(targetHeroField);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicItemComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("道具:"));
-        JTextField itemField = new JTextField(10);
-        panel.add(itemField);
-        panel.add(new JLabel("地点:"));
-        JTextField locationField = new JTextField(10);
-        panel.add(locationField);
-        dynamicComponents.put("itemField", itemField);
-        dynamicComponents.put("locationField", locationField);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicAttackComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("攻击方式:"));
-        JComboBox<String> attackTypeCombo = new JComboBox<>(new String[]{"平A", "连续平A", "走A", "强化普攻"});
-        panel.add(attackTypeCombo);
-        panel.add(new JLabel("目标:"));
-        JTextField attackTargetField = new JTextField(10);
-        panel.add(attackTargetField);
-        dynamicComponents.put("attackTypeCombo", attackTypeCombo);
-        dynamicComponents.put("attackTargetField", attackTargetField);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicMoveComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("方向:"));
-        JTextField directionField = new JTextField(20);
-        panel.add(directionField);
-        dynamicComponents.put("directionField", directionField);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicPositioningComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("方位:"));
-        JComboBox<String> positionCombo = new JComboBox<>(new String[]{"左", "右", "前", "后"});
-        panel.add(positionCombo);
-        dynamicComponents.put("positionCombo", positionCombo);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicAmbushComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("位置:"));
-        JTextField ambushLocationField = new JTextField(10);
-        panel.add(ambushLocationField);
-        dynamicComponents.put("ambushLocationField", ambushLocationField);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicTowerDestructionComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("线路:"));
-        JComboBox<String> laneCombo = new JComboBox<>(new String[]{"上路", "中路", "下路"});
-        panel.add(laneCombo);
-        panel.add(new JLabel("塔级:"));
-        JComboBox<String> towerLevelCombo = new JComboBox<>(new String[]{"一塔", "二塔", "三塔", "高地塔"});
-        panel.add(towerLevelCombo);
-        dynamicComponents.put("laneCombo", laneCombo);
-        dynamicComponents.put("towerLevelCombo", towerLevelCombo);
-        dynamicParamPanel.add(panel);
-    }
-
-    private void addDynamicBuyComponents() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel("道具类型:"));
-        JTextField itemTypeField = new JTextField(10);
-        panel.add(itemTypeField);
-        dynamicComponents.put("itemTypeField", itemTypeField);
-        dynamicParamPanel.add(panel);
-    }
-
+    
     /**
-     * 根据当前表单的选择，调用核心逻辑生成行为描述。
+     * 插入文本到当前焦点所在的输入框
      */
-    private void generateDescription() {
-        String actionType = (String) actionTypeComboBox.getSelectedItem();
-        StringBuilder description = new StringBuilder();
-
-        if ("英雄技能".equals(actionType)) {
-            String skill = (String) skillComboBox.getSelectedItem();
-            String state = (String) stateComboBox.getSelectedItem();
-            String targetHero = targetHeroField.getText().trim();
-            String effect = (String) effectComboBox.getSelectedItem();
-            description.append(ActionDescriptionGenerator.generateSkillDescription(skill, state, targetHero, effect));
-        } else if ("道具使用".equals(actionType)) {
-            JTextField itemField = (JTextField) dynamicComponents.get("itemField");
-            JTextField locationField = (JTextField) dynamicComponents.get("locationField");
-            if (itemField != null && locationField != null) {
-                description.append(ActionDescriptionGenerator.generateItemDescription(
-                        itemField.getText(), locationField.getText()));
-            }
-        } else if ("攻击".equals(actionType)) {
-            JComboBox<String> attackTypeCombo = (JComboBox<String>) dynamicComponents.get("attackTypeCombo");
-            JTextField attackTargetField = (JTextField) dynamicComponents.get("attackTargetField");
-            if (attackTypeCombo != null && attackTargetField != null) {
-                description.append(ActionDescriptionGenerator.generateAttackDescription(
-                        (String) attackTypeCombo.getSelectedItem(), attackTargetField.getText()));
-            }
-        } else if ("移动".equals(actionType)) {
-            JTextField directionField = (JTextField) dynamicComponents.get("directionField");
-            if (directionField != null) {
-                description.append(ActionDescriptionGenerator.generateMoveDescription(directionField.getText()));
-            }
-        } else if ("购买".equals(actionType)) {
-            JTextField itemTypeField = (JTextField) dynamicComponents.get("itemTypeField");
-            if (itemTypeField != null) {
-                description.append(ActionDescriptionGenerator.generateBuyDescription(itemTypeField.getText()));
-            }
-        } else if ("走位".equals(actionType)) {
-            JComboBox<String> positionCombo = (JComboBox<String>) dynamicComponents.get("positionCombo");
-            if (positionCombo != null) {
-                description.append(ActionDescriptionGenerator.generatePositioningDescription((String) positionCombo.getSelectedItem()));
-            }
-        } else if ("埋伏".equals(actionType)) {
-            JTextField ambushLocationField = (JTextField) dynamicComponents.get("ambushLocationField");
-            if (ambushLocationField != null) {
-                description.append(ActionDescriptionGenerator.generateAmbushDescription(ambushLocationField.getText()));
-            }
-        } else if ("拆塔".equals(actionType)) {
-            JComboBox<String> laneCombo = (JComboBox<String>) dynamicComponents.get("laneCombo");
-            JComboBox<String> towerLevelCombo = (JComboBox<String>) dynamicComponents.get("towerLevelCombo");
-            if (laneCombo != null && towerLevelCombo != null) {
-                description.append(ActionDescriptionGenerator.generateTowerDestructionDescription(
-                        (String) laneCombo.getSelectedItem(), (String) towerLevelCombo.getSelectedItem()));
-            }
+    public void insertTextToFocusedField(String text) {
+        JTextField targetField = currentFocusedField != null ? currentFocusedField : heroNameField;
+        if (targetField == null || text == null || text.isEmpty()) return;
+        
+        String currentText = targetField.getText();
+        int caretPosition = targetField.getCaretPosition();
+        
+        // 如果有选中文本，用新文本替换
+        if (targetField.getSelectedText() != null) {
+            String newText = currentText.substring(0, targetField.getSelectionStart()) + 
+                          text + 
+                          currentText.substring(targetField.getSelectionEnd());
+            targetField.setText(newText);
+            targetField.setCaretPosition(targetField.getSelectionStart() + text.length());
+        } else {
+            // 否则在光标位置插入
+            String newText = currentText.substring(0, caretPosition) + text + 
+                          currentText.substring(caretPosition);
+            targetField.setText(newText);
+            targetField.setCaretPosition(caretPosition + text.length());
         }
-
-        generatedDescriptionArea.setText(description.toString());
+        
+        System.out.println("插入文本到焦点字段：" + text);
     }
-
-    /**
-     * 获取生成的完整BehaviorEntry。
-     * @return 当前表单生成的BehaviorEntry对象，如果信息不全则返回null。
-     */
-    public BehaviorEntry getGeneratedEntry() {
-        String identityStr = (String) identityComboBox.getSelectedItem();
-        BehaviorEntry.Identity identity = null;
-        for (BehaviorEntry.Identity id : BehaviorEntry.Identity.values()) {
-            if (id.toString().equals(identityStr)) {
-                identity = id;
-                break;
-            }
-        }
-        String heroName = heroNameField.getText().trim();
-        String actionDesc = generatedDescriptionArea.getText().trim();
-
-        if (identity == null || heroName.isEmpty() || actionDesc.isEmpty()) {
-            return null;
-        }
-
-        return new BehaviorEntry(identity, heroName, actionDesc, "无特殊意图");
-    }
-
-    /**
-     * 获取“添加到列表”按钮，以便主窗口可以为其添加监听器。
-     */
-    public JButton getAddToEntryButton() {
-        return addToEntryButton;
+    
+    public String getDescription() {
+        return resultArea.getText().trim();
     }
 }

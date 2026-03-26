@@ -1,6 +1,7 @@
 package dota.ui;
 
 import dota.model.Hero;
+import dota.model.Skill;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -52,16 +53,16 @@ public class MainAppUI extends JFrame {
     private JTextField lastFocusedField = null;
 
     public MainAppUI() {
-        setTitle("DOTA2玩家行为标注工具");
+        setTitle("DOTA2 玩家行为标注工具");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 700);
+        setSize(1200, 800); // 增大窗口尺寸
         setLocationRelativeTo(null); // 居中显示
         initializeComponents();
         loadHeroesFromJson(); // 加载英雄数据
         addFocusListeners(); // 添加焦点监听器
         createHeroSlots();
         layoutComponents();
-        // 初始化时不连接业务逻辑，由App主类负责
+        // 初始化时不连接业务逻辑，由 App 主类负责
     }
 
     private void initializeComponents() {
@@ -97,8 +98,8 @@ public class MainAppUI extends JFrame {
         // 创建英雄槽位面板
         heroSlotsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         heroSlotsPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "英雄选择区", TitledBorder.CENTER, TitledBorder.TOP));
-        heroSlotsPanel.setLayout(new GridLayout(2, 5, 5, 5)); // 2行5列布局，间距5px
+                BorderFactory.createEtchedBorder(), "已选英雄池", TitledBorder.CENTER, TitledBorder.TOP));
+        heroSlotsPanel.setLayout(new GridLayout(2, 5, 15, 15)); // 2 行 5 列布局，间距 15px
 
         // 底部面板 - 状态栏
         bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -121,30 +122,21 @@ public class MainAppUI extends JFrame {
     public JButton getOpenProjectButton() { return openProjectButton; }
     public JButton getSaveProjectButton() { return saveProjectButton; }
     public JButton getExportProjectButton() { return exportProjectButton; }
-    public JButton getAddToEntryButton() { return generatorPanel.getAddToEntryButton(); }
 
     public BehaviorGeneratorPanel getGeneratorPanel() { return generatorPanel; }
+    
+    public BehaviorGeneratorPanel getBehaviorGeneratorPanel() { return generatorPanel; }
     
     // 初始化组件时添加焦点监听器
     private void addFocusListeners() {
         JTextField heroNameField = generatorPanel.getHeroNameField();
-        JTextField targetHeroField = generatorPanel.getTargetHeroField();
         
         // 为英雄名称输入框添加焦点监听器
         heroNameField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 lastFocusedField = (JTextField) e.getSource();
-                System.out.println("焦点获得: 英雄输入框");
-            }
-        });
-        
-        // 为目标输入框添加焦点监听器
-        targetHeroField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                lastFocusedField = (JTextField) e.getSource();
-                System.out.println("焦点获得: 目标输入框");
+                System.out.println("焦点获得：英雄输入框");
             }
         });
     }
@@ -156,26 +148,36 @@ public class MainAppUI extends JFrame {
         for (int i = 0; i < 10; i++) {
             HeroSlotPanel slotPanel = new HeroSlotPanel(i, this);
             
-                    // 创建基于焦点的智能监听器
+            // 创建基于焦点的智能监听器
             slotPanel.addHeroSelectionListener(new HeroSelectionListener() {
                 @Override
                 public void onHeroSelected(Hero hero) {
-                    // 存储当前焦点信息
-                    JTextField finalFocusedField;
+                    // 判断焦点是否在行为生成器的动态文本框中
+                    JTextField targetField = generatorPanel.getCurrentFocusedField();
                     
-                    // 在事件发生时立即捕获焦点状态
-                    if (generatorPanel.getHeroNameField().hasFocus()) {
-                        finalFocusedField = generatorPanel.getHeroNameField();
-                    } else if (generatorPanel.getTargetHeroField().hasFocus()) {
-                        finalFocusedField = generatorPanel.getTargetHeroField();
+                    // 如果有动态文本框获得焦点，插入到动态文本框；否则插入到英雄名称输入框
+                    if (targetField != null) {
+                        // 焦点在动态文本框中
+                        SwingUtilities.invokeLater(() -> {
+                            generatorPanel.insertTextToFocusedField(hero.getTitle());
+                        });
                     } else {
-                        // 如果都没有焦点，使用之前记录的最后一个焦点字段
-                        finalFocusedField = lastFocusedField != null ? lastFocusedField : generatorPanel.getTargetHeroField();
+                        // 没有动态文本框获得焦点，使用默认逻辑
+                        JTextField finalFocusedField = lastFocusedField != null ? lastFocusedField : generatorPanel.getHeroNameField();
+                        SwingUtilities.invokeLater(() -> {
+                            insertHeroName(hero.getTitle(), finalFocusedField);
+                        });
                     }
+                }
+                            
+                @Override
+                public void onSkillSelected(Skill skill) {
+                    // 处理技能按钮点击事件：将技能描述填充到行为生成器
+                    System.out.println("技能被点击：" + skill.getName() + " - " + skill.getFull_text());
                     
-                    // 使用SwingUtilities.invokeLater确保在事件调度线程中更新UI
+                    // 调用行为生成器的填充方法
                     SwingUtilities.invokeLater(() -> {
-                        insertHeroName(hero.getTitle(), finalFocusedField);
+                        generatorPanel.fillFromSkill(skill);
                     });
                 }
             });

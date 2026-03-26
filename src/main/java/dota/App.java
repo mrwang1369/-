@@ -117,9 +117,6 @@ public class App {
 
         // 导出项目按钮
         ui.getExportProjectButton().addActionListener(e -> handleExportProject());
-
-        // “添加到列表”按钮
-        ui.getAddToEntryButton().addActionListener(e -> handleAddToEntryList());
     }
 
     /**
@@ -168,21 +165,11 @@ public class App {
     }
 
     /**
-     * 处理“添加到列表”操作。
+     * 处理"添加到列表"操作（已删除）。
      */
     private void handleAddToEntryList() {
-        var entry = ui.getGeneratorPanel().getGeneratedEntry();
-        if (entry != null) {
-            HeroGroup newGroup = new HeroGroup();
-            newGroup.addHero(entry.getHeroName());
-            currentSnippet.addHeroGroup(newGroup);
-            // 重构后不再使用JList，直接更新数据模型
-            // currentSnippet.addHeroGroup(newGroup) 已在前一行执行
-            updateStatus("已添加行为条目。");
-        } else {
-            updateStatus("添加失败：请填写完整的身份、英雄名、生成描述和意图。");
-            JOptionPane.showMessageDialog(ui, "请确保身份、英雄名、行为描述和意图均已填写。", "输入不完整", JOptionPane.WARNING_MESSAGE);
-        }
+        // 该方法已删除
+        updateStatus("'添加到列表'功能已移除。");
     }
 
     /**
